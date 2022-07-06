@@ -1,0 +1,9 @@
+[submodule "rhythmbox/cinnamon-rhythmbox-tray"]
+	path = rhythmbox/cinnamon-rhythmbox-tray
+	url = https://github.com/paprykut/cinnamon-rhythmbox-tray
+[submodule "rhythmbox/remember-the-rhythm"]
+	path = rhythmbox/remember-the-rhythm
+	url = https://github.com/owais/remember-the-rhythm
+[submodule "monego"]
+	path = monego
+	url = https://github.com/cseelus/monego

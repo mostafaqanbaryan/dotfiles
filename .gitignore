@@ -1,0 +1,13 @@
+.ssh
+vim/view
+vim/bundle
+vim/undodir
+vim/.netrwhist
+nvim/view
+nvim/bundle
+nvim/undodir
+nvim/.netrwhist
+; !rhythmbox/*
+; !rhythmbox/ADDRESS
+; !rhythmbox/Packages
+*.swp
