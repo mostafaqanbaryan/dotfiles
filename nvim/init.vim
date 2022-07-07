@@ -297,9 +297,7 @@ let g:syntastic_javascript_jsxhint_exec = 'jsx-jshint-wrapper'
 
 " Git Fugitive
 let g:fugitive_gitlab_domains = ['https://my.gitlab.com']
-nnoremap <Leader>gp :Git push -u origin HEAD<CR>
-nnoremap <Leader>gu :Git pull<CR>
-nnoremap <Leader>gg :Git<CR>
+nnoremap <Leader>g :Git<CR>
 
 " ReRender syntax highlights
 nnoremap <F12> :syntax sync fromstart<CR>
