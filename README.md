@@ -8,6 +8,16 @@ My current setup and tools I use:
 - [Monaco](https://github.com/cseelus/monego) fonts
 - [Starship](https://github.com/cseelus/monego) as prompt
 
+## Gnome Extensions
+- [Burn my windows](https://github.com/Schneegans/Burn-My-Windows) amazing effects for opnening/closing windows
+- [Random Wallpapers](https://github.com/ifl0w/RandomWallpaperGnome3)
+
+## Softwares
+- [FZF](https://github.com/junegunn/fzf) fuzzy in terminal
+- [Flameshot](https://github.com/flameshot-org/flameshot) easy way for taking screenshots
+- [Termdown](https://github.com/trehn/termdown) beautiful countdown timer in terminal
+- [Please](https://github.com/NayamAmarshe/please) simple to-do in terminal
+
 ## Setup
 - Clone this repository to you SSD (For better performance of `VIM`)
 - Run `init.sh`
