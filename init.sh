@@ -1,4 +1,5 @@
 #!/bin/bash
+dconf dump / > ./keybindings.conf.bak
 dconf load / < ./keybindings.conf
 
 # Fish
