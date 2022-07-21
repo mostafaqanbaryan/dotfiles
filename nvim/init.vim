@@ -1,5 +1,10 @@
+set shell=/bin/bash
+
 " Plug Start
 call plug#begin('~/.config/nvim/bundle/')
+
+" Theme
+Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 
 " Fuzzy
 Plug 'junegunn/fzf', {'branch': 'master'}
@@ -7,33 +12,42 @@ Plug 'junegunn/fzf.vim', {'branch': 'master'}
 
 " LSP
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'othree/javascript-libraries-syntax.vim', {'branch': 'master'}
-Plug 'cakebaker/scss-syntax.vim', {'branch': 'master'}
+Plug 'othree/javascript-libraries-syntax.vim', {'branch': 'master', 'for': 'javascript'}
+Plug 'cakebaker/scss-syntax.vim', {'branch': 'master', 'for': 'sass'}
+
+" Fix class/function name at top
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-context'
 
 " Git
 Plug 'tpope/vim-fugitive', {'branch': 'master'}
-Plug 'shumphrey/fugitive-gitlab.vim', {'branch': 'master'}
-" Plug 'airblade/vim-gitgutter', {'branch': 'master'}
+Plug 'shumphrey/fugitive-gitlab.vim', {'branch': 'master', 'on': 'Gbrowse'}
+Plug 'airblade/vim-gitgutter', {'branch': 'master'}
 
 " Statusbar
 Plug 'vim-airline/vim-airline', {'branch': 'master'}
 Plug 'vim-airline/vim-airline-themes', {'branch': 'master'}
-
-" React
-Plug 'mxw/vim-jsx', {'branch': 'master'}
-Plug 'moll/vim-node', {'branch': 'master'}
 
 Plug 'preservim/nerdtree', {'branch': 'master'}
 Plug 'scrooloose/nerdcommenter', {'branch': 'master'}
 Plug 'mhartington/oceanic-next', {'branch': 'master'}
 Plug 'godlygeek/tabular', {'branch': 'master'}
 Plug 'SirVer/ultisnips', {'branch': 'master'}
-Plug 'alvan/vim-closetag', {'branch': 'master'}
+Plug 'alvan/vim-closetag', {'branch': 'master', 'for': 'html'}
 Plug 'terryma/vim-multiple-cursors', {'branch': 'master'}
 Plug 'honza/vim-snippets', {'branch': 'master'}
 Plug 'tpope/vim-surround', {'branch': 'master'}
 Plug 'ryanoasis/vim-devicons', {'branch': 'master'}
 Plug 'tpope/vim-unimpaired', {'branch': 'master'}
+Plug 'norcalli/nvim-colorizer.lua', {'branch': 'master'}
+
+" Welcome
+Plug 'mhinz/vim-startify'
+let g:startify_session_dir = '~/sessions'
+
+
+" Notify
+Plug 'rcarriga/nvim-notify'
 
 call plug#end()
 
@@ -80,17 +94,14 @@ filetype plugin indent on
 :command! -nargs=0 Config :exe 'edit ' . stdpath('config') . '/init.vim'
 :command! -nargs=0 Reload :exe 'source ' . stdpath('config') . '/init.vim'
 
-" Git Gutter
-let g:gitgutter_highlight_linenrs = 1
-let g:gitgutter_highlight_lines = 0
 
 " Save session on close
 autocmd VimLeavePre * call SaveSessionOnLeave()
 function SaveSessionOnLeave()
     :NERDTreeClose
-	if v:this_session != "" && v:this_session != expand('~/sessions/latest.vim')
-		execute "mksession! " . v:this_session
-	else
+    if v:this_session != "" && v:this_session != expand('~/sessions/latest.vim')
+        execute "mksession! " . v:this_session
+    else
         let branchName = trim(substitute(system("git rev-parse --abbrev-ref HEAD"), "^[^/]*/", "", ""))
 		if branchName != ""
 			execute "mksession! ~/sessions/" . branchName . ".vim"
@@ -104,6 +115,16 @@ function SaveSessionOnLeave()
 		endif
 	endif
 endfunction
+
+" HighlightWordUnderCursor
+function! HighlightWordUnderCursor()
+    if getline(".")[col(".")-1] !~# '[[:punct:][:blank:]]' 
+        exec 'match' 'Search' '/\V\<'.expand('<cword>').'\>/' 
+    else 
+        match none 
+    endif
+endfunction
+autocmd! CursorHold,CursorHoldI * call HighlightWordUnderCursor()
 
 " Clear and Redraw screen when an error happens
 nnoremap <Leader>l :redraw!<cr>
@@ -168,37 +189,19 @@ if exists('+termguicolors')
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
     set termguicolors
 endif
-let g:airline_theme='oceanicnext'
+let g:airline_theme='deus'
 
-" XCodeDark
-let g:signify_sign_add    = '┃'
-let g:signify_sign_change = '┃'
-let g:signify_sign_delete = '•'
-let g:signify_sign_show_count = 0
-colorscheme xcodedark
-autocmd User SignifySetup
-    \ execute 'autocmd! signify' |
-    \ autocmd signify TextChanged,TextChangedI * call sy#start()
-augroup vim-colors-xcode
-    autocmd!
-augroup END
-autocmd vim-colors-xcode ColorScheme * hi Comment        cterm=italic gui=italic
-autocmd vim-colors-xcode ColorScheme * hi SpecialComment cterm=italic gui=italic
+let g:catppuccin_flavour = "frappe" " latte, frappe, macchiato, mocha
+colorscheme catppuccin
+hi TreesitterContext guibg=#2C314C
+hi TreesitterContextLineNumber guifg=#98C379
 
-" Highlight tagnames in jsx for oceanicnext
-hi htmlTagName guifg=#75ffaf ctermfg=251
-hi htmlTagN guifg=#a5b9f0 ctermfg=251
-hi htmlTag guifg=#62b3b2 ctermfg=73
-
-hi xmlTagName guifg=#75ffaf ctermfg=251
-hi xmlTagN guifg=#a5b9f0 ctermfg=251
-
-" Transparent background
-hi Normal guibg=NONE ctermbg=NONE
+" Using Catppuccin colors
 hi Folded guibg=NONE
-hi Folded guifg=#775555
+hi Folded guifg=#7a6750
 hi Folded ctermbg=NONE
-hi clear EndOfBuffer
+hi Search guibg=#404456  
+hi Search guifg=#ff6000
 
 " Airplane Theme
 if !exists('g:airline_symbols')
@@ -208,8 +211,8 @@ let g:airline_symbols.space = "\ua0"
 let g:airline_extensions = ['fugitiveline', 'branch']
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#branch#enabled=1
-let g:airline_right_sep = "\uE0B6"
-let g:airline_left_sep = "\uE0BC"
+let g:airline_left_sep = "\uE0B4"
+let g:airline_right_sep = "\uE0BA"
 let g:airline_skip_empty_sections = 1
 let g:airline_section_c = '%<%F%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
 
@@ -281,9 +284,9 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " Fold/Unfold saving
 augroup AutoSaveFolds
-	autocmd!
-	au BufWinLeave *.* mkview 1
-	au BufWinEnter *.* silent! loadview 1
+    autocmd!
+    au BufWinLeave *.* mkview 1
+    au BufWinEnter *.* silent! loadview 1
 augroup END
 
 " Tabular
@@ -339,5 +342,23 @@ nnoremap <Leader>fb :Buffers<CR>
 nnoremap <leader>fr :PRg<space>
 vnoremap <leader>fr y:PRg <C-r>"<CR>
 nnoremap <F2> :BLines function <CR>
+imap <c-x><c-f> <plug>(fzf-complete-path)
 
-set shell=/bin/bash
+lua <<EOF
+    require'treesitter-context'.setup{
+        enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+        max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+        trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+        patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+            default = {
+                'class',
+                'function',
+                'method',
+            },
+        },
+        zindex = 20, -- The Z-index of the context window
+        mode = 'cursor',  -- Line used to calculate context. Choices: 'cursor', 'topline'
+    }
+
+    require 'colorizer'.setup()
+EOF
