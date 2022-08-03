@@ -45,10 +45,6 @@ Plug 'norcalli/nvim-colorizer.lua', {'branch': 'master'}
 Plug 'mhinz/vim-startify'
 let g:startify_session_dir = '~/sessions'
 
-
-" Notify
-Plug 'rcarriga/nvim-notify'
-
 call plug#end()
 
 " RTL
@@ -354,6 +350,8 @@ lua <<EOF
                 'class',
                 'function',
                 'method',
+                'for',
+                'if',
             },
         },
         zindex = 20, -- The Z-index of the context window
