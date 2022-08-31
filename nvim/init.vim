@@ -12,7 +12,7 @@ Plug 'junegunn/fzf.vim', {'branch': 'master'}
 
 " LSP
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'othree/javascript-libraries-syntax.vim', {'branch': 'master', 'for': 'javascript'}
+Plug 'pangloss/vim-javascript', {'branch': 'master', 'for': 'javascript'}
 Plug 'cakebaker/scss-syntax.vim', {'branch': 'master', 'for': 'sass'}
 
 " Fix class/function name at top
@@ -308,6 +308,10 @@ nmap <silent> <Leader>q <Plug>(coc-diagnostic-prev)
 nmap <silent> gd :call CocAction('jumpDefinition')<CR>
 nmap <silent> gr <Plug>(coc-references)
 let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-tsserver', 'coc-phpls', 'coc-vetur', 'coc-html', 'coc-prettier', 'coc-css', 'coc-eslint', 'coc-svg', 'coc-sql', 'coc-flutter', 'coc-snippets']
+
+
+" Select suggestion using Enter
+inoremap <silent><expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
 
 " Terminal mapping
 nnoremap \` :term<CR>
