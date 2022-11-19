@@ -1,6 +1,6 @@
 #!/bin/bash
-dconf dump / > ./keybindings.conf.bak
-dconf load / < ./keybindings.conf
+# dconf dump / > ./keybindings.conf.bak
+# dconf load / < ./keybindings.conf
 
 # Fish
 rm ~/.config/fish/functions/fish_prompt.fish
