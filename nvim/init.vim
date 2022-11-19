@@ -4,12 +4,15 @@ set shell=/bin/bash
 call plug#begin('~/.config/nvim/bundle/')
 
 " Theme
-Plug 'catppuccin/nvim', {'as': 'catppuccin'}
-
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+ 
 " Fuzzy
 Plug 'junegunn/fzf', {'branch': 'master'}
 Plug 'junegunn/fzf.vim', {'branch': 'master'}
 
+" Ranger
+Plug 'kevinhwang91/rnvimr'
+ 
 " LSP
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'pangloss/vim-javascript', {'branch': 'master', 'for': 'javascript'}
@@ -22,28 +25,24 @@ Plug 'nvim-treesitter/nvim-treesitter-context'
 " Git
 Plug 'tpope/vim-fugitive', {'branch': 'master'}
 Plug 'shumphrey/fugitive-gitlab.vim', {'branch': 'master', 'on': 'Gbrowse'}
-Plug 'airblade/vim-gitgutter', {'branch': 'master'}
+Plug 'lewis6991/gitsigns.nvim'
 
 " Statusbar
-Plug 'vim-airline/vim-airline', {'branch': 'master'}
-Plug 'vim-airline/vim-airline-themes', {'branch': 'master'}
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
 
-Plug 'preservim/nerdtree', {'branch': 'master'}
 Plug 'scrooloose/nerdcommenter', {'branch': 'master'}
-Plug 'mhartington/oceanic-next', {'branch': 'master'}
 Plug 'godlygeek/tabular', {'branch': 'master'}
 Plug 'SirVer/ultisnips', {'branch': 'master'}
 Plug 'alvan/vim-closetag', {'branch': 'master', 'for': 'html'}
 Plug 'terryma/vim-multiple-cursors', {'branch': 'master'}
 Plug 'honza/vim-snippets', {'branch': 'master'}
 Plug 'tpope/vim-surround', {'branch': 'master'}
-Plug 'ryanoasis/vim-devicons', {'branch': 'master'}
 Plug 'tpope/vim-unimpaired', {'branch': 'master'}
 Plug 'norcalli/nvim-colorizer.lua', {'branch': 'master'}
 
 " Welcome
 Plug 'mhinz/vim-startify'
-let g:startify_session_dir = '~/sessions'
 
 call plug#end()
 
@@ -65,7 +64,7 @@ set autoindent
 set smarttab
 set softtabstop=4
 set tabstop=4
-set laststatus=2
+set laststatus=3
 set wildmenu
 set wildmode=list:longest,full
 set expandtab
@@ -85,16 +84,16 @@ set cindent!
 set foldmethod=indent
 set foldlevel=2
 set wrap
+set autochdir
 filetype plugin indent on
+let g:startify_session_dir = '~/sessions'
 
 :command! -nargs=0 Config :exe 'edit ' . stdpath('config') . '/init.vim'
 :command! -nargs=0 Reload :exe 'source ' . stdpath('config') . '/init.vim'
 
-
 " Save session on close
 autocmd VimLeavePre * call SaveSessionOnLeave()
 function SaveSessionOnLeave()
-    :NERDTreeClose
     if v:this_session != "" && v:this_session != expand('~/sessions/latest.vim')
         execute "mksession! " . v:this_session
     else
@@ -185,10 +184,11 @@ if exists('+termguicolors')
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
     set termguicolors
 endif
-let g:airline_theme='deus'
+" let g:airline_theme='deus'
 
-let g:catppuccin_flavour = "frappe" " latte, frappe, macchiato, mocha
-colorscheme catppuccin
+lua require 'me.tokyonight'
+
+colorscheme tokyonight-night
 hi TreesitterContext guibg=#2C314C
 hi TreesitterContextLineNumber guifg=#98C379
 
@@ -199,25 +199,15 @@ hi Folded ctermbg=NONE
 hi Search guibg=#404456  
 hi Search guifg=#ff6000
 
-" Airplane Theme
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-let g:airline_symbols.space = "\ua0"
-let g:airline_extensions = ['fugitiveline', 'branch']
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#branch#enabled=1
-let g:airline_left_sep = "\uE0B4"
-let g:airline_right_sep = "\uE0BA"
-let g:airline_skip_empty_sections = 1
-let g:airline_section_c = '%<%F%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
-
 " Title as filename
 autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
 set title
 
 " Search in VisualMode
 vnoremap // y/<C-R>"<CR>
+
+" Replace word under cursor
+nnoremap cu :%s/<C-R><C-W>//cg<Left><Left><Left>
 
 " Close sentence with ;
 inoremap <Leader>; <Esc>mqA;<Esc>`qli
@@ -254,29 +244,17 @@ let g:NERDSpaceDelims=1
 let g:NERDDefaultNesting=0
 let g:NERDRemoveExtraSpaces=1
 
-" NERDTree
-autocmd VimEnter * NERDTreeVCS | wincmd p
-function IsNERDTreeFocused()
-    return exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) == winnr()
-endfunction
-let NERDTreeShowHidden=0
-let g:NERDTreeShowBookmarks=1
-let g:NERDTreeWinSize=35
-map <C-q> :NERDTreeToggleVCS<CR>
-
-" Switch between NERDTree and current buffer
-map <expr> ff IsNERDTreeFocused() ? ':wincmd p<CR>' : ':NERDTreeFind<CR>'
-
-" Change PWD to current folder (For NERDTree and autochdir to work)
-autocmd BufEnter *  silent! call timer_start(100, {-> call(function('ChangePwdToCurrentFile'), [])})
-function! ChangePwdToCurrentFile()
-    if filereadable(expand("%")) 
-        execute("cd %:p:h")
-    endif
-endfunction
-
-" Close NERDTree if it's last window
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" Ranger
+" Make Ranger to be hidden after picking a file
+let g:rnvimr_enable_picker = 1
+" Hide the files included in gitignore
+let g:rnvimr_hide_gitignore = 0
+" Make Neovim wipe the buffers corresponding to the files deleted by Ranger
+let g:rnvimr_enable_bw = 1
+" Add a shadow window, value is equal to 100 will disable shadow
+let g:rnvimr_shadow_winblend = 70
+nnoremap <Leader>r :RnvimrToggle<CR>
+autocmd BufRead * RnvimrStartBackground
 
 " Fold/Unfold saving
 augroup AutoSaveFolds
@@ -307,8 +285,7 @@ nmap <silent> <Leader>e <Plug>(coc-diagnostic-next)
 nmap <silent> <Leader>q <Plug>(coc-diagnostic-prev)
 nmap <silent> gd :call CocAction('jumpDefinition')<CR>
 nmap <silent> gr <Plug>(coc-references)
-let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-tsserver', 'coc-phpls', 'coc-vetur', 'coc-html', 'coc-prettier', 'coc-css', 'coc-eslint', 'coc-svg', 'coc-sql', 'coc-flutter', 'coc-snippets']
-
+let g:coc_global_extensions = ['coc-json', 'coc-tsserver', 'coc-phpls', 'coc-html', 'coc-prettier', 'coc-css', 'coc-eslint', 'coc-svg', 'coc-sql', 'coc-snippets', '@yaegassy/coc-tailwindcss3']
 
 " Select suggestion using Enter
 inoremap <silent><expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
@@ -344,23 +321,7 @@ vnoremap <leader>fr y:PRg <C-r>"<CR>
 nnoremap <F2> :BLines function <CR>
 imap <c-x><c-f> <plug>(fzf-complete-path)
 
-lua <<EOF
-    require'treesitter-context'.setup{
-        enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-        max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-        trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-        patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
-            default = {
-                'class',
-                'function',
-                'method',
-                'for',
-                'if',
-            },
-        },
-        zindex = 20, -- The Z-index of the context window
-        mode = 'cursor',  -- Line used to calculate context. Choices: 'cursor', 'topline'
-    }
-
-    require 'colorizer'.setup()
-EOF
+lua require 'colorizer'.setup()
+lua require 'me.gitsigns'
+lua require 'me.treesitter'
+lua require 'me.statusbar'
