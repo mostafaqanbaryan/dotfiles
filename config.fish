@@ -1,5 +1,4 @@
 function fish_greeting
-    please
     starship init fish | source
 end
 
@@ -21,12 +20,12 @@ abbr dcd "docker-compose -f docker-compose.yml down"
 abbr gu "git pull"
 abbr gp "git push -u origin HEAD"
 abbr gl "git log"
-abbr gs "git status"
+abbr gst "git status"
 abbr gco "git checkout"
-abbr gd "git diff"
-abbr gr "git rebase"
-abbr gc 'git commit -m "'
-abbr ga "git commit --amend"
+abbr gdi "git diff"
+abbr gre "git rebase"
+abbr gcm 'git commit -m "'
+abbr gca "git commit --amend"
 abbr parent "git log --first-parent"
 
 # Ctrl+Backspace
