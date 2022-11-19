@@ -26,3 +26,7 @@ ln -s ${PWD}/starship.toml ~/.config/starship.toml
 rm ~/.wezterm.lua
 ln -s ${PWD}/wezterm.lua ~/.wezterm.lua
 cp ${PWD}/terminal.jpg ~/terminal.jpg
+
+# Ranger
+rm ~/ranger.conf
+ln -s ${PWD}/ranger.conf ~/.config/ranger/ranger.conf
