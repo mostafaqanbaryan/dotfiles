@@ -8,12 +8,6 @@ ln -s ${PWD}/fish_prompt.fish ~/.config/fish/functions/fish_prompt.fish
 rm ~/.config/fish/config.fish
 ln -s ${PWD}/config.fish ~/.config/fish/config.fish
 
-# Vim
-rm ~/.vim -rf
-ln -s ${PWD}/vim ~/.vim
-rm ~/.vimrc
-ln -s ${PWD}/vimrc ~/.vimrc
-
 # NVim
 rm ~/.config/nvim -rf
 ln -s ${PWD}/nvim ~/.config/nvim
