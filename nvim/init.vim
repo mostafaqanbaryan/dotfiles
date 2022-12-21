@@ -281,7 +281,6 @@ let g:rnvimr_enable_bw = 1
 " Add a shadow window, value is equal to 100 will disable shadow
 let g:rnvimr_shadow_winblend = 70
 nnoremap <Leader>r :RnvimrToggle<CR>
-autocmd VimEnter * RnvimrStartBackground
 
 " Fold/Unfold saving
 augroup AutoSaveFolds
