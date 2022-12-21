@@ -1,12 +1,15 @@
 -- Eviline config for lualine
 -- Credit: glepnir
-function get_winbar()
-  -- Use lualine disable file types
-  -- if excludes() then
-  --   return ""
-  -- end
 
-  if navic.is_available() then
+--[[ local navic = require("nvim-navic")
+
+require("lspconfig").clangd.setup {
+    on_attach = function(client, bufnr)
+        navic.attach(client, bufnr)
+    end
+}
+
+function get_winbar()
     return "%#WinBarSeparator#"
       .. "%="
       .. ""
@@ -16,10 +19,7 @@ function get_winbar()
       .. "%#WinBarSeparator#"
       .. ""
       .. "%*"
-  else
-    return "%#WinBarSeparator#" .. "%=" .. "" .. "%*" .. get_modified() .. "%#WinBarSeparator#" .. "" .. "%*"
-  end
-end
+end ]]
 
 -- Color table for highlights
 -- stylua: ignore
@@ -54,6 +54,23 @@ local conditions = {
 -- Config
 local config = {
   options = {
+      disabled_filetypes = {
+      statusline = {},
+      winbar = {
+        "help",
+        "startify",
+        "dashboard",
+        "packer",
+        "neogitstatus",
+        "NvimTree",
+        "Trouble",
+        "alpha",
+        "lir",
+        "Outline",
+        "spectre_panel",
+        "toggleterm",
+      },
+    },
     -- Disable sections and component separators
     component_separators = '',
     section_separators = '',
@@ -79,7 +96,7 @@ local config = {
       "toggleterm",
     },
   },
-  winbar = {
+  --[[ winbar = {
     lualine_a = { 'diagnostics' },
     lualine_b = {},
     lualine_c = {},
@@ -94,7 +111,7 @@ local config = {
     lualine_x = {},
     lualine_y = {},
     lualine_z = {},
-  },
+  }, ]]
   sections = {
     -- these are to remove the defaults
     lualine_a = {},
@@ -169,30 +186,28 @@ ins_left {
 }
 
 ins_left {
-  -- filesize component
-  'filesize',
-  cond = conditions.buffer_not_empty,
+  'branch',
+  icon = '',
+  color = { fg = colors.violet, gui = 'bold' },
 }
 
+local function filepath()
+    local s = vim.fn.expand('%:~:h:t')
+    local s2 = vim.fn.expand('%:~:h:h:t')
+    if s2 ~= '.' then
+        s = s2 .. '/' .. s
+    end
+    local s3 = vim.fn.expand('%:~:h:h:h:t')
+    if s3 ~= '.' then
+        s = s3 .. '/' .. s
+    end
+    return s
+end
 ins_left {
-  'filename',
+  filepath,
   cond = conditions.buffer_not_empty,
-  color = { fg = colors.magenta, gui = 'bold' },
-}
-
-ins_left { 'location' }
-
-ins_left { 'progress', color = { fg = colors.fg, gui = 'bold' } }
-
-ins_left {
-  'diagnostics',
-  sources = { 'nvim_diagnostic', 'coc' },
-  symbols = { error = ' ', warn = ' ', info = ' ' },
-  diagnostics_color = {
-    color_error = { fg = colors.red },
-    color_warn = { fg = colors.yellow },
-    color_info = { fg = colors.cyan },
-  },
+  color = { fg = colors.fg },
+  icon = '',
 }
 
 -- Insert mid section. You can make any number of sections in neovim :)
@@ -204,27 +219,25 @@ ins_left {
 }
 
 ins_left {
-  -- Lsp server name .
-  function()
-    local msg = 'No Active Lsp'
-    local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
-    local clients = vim.lsp.get_active_clients()
-    if next(clients) == nil then
-      return msg
-    end
-    for _, client in ipairs(clients) do
-      local filetypes = client.config.filetypes
-      if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-        return client.name
-      end
-    end
-    return msg
-  end,
-  icon = ' LSP:',
-  color = { fg = '#ffffff', gui = 'bold' },
+  'filename',
+  cond = conditions.buffer_not_empty,
+  color = { fg = colors.magenta, gui = 'bold' },
+}
+
+ins_left {
+  'diagnostics',
+  sources = { 'coc' },
+  symbols = { error = ' ', warn = ' ', info = ' ' },
+  diagnostics_color = {
+    color_error = { fg = colors.red },
+    color_warn = { fg = colors.yellow },
+    color_info = { fg = colors.cyan },
+  },
 }
 
 -- Add components to right sections
+ins_right { 'location', color = { fg = colors.orange, gui = 'bold' }  }
+
 ins_right {
   'o:encoding', -- option component same as &encoding in viml
   fmt = string.upper, -- I'm not sure why it's upper case either ;)
@@ -233,16 +246,9 @@ ins_right {
 }
 
 ins_right {
-  'fileformat',
+  'filetype',
   fmt = string.upper,
-  icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
-  color = { fg = colors.green, gui = 'bold' },
-}
-
-ins_right {
-  'branch',
-  icon = '',
-  color = { fg = colors.violet, gui = 'bold' },
+  color = { fg = colors.blue, gui = 'bold' },
 }
 
 ins_right {
@@ -256,6 +262,8 @@ ins_right {
   },
   cond = conditions.hide_in_width,
 }
+
+ins_right { 'progress' }
 
 ins_right {
   function()
