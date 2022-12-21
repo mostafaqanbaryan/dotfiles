@@ -3,15 +3,30 @@ set shell=/bin/bash
 " Plug Start
 call plug#begin('~/.config/nvim/bundle/')
 
+Plug 'lewis6991/impatient.nvim', {'branch': 'main'}
+
 " Theme
-Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+Plug 'folke/tokyonight.nvim', {'branch': 'main'}
  
 " Fuzzy
 Plug 'junegunn/fzf', {'branch': 'master'}
 Plug 'junegunn/fzf.vim', {'branch': 'master'}
 
+" EditorConfig
+Plug 'editorconfig/editorconfig-vim', {'branch': 'master'}
+
+" Note
+Plug 'xolox/vim-misc', {'branch': 'master'}
+Plug 'xolox/vim-notes', {'branch': 'master'}
+
 " Ranger
 Plug 'kevinhwang91/rnvimr'
+
+" Wezterm
+Plug 'numToStr/Navigator.nvim'
+
+" Scroll
+Plug 'karb94/neoscroll.nvim'
  
 " LSP
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -21,15 +36,17 @@ Plug 'cakebaker/scss-syntax.vim', {'branch': 'master', 'for': 'sass'}
 " Fix class/function name at top
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-context'
+" Plug 'neovim/nvim-lspconfig', {'branch': 'master'}
+" Plug 'SmiteshP/nvim-navic', {'branch': 'master'}
 
 " Git
 Plug 'tpope/vim-fugitive', {'branch': 'master'}
 Plug 'shumphrey/fugitive-gitlab.vim', {'branch': 'master', 'on': 'Gbrowse'}
-Plug 'lewis6991/gitsigns.nvim'
+Plug 'lewis6991/gitsigns.nvim', {'branch': 'master'}
 
 " Statusbar
-Plug 'nvim-lualine/lualine.nvim'
-Plug 'kyazdani42/nvim-web-devicons'
+Plug 'nvim-lualine/lualine.nvim', {'branch': 'master'}
+Plug 'kyazdani42/nvim-web-devicons', {'branch': 'master'}
 
 Plug 'scrooloose/nerdcommenter', {'branch': 'master'}
 Plug 'godlygeek/tabular', {'branch': 'master'}
@@ -42,9 +59,15 @@ Plug 'tpope/vim-unimpaired', {'branch': 'master'}
 Plug 'norcalli/nvim-colorizer.lua', {'branch': 'master'}
 
 " Welcome
-Plug 'mhinz/vim-startify'
+Plug 'mhinz/vim-startify', {'branch': 'master'}
 
 call plug#end()
+
+" Cache plugins
+lua require('impatient')
+
+" <Leader> as <space>
+let mapleader = ' '
 
 " RTL
 set termbidi
@@ -125,7 +148,7 @@ autocmd! CursorHold,CursorHoldI * call HighlightWordUnderCursor()
 nnoremap <Leader>l :redraw!<cr>
 
 " clear search
-nnoremap <silent> <leader><space> :let @/=''<CR>:nohlsearch<CR>
+nnoremap <silent> <leader>/ :let @/=''<CR>:nohlsearch<CR>
 
 " Cut/Copy/Paste outside vim
 nnoremap <C-x><C-x> "+dd
@@ -139,7 +162,7 @@ nnoremap H _
 nnoremap L $
 
 " Add brace to current line
-nnoremap <Leader>[ kA<Space>{<Esc>jo}<Esc>
+nnoremap <Leader>[ kA{<Esc>jo}<Esc>
 
 " Copy full address
 nnoremap <Leader>y :let @+=expand('%:p')<CR>
@@ -210,7 +233,6 @@ vnoremap // y/<C-R>"<CR>
 nnoremap cu :%s/<C-R><C-W>//cg<Left><Left><Left>
 
 " Close sentence with ;
-inoremap <Leader>; <Esc>mqA;<Esc>`qli
 nnoremap <Leader>; mqA;<Esc>`q
 
 " echo paching pair
@@ -239,12 +261,17 @@ function DuplicateAddToArgs()
     endif
 endfunction
 
+" Go to last buffer and delete the current one
+nnoremap <silent> <Leader>bd :bnext<CR>:bd#<CR>
+
 " Comment/Uncomment
 let g:NERDSpaceDelims=1
 let g:NERDDefaultNesting=0
 let g:NERDRemoveExtraSpaces=1
 
 " Ranger
+" Make Ranger replace Netrw and be the file explorer
+let g:rnvimr_enable_ex = 1
 " Make Ranger to be hidden after picking a file
 let g:rnvimr_enable_picker = 1
 " Hide the files included in gitignore
@@ -254,7 +281,7 @@ let g:rnvimr_enable_bw = 1
 " Add a shadow window, value is equal to 100 will disable shadow
 let g:rnvimr_shadow_winblend = 70
 nnoremap <Leader>r :RnvimrToggle<CR>
-autocmd BufRead * RnvimrStartBackground
+autocmd VimEnter * RnvimrStartBackground
 
 " Fold/Unfold saving
 augroup AutoSaveFolds
@@ -271,6 +298,9 @@ nnoremap <Leader>, :Tab /,<CR> :%retab!<CR>
 " JSX Syntax to JS
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_javascript_jsxhint_exec = 'jsx-jshint-wrapper'
+
+" EditorConfig
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
 " Git Fugitive
 let g:fugitive_gitlab_domains = ['https://my.gitlab.com']
@@ -312,16 +342,16 @@ let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.95 } }
 command! -bang -nargs=* PRg
   \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'dir': system('git rev-parse --show-toplevel 2> /dev/null')[:-2]}), <bang>0)
 command! -bang PFiles call fzf#vim#files('~/Projects', <bang>0)
-nnoremap <Leader>ff :GFiles<CR>
-nnoremap <Leader>fz :PFiles<CR>
-nnoremap <Leader>fl :BLines<CR>
-nnoremap <Leader>fb :Buffers<CR>
-nnoremap <leader>fr :PRg<space>
-vnoremap <leader>fr y:PRg <C-r>"<CR>
-nnoremap <F2> :BLines function <CR>
+nnoremap <Leader>f :GFiles<CR>
+nnoremap <Leader>z :PFiles<CR>
+nnoremap <Leader>bf :Buffers<CR>
+nnoremap <leader>p :PRg<space>
+vnoremap <leader>p y:PRg <C-r>"<CR>
 imap <c-x><c-f> <plug>(fzf-complete-path)
 
 lua require 'colorizer'.setup()
+lua require 'neoscroll'.setup()
 lua require 'me.gitsigns'
 lua require 'me.treesitter'
 lua require 'me.statusbar'
+lua require 'me.navigator'
