@@ -1,5 +1,38 @@
 local wezterm = require 'wezterm';
 local dimmer = {brightness=0.1};
+local act = wezterm.action
+
+local function isViProcess(pane) 
+    -- get_foreground_process_name On Linux, macOS and Windows, 
+    -- the process can be queried to determine this path. Other operating systems 
+    -- (notably, FreeBSD and other unix systems) are not currently supported
+    return pane:get_foreground_process_name():find('n?vim') ~= nil
+end
+
+local function conditionalActivatePane(window, pane, pane_direction, vim_direction)
+    if isViProcess(pane) then
+        window:perform_action(
+            -- This should match the keybinds you set in Neovim.
+            act.SendKey({ key = vim_direction, mods = 'CTRL' }),
+            pane
+        )
+    else
+        window:perform_action(act.ActivatePaneDirection(pane_direction), pane)
+    end
+end
+
+wezterm.on('ActivatePaneDirection-right', function(window, pane)
+    conditionalActivatePane(window, pane, 'Right', 'l')
+end)
+wezterm.on('ActivatePaneDirection-left', function(window, pane)
+    conditionalActivatePane(window, pane, 'Left', 'h')
+end)
+wezterm.on('ActivatePaneDirection-up', function(window, pane)
+    conditionalActivatePane(window, pane, 'Up', 'k')
+end)
+wezterm.on('ActivatePaneDirection-down', function(window, pane)
+    conditionalActivatePane(window, pane, 'Down', 'j')
+end)
 
 return {
     color_scheme = "Espresso",
@@ -23,15 +56,27 @@ return {
     },
 
     keys = {
-        {key="h", mods="SUPER", action=wezterm.action{ActivatePaneDirection="Left"}},
-        {key="j", mods="SUPER", action=wezterm.action{ActivatePaneDirection="Down"}},
-        {key="k", mods="SUPER", action=wezterm.action{ActivatePaneDirection="Up"}},
-        {key="l", mods="SUPER", action=wezterm.action{ActivatePaneDirection="Right"}},
-        {key="s", mods="SUPER", action=wezterm.action{SplitHorizontal={domain="CurrentPaneDomain"}}},
-        {key="v", mods="SUPER", action=wezterm.action{SplitVertical={domain="CurrentPaneDomain"}}},
-        {key="w", mods="SUPER", action=wezterm.action{CloseCurrentPane={confirm=true}}},
+        {key="h", mods="META", action=act.SendKey{ key = 'LeftArrow' }},
+        {key="j", mods="META", action=act.SendKey{ key = 'DownArrow' }},
+        {key="k", mods="META", action=act.SendKey{ key = 'UpArrow' }},
+        {key="l", mods="META", action=act.SendKey{ key = 'RightArrow' }},
+
+        {key='h', mods='CTRL', action=act.EmitEvent('ActivatePaneDirection-left')},
+        {key='j', mods='CTRL', action=act.EmitEvent('ActivatePaneDirection-down')},
+        {key='k', mods='CTRL', action=act.EmitEvent('ActivatePaneDirection-up')},
+        {key='l', mods='CTRL', action=act.EmitEvent('ActivatePaneDirection-right')},
+
+        {key="s", mods="SUPER", action=act{SplitHorizontal={domain="CurrentPaneDomain"}}},
+        {key="v", mods="SUPER", action=act{
+            SplitPane={
+                direction="Down",
+                size={ Percent= 25 }
+            }
+        }},
+
+        {key="w", mods="SUPER", action=act{CloseCurrentPane={confirm=true}}},
         {key="z", mods="SUPER", action="TogglePaneZoomState"},
-        {key="r", mods="SUPER", action=wezterm.action.PaneSelect{alphabet="qweasdzxc"}},
         {key="F11", mods="", action="ToggleFullScreen"},
     },
+    
 }
