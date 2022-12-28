@@ -51,7 +51,9 @@ Plug 'lewis6991/gitsigns.nvim', {'branch': 'master'}
 Plug 'nvim-lualine/lualine.nvim', {'branch': 'master'}
 Plug 'kyazdani42/nvim-web-devicons', {'branch': 'master'}
 
-Plug 'scrooloose/nerdcommenter', {'branch': 'master'}
+" Comment
+Plug 'tomtom/tcomment_vim', {'branch': 'master'}
+
 Plug 'godlygeek/tabular', {'branch': 'master'}
 Plug 'SirVer/ultisnips', {'branch': 'master'}
 Plug 'alvan/vim-closetag', {'branch': 'master', 'for': 'html'}
@@ -259,11 +261,6 @@ endfunction
 
 " Go to last buffer and delete the current one
 nnoremap <silent> <Leader>bd :bnext<CR>:bd#<CR>
-
-" Comment/Uncomment
-let g:NERDSpaceDelims=1
-let g:NERDDefaultNesting=0
-let g:NERDRemoveExtraSpaces=1
 
 " Ranger
 " Make Ranger replace Netrw and be the file explorer
