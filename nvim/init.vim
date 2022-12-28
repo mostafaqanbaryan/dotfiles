@@ -27,6 +27,9 @@ Plug 'numToStr/Navigator.nvim'
 
 " Scroll
 Plug 'karb94/neoscroll.nvim'
+
+" Autopairs
+Plug 'windwp/nvim-autopairs'
  
 " LSP
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -235,13 +238,6 @@ nnoremap cu :%s/<C-R><C-W>//cg<Left><Left><Left>
 " Close sentence with ;
 nnoremap <Leader>; mqA;<Esc>`q
 
-" echo paching pair
-inoremap ({<CR> ({<CR><C-d>});<Esc>O
-inoremap ([ ([])<Esc>hi
-inoremap (<CR> (<CR><C-d>)<Esc>O
-inoremap {<CR> {<CR>}<Esc>O
-inoremap [<CR> [<CR><C-d>]<Esc>O
-
 " Args mapping
 nnoremap <Leader>ad :argdelete %<CR>
 nnoremap <Leader>ac :argdo argdelete %<CR>
@@ -350,6 +346,7 @@ imap <c-x><c-f> <plug>(fzf-complete-path)
 
 lua require 'colorizer'.setup()
 lua require 'neoscroll'.setup()
+lua require 'nvim-autopairs'.setup()
 lua require 'me.gitsigns'
 lua require 'me.treesitter'
 lua require 'me.statusbar'
