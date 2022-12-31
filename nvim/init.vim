@@ -3,10 +3,14 @@ set shell=/bin/bash
 " Plug Start
 call plug#begin('~/.config/nvim/bundle/')
 
+" Faster startup
 Plug 'lewis6991/impatient.nvim', {'branch': 'main'}
 
 " Theme
 Plug 'folke/tokyonight.nvim', {'branch': 'main'}
+
+" Terminal
+Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
  
 " Fuzzy
 Plug 'junegunn/fzf', {'branch': 'master'}
@@ -344,6 +348,7 @@ imap <c-x><c-f> <plug>(fzf-complete-path)
 lua require 'colorizer'.setup()
 lua require 'neoscroll'.setup()
 lua require 'nvim-autopairs'.setup()
+lua require 'me.toggleterm'
 lua require 'me.gitsigns'
 lua require 'me.treesitter'
 lua require 'me.statusbar'
