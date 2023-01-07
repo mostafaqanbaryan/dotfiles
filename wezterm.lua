@@ -36,7 +36,10 @@ end)
 
 return {
     color_scheme = "Espresso",
-    font = wezterm.font("Monego Ligatures"),
+    font = wezterm.font_with_fallback {
+        "Monego Ligatures",
+        "Vazir Code"
+    },
     font_size = 10.7,
     line_height = 1.3,
     hide_tab_bar_if_only_one_tab = false,
