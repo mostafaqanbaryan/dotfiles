@@ -192,13 +192,13 @@ ins_left {
 }
 
 local function filepath()
-    local s = vim.fn.expand('%:~:h:t')
-    local s2 = vim.fn.expand('%:~:h:h:t')
-    if s2 ~= '.' then
+    local s = vim.fn.expand('%:p:h:t')
+    local s2 = vim.fn.expand('%:p:h:h:t')
+    if s2 ~= '' then
         s = s2 .. '/' .. s
     end
-    local s3 = vim.fn.expand('%:~:h:h:h:t')
-    if s3 ~= '.' then
+    local s3 = vim.fn.expand('%:p:h:h:h:t')
+    if s3 ~= '' then
         s = s3 .. '/' .. s
     end
     return s
