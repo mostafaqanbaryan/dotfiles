@@ -62,7 +62,7 @@ Plug 'godlygeek/tabular', {'branch': 'master'}
 Plug 'SirVer/ultisnips', {'branch': 'master'}
 Plug 'alvan/vim-closetag', {'branch': 'master', 'for': 'html'}
 Plug 'terryma/vim-multiple-cursors', {'branch': 'master'}
-Plug 'honza/vim-snippets', {'branch': 'master'}
+Plug 'mostafaqanbaryan/vim-snippets', {'branch': 'master'}
 Plug 'tpope/vim-surround', {'branch': 'master'}
 Plug 'tpope/vim-unimpaired', {'branch': 'master'}
 Plug 'norcalli/nvim-colorizer.lua', {'branch': 'master'}
