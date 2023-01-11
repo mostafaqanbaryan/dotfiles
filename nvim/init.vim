@@ -116,9 +116,10 @@ set cindent!
 set foldmethod=indent
 set foldlevel=2
 set wrap
-set autochdir
 filetype plugin indent on
 let g:startify_session_dir = '~/sessions'
+
+autocmd BufEnter * silent! :lcd%:p:h
 
 :command! -nargs=0 Config :exe 'edit ' . stdpath('config') . '/init.vim'
 :command! -nargs=0 Reload :exe 'source ' . stdpath('config') . '/init.vim'
