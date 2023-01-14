@@ -158,7 +158,7 @@ autocmd! CursorHold,CursorHoldI * call HighlightWordUnderCursor()
 nnoremap <Leader>l :redraw!<cr>
 
 " clear search
-nnoremap <silent> <leader>/ :let @/=''<CR>:nohlsearch<CR>
+nnoremap <silent> <leader>\ :let @/=''<CR>:nohlsearch<CR>
 
 " Cut/Copy/Paste outside vim
 nnoremap <C-x><C-x> "+dd
@@ -344,6 +344,7 @@ nnoremap <Leader>z :PFiles<CR>
 nnoremap <Leader>bf :Buffers<CR>
 nnoremap <leader>p :PRg<space>
 vnoremap <leader>p y:PRg <C-r>"<CR>
+nnoremap <leader>/ :call fzf#vim#grep("grep function -r " . expand("%"), 0)<LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT>
 imap <c-x><c-f> <plug>(fzf-complete-path)
 
 lua require 'colorizer'.setup()
