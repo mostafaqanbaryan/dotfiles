@@ -3,10 +3,12 @@
 # dconf load / < ./keybindings.conf
 
 # Fish
-rm ~/.config/fish/functions/fish_prompt.fish
-ln -s ${PWD}/fish_prompt.fish ~/.config/fish/functions/fish_prompt.fish
+rm ~/.config/fish/functions -rf
+rm ~/.config/fish/completions -rf
 rm ~/.config/fish/config.fish
-ln -s ${PWD}/config.fish ~/.config/fish/config.fish
+ln -s ${PWD}/fish/completions ~/.config/fish/completions
+ln -s ${PWD}/fish/functions ~/.config/fish/functions
+ln -s ${PWD}/fish/config.fish ~/.config/fish/config.fish
 
 # NVim
 rm ~/.config/nvim -rf
