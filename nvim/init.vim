@@ -49,7 +49,7 @@ Plug 'nvim-treesitter/nvim-treesitter-context'
 " Git
 Plug 'tpope/vim-fugitive', {'branch': 'master'}
 Plug 'shumphrey/fugitive-gitlab.vim', {'branch': 'master', 'on': 'Gbrowse'}
-Plug 'lewis6991/gitsigns.nvim', {'branch': 'master'}
+Plug 'lewis6991/gitsigns.nvim', {'branch': 'main'}
 
 " Statusbar
 Plug 'nvim-lualine/lualine.nvim', {'branch': 'master'}
@@ -118,8 +118,6 @@ set foldlevel=2
 set wrap
 filetype plugin indent on
 let g:startify_session_dir = '~/sessions'
-
-autocmd BufEnter * silent! :lcd%:p:h
 
 :command! -nargs=0 Config :exe 'edit ' . stdpath('config') . '/init.vim'
 :command! -nargs=0 Reload :exe 'source ' . stdpath('config') . '/init.vim'
