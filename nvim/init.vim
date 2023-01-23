@@ -231,7 +231,7 @@ hi Search guibg=#404456
 hi Search guifg=#ff6000
 
 " Title as filename
-autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
+autocmd BufEnter * let &titlestring = expand("%:t") . " (" . expand("%:~:h") . ") - Vim"
 set title
 
 " Search in VisualMode
