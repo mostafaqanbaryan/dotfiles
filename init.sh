@@ -26,3 +26,6 @@ cp ${PWD}/terminal.jpg ~/terminal.jpg
 # Ranger
 rm ~/ranger.conf
 ln -s ${PWD}/ranger.conf ~/.config/ranger/ranger.conf
+
+# WM
+ln -s ${PWD}/sway/config ~/.config/sway/config
