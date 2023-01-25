@@ -335,7 +335,7 @@ augroup END
 " Fuzzy
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.95 } }
 command! -bang -nargs=* PRg
-  \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'dir': system('git rev-parse --show-toplevel 2> /dev/null')[:-2]}), <bang>0)
+  \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 0, fzf#vim#with_preview({'dir': system('git rev-parse --show-toplevel')[:-2]}), <bang>0)
 command! -bang PFiles call fzf#vim#files('~/Projects', <bang>0)
 nnoremap <Leader>f :GFiles<CR>
 nnoremap <Leader>z :PFiles<CR>
