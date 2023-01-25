@@ -36,6 +36,7 @@ bind \e\[3\;5~ kill-word
 
 # Fun
 alias coffee 'termdown "3m" && sh -c "speaker-test -t sine -f 1000 -l 1 & sleep .5 && kill -9 \$!" 2>&1 > /dev/null'
+alias download 'aria2c -c -x 10 -s 10'
 
 # Get vim session
 function getVimSession
