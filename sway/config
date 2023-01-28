@@ -32,3 +32,7 @@ set $workspace10 "10:  "
 include /etc/sway/config-vars.d/*
 include /etc/sway/config.d/*
 include ~/.config/sway/config.d/*.conf
+
+exec clementine
+exec google-chrome
+exec wezterm
