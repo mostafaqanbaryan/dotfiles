@@ -323,6 +323,9 @@ nmap <silent> gd :call CocAction('jumpDefinition')<CR>
 nmap <silent> gr <Plug>(coc-references)
 let g:coc_global_extensions = ['coc-json', 'coc-tsserver', 'coc-phpls', 'coc-html', 'coc-prettier', 'coc-css', 'coc-eslint', 'coc-svg', 'coc-sql', 'coc-snippets', '@yaegassy/coc-tailwindcss3']
 
+" Prettier on save
+command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
+
 " Select suggestion using Enter
 inoremap <silent><expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
 
