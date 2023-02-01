@@ -20,7 +20,7 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec --
 # Set names for workspaces
 set $workspace1 "1:  "
 set $workspace2 "2:  "
-set $workspace3 "3"
+set $workspace3 "3:  "
 set $workspace4 "4"
 set $workspace5 "5"
 set $workspace6 "6"
@@ -36,3 +36,4 @@ include ~/.config/sway/config.d/*.conf
 exec clementine
 exec google-chrome
 exec wezterm
+exec gnome-keyring-daemon -s --components keyring,pkcs11,secrets,ssh

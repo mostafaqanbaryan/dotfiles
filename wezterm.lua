@@ -35,6 +35,7 @@ wezterm.on('ActivatePaneDirection-down', function(window, pane)
 end)
 
 return {
+    automatically_reload_config = true,
     color_scheme = "Espresso",
     font = wezterm.font_with_fallback {
         "Monego Ligatures",
@@ -42,7 +43,7 @@ return {
     },
     font_size = 10.7,
     line_height = 1.3,
-    hide_tab_bar_if_only_one_tab = false,
+    hide_tab_bar_if_only_one_tab = true,
     warn_about_missing_glyphs = false,
     bidi_enabled = true,
     window_padding = {
@@ -51,7 +52,7 @@ return {
         top = 0,
         bottom = 0,
     },
-    window_background_image = "/home/mostafaqanbaryan/terminal.jpg",
+    window_background_opacity = 0.0,
     inactive_pane_hsb = {
         hue = 0.5,
         saturation = 0.9,
