@@ -11,6 +11,9 @@ Plug 'folke/tokyonight.nvim', {'branch': 'main'}
 
 " Terminal
 Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
+
+" Chdir to root of project
+Plug 'airblade/vim-rooter', {'branch' : 'master'}
  
 " Fuzzy
 Plug 'junegunn/fzf', {'branch': 'master'}
@@ -233,6 +236,14 @@ hi Search guifg=#ff6000
 " Title as filename
 autocmd BufEnter * let &titlestring = expand("%:t") . " (" . expand("%:~:h") . ") - Vim"
 set title
+
+" Open a file in the same directory as the current one
+cnoreabbrev f find %:h
+
+" Stop Rooter echoing the project directory
+let g:rooter_silent_chdir = 1
+let g:rooter_patterns = ['.git', '_darcs', '.hg', '.bzr', '.svn', 'Makefile', 'package.json', '>Projects']
+let g:rooter_buftypes = ['']
 
 " Search in VisualMode
 vnoremap // y/<C-R>"<CR>
