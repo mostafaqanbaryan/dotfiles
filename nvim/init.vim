@@ -317,8 +317,8 @@ nnoremap <F12> :syntax sync fromstart<CR>
 inoremap <F12> <ESC>:syntax sync fromstart<CR>a
 
 " COC mapping
-nmap <silent> <Leader>e <Plug>(coc-diagnostic-next)
-nmap <silent> <Leader>q <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> gd :call CocAction('jumpDefinition')<CR>
 nmap <silent> gr <Plug>(coc-references)
 let g:coc_global_extensions = ['coc-json', 'coc-tsserver', 'coc-phpls', 'coc-html', 'coc-prettier', 'coc-css', 'coc-eslint', 'coc-svg', 'coc-sql', 'coc-snippets', '@yaegassy/coc-tailwindcss3']
