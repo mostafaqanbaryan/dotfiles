@@ -52,7 +52,7 @@ return {
         top = 0,
         bottom = 0,
     },
-    window_background_opacity = 0.0,
+    window_background_opacity = 0.8,
     inactive_pane_hsb = {
         hue = 0.5,
         saturation = 0.9,

@@ -3,6 +3,8 @@ set shell=/bin/bash
 " Plug Start
 call plug#begin('~/.config/nvim/bundle/')
 
+Plug 'xiyaowong/nvim-transparent'
+
 " Faster startup
 Plug 'lewis6991/impatient.nvim', {'branch': 'main'}
 
@@ -367,3 +369,8 @@ lua require 'me.gitsigns'
 lua require 'me.treesitter'
 lua require 'me.statusbar'
 lua require 'me.navigator'
+lua <<END
+require("transparent").setup({
+  enable = true
+})
+END
