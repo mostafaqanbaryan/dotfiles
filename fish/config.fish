@@ -55,3 +55,10 @@ if test -z (pgrep ssh-agent -n)
     set -Ux SSH_AGENT_PID $SSH_AGENT_PID
     set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK
 end
+
+## https://github.com/flameshot-org/flameshot/blob/master/docs/Sway%20and%20wlroots%20support.md
+export SDL_VIDEODRIVER=wayland
+export _JAVA_AWT_WM_NONREPARENTING=1
+export QT_QPA_PLATFORM=wayland
+export XDG_CURRENT_DESKTOP=sway
+export XDG_SESSION_DESKTOP=sway
