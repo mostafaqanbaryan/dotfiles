@@ -36,4 +36,7 @@ include ~/.config/sway/config.d/*.conf
 exec clementine
 exec google-chrome
 exec wezterm
-exec gnome-keyring-daemon -s --components keyring,pkcs11,secrets,ssh
+
+### Notification center
+# https://github.com/ErikReider/SwayNotificationCenter
+exec swaync
