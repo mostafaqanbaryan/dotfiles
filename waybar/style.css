@@ -1,34 +1,29 @@
 * {
     border: none;
-    font-family: "3270 Nerd Font", Roboto, Arial, sans-serif;
+    font-family: "3270 Nerd Font", "Monego Ligatures", Roboto, Arial, sans-serif;
     font-size: 13px;
     color: #ffffff;
-    border-radius: 20px;
 }
 
-window {
-	/*font-weight: bold;*/
-}
 window#waybar {
-    background: rgba(0, 0, 0, 0);
+    background: rgba(255, 255, 255, 0.025);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 /*-----module groups----*/
 .modules-right {
-	background-color: rgba(0,43,51,0.85);
     margin: 2px 10px 0 0;
 }
 .modules-center {
-	background-color: rgba(0,43,51,0.85);
     margin: 2px 0 0 0;
 }
 .modules-left {
     margin: 2px 0 0 5px;
-	background-color: rgba(0,119,179,0.6);
 }
 /*-----modules indv----*/
 #workspaces button {
     padding: 1px 5px;
     background-color: transparent;
+    margin-bottom: 3px;
 }
 #workspaces button:hover {
     box-shadow: inherit;
@@ -59,7 +54,6 @@ window#waybar {
     font-weight: bold;
 }
 #custom-power {
-    background-color: rgba(0,119,179,0.6);
     border-radius: 100px;
     margin: 5px 5px;
     padding: 1px 1px 1px 6px;

@@ -3,17 +3,18 @@
 {
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["clock", "idle_inhibitor"],
-    "modules-right": ["tray", "custom/scratchpad-indicator", "pulseaudio", "custom/power"],
+    "modules-right": ["tray", "custom/scratchpad-indicator", "network", "pulseaudio", "custom/power"],
 
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
     },
     "network": {
+        "tooltip-format": "{essid} ({signalStrength}%) ",
         "format-wifi": "{essid} ({signalStrength}%) ",
         "format-ethernet": "{ifname} ",
         "format-disconnected": "", 
         "max-length": 50,
-        "on-click": "kitty -e 'nmtui'"
+        "on-double-click": "gnome-control-center wifi"
     },
     "idle_inhibitor": {
         "format": "{icon}",
@@ -28,8 +29,10 @@
         "spacing": 10
     },
     "clock": {
-        // "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        // "format-alt": "{:%Y-%m-%d}"
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%Y-%m-%d}",
+        "format": "{:%H:%M:%S}",
+        "interval": 1,
 		"on-click": "gnome-calendar"
     },
     "pulseaudio": {
@@ -52,7 +55,7 @@
     },
 	"custom/power": {
 		"format": " ",
-		"on-click": "swaynag -t warning -m 'Power Menu Options' -b 'Logout' 'swaymsg exit' -b 'Restart' 'shutdown -r now' -b 'Shutdown'  'shutdown -h now' --background=#005566 --button-background=#009999 --button-border=#002b33 --border-bottom=#002b33"
+		"on-click": "sway mode 'System (l)lock, (k) locktoblack, (e) exit, (s) suspend, (r) reboot, (End) shutdown' --background=#005566 --button-background=#009999 --button-border=#002b33 --border-bottom=#002b33"
 	},
     "custom/scratchpad-indicator": {
         "format-text": "{}",
@@ -62,5 +65,21 @@
         "exec-if": "exit 0",
         "on-click": "swaymsg 'scratchpad show'",
         "on-click-right": "swaymsg 'move scratchpad'"
+    },
+    "custom/notification": {
+        "tooltip": true,
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "<span foreground='red'><sup></sup></span>",
+            "none": "",
+            "dnd-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-none": ""
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
     }
 }
