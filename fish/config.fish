@@ -6,6 +6,7 @@ source ~/env.fish
 
 alias PHPERROR 'sudo tail -f /var/log/php-fpm/www-error.log'
 alias nethogs 'sudo nethogs'
+alias kodi 'kodi-standalone --windowing=x11'
 
 # Editor
 alias vim "nvim"
