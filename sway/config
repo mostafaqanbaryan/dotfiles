@@ -15,7 +15,7 @@ set $term wezterm
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu dmenu_path | dmenu | xargs swaymsg exec --
+set $menu albert show | xargs swaymsg exec --
 
 # Set names for workspaces
 set $workspace1 "1:  "
@@ -41,6 +41,10 @@ exec hash dbus-update-activation-environment 2>/dev/null && \
 exec clementine
 exec google-chrome
 exec wezterm
+
+### Launcher
+# https://github.com/albertlauncher/albert
+exec albert
 
 ### Notification center
 # https://github.com/ErikReider/SwayNotificationCenter
