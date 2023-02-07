@@ -3,7 +3,7 @@
 {
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["clock", "idle_inhibitor"],
-    "modules-right": ["tray", "custom/scratchpad-indicator", "sway/language", "network", "pulseaudio", "custom/power"],
+    "modules-right": ["custom/media", "tray", "custom/scratchpad-indicator", "sway/language", "network", "pulseaudio", "custom/power"],
 
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
@@ -80,5 +80,18 @@
         "on-click": "swaync-client -t -sw",
         "on-click-right": "swaync-client -d -sw",
         "escape": true
+    },
+    "custom/media": {
+        "format": "{icon} {}",
+        "return-type": "json",
+        "max-length": 40,
+        "format-icons": {
+            "spotify": "",
+            "default": "🎜"
+        },
+        "escape": true,
+        // apt install gir1.2-playerctl-2.0
+        "exec": "$HOME/.config/waybar/resources/mediaplayer.py 2> /dev/null",
+        "interval": 1
     }
 }
