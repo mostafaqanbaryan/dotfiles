@@ -27,5 +27,10 @@ cp ${PWD}/terminal.jpg ~/terminal.jpg
 rm ~/ranger.conf
 ln -s ${PWD}/ranger.conf ~/.config/ranger/ranger.conf
 
+# Services
+ln -s ${PWD}/services ~/.config/systemd/user
+systemctl daemon-reload --user
+systemctl enable --now --user gnome-keyring-daemon
+
 # WM
 ln -s ${PWD}/sway/config ~/.config/sway/config

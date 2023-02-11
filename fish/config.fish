@@ -48,17 +48,13 @@ function getVimSession
 end
 bind \cS getVimSession
 
-# Ssh agent for sway
-if test -z (pgrep ssh-agent -n)
-    eval (ssh-agent -c)
-    set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK
-    set -Ux SSH_AGENT_PID $SSH_AGENT_PID
-    set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK
-end
-
 ## https://github.com/flameshot-org/flameshot/blob/master/docs/Sway%20and%20wlroots%20support.md
 export SDL_VIDEODRIVER=wayland
 export _JAVA_AWT_WM_NONREPARENTING=1
 export QT_QPA_PLATFORM=wayland
 export XDG_CURRENT_DESKTOP=sway
 export XDG_SESSION_DESKTOP=sway
+
+## SSH
+set -Ux GNOME_KEYRING_CONTROL /run/user/1000/keyring
+set -Ux SSH_AUTH_SOCK /run/user/1000/keyring/ssh
