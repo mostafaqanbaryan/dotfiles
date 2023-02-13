@@ -3,8 +3,6 @@ set shell=/bin/bash
 " Plug Start
 call plug#begin('~/.config/nvim/bundle/')
 
-Plug 'xiyaowong/nvim-transparent'
-
 " Faster startup
 Plug 'lewis6991/impatient.nvim', {'branch': 'main'}
 
@@ -146,16 +144,6 @@ function SaveSessionOnLeave()
 		endif
 	endif
 endfunction
-
-" HighlightWordUnderCursor
-function! HighlightWordUnderCursor()
-    if getline(".")[col(".")-1] !~# '[[:punct:][:blank:]]' 
-        exec 'match' 'Search' '/\V\<'.expand('<cword>').'\>/' 
-    else 
-        match none 
-    endif
-endfunction
-autocmd! CursorHold,CursorHoldI * call HighlightWordUnderCursor()
 
 " Clear and Redraw screen when an error happens
 nnoremap <Leader>l :redraw!<cr>
@@ -407,7 +395,8 @@ augroup END
 " Fuzzy
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.95 } }
 command! -bang -nargs=* PRg
-  \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 0, fzf#vim#with_preview({'dir': system('git rev-parse --show-toplevel')[:-2]}), <bang>0)
+  \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'dir': system('git rev-parse --show-toplevel 2> /dev/null')[:-2]}), <bang>0)
+
 command! -bang PFiles call fzf#vim#files('~/Projects', <bang>0)
 nnoremap <Leader>f :GFiles<CR>
 nnoremap <Leader>z :PFiles<CR>
@@ -425,8 +414,3 @@ lua require 'me.gitsigns'
 lua require 'me.treesitter'
 lua require 'me.statusbar'
 lua require 'me.navigator'
-lua <<END
-require("transparent").setup({
-  enable = true
-})
-END

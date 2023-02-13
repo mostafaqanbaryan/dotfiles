@@ -36,7 +36,7 @@ end)
 
 return {
     automatically_reload_config = true,
-    color_scheme = "Espresso",
+    color_scheme = "TokyoNight (Gogh)",
     font = wezterm.font_with_fallback {
         "Monego Ligatures",
         "Vazir Code"
@@ -52,7 +52,6 @@ return {
         top = 0,
         bottom = 0,
     },
-    window_background_opacity = 0.8,
     inactive_pane_hsb = {
         hue = 0.5,
         saturation = 0.9,
