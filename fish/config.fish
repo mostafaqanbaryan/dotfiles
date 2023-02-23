@@ -15,6 +15,11 @@ alias PHPERROR 'sudo tail -f /var/log/php-fpm/www-error.log'
 alias nethogs 'sudo nethogs'
 alias kodi 'kodi-standalone --windowing=x11'
 
+# Show hostname of remote server in Wezterm
+function _ssh
+    ssh $argv && wezterm_set_user_var SSH_ENV 
+end
+
 # Editor
 alias vim "nvim"
 set -x EDITOR "nvim"

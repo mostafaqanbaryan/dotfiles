@@ -1,6 +1,13 @@
 #!/bin/bash
 # dconf dump / > ./keybindings.conf.bak
 # dconf load / < ./keybindings.conf
+# Add ssh hostname to wezterm
+echo "
+    Host * !*git*
+        ServerAliveInterval 60
+        RequestTTY force
+        RemoteCommand printf \"\033Ptmux;\033\033]1337;SetUserVar=SSH_ENV=$(hostname | base64)\007\033\\\"; $SHELL
+" >> ~/.ssh/config
 
 # Fish
 rm ~/.config/fish/functions -rf
