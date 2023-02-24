@@ -37,7 +37,7 @@ include /etc/sway/config.d/*
 include ~/.config/sway/config.d/*.conf
 
 exec clementine
-exec google-chrome
+exec google-chrome --password-store=gnome
 exec wezterm
 
 ### Launcher
