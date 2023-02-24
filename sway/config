@@ -17,6 +17,9 @@ set $term wezterm
 # on the original workspace that the command was run on.
 set $menu albert show | xargs swaymsg exec --
 
+set $lockscreen "~/dotfiles/lockscreen.jpg"
+set $wallpaper "~/dotfiles/wallpaper.jpg"
+
 # Set names for workspaces
 set $workspace1 "1:  "
 set $workspace2 "2:  "
