@@ -1,6 +1,12 @@
 #!/bin/bash
 # dconf dump / > ./keybindings.conf.bak
 # dconf load / < ./keybindings.conf
+#
+sudo dnf install \
+    swappy \
+    wl-clipboard \
+    grim
+
 # Add ssh hostname to wezterm
 echo "
     Host * !*git*

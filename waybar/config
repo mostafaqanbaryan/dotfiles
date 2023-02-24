@@ -3,7 +3,7 @@
 {
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["clock", "idle_inhibitor"],
-    "modules-right": ["custom/media", "tray", "custom/scratchpad-indicator", "sway/language", "network", "pulseaudio", "custom/power"],
+    "modules-right": ["custom/media", "tray", "custom/scratchpad-indicator", "sway/language", "network", "pulseaudio", "custom/grimshot", "custom/power"],
 
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
@@ -91,7 +91,14 @@
         },
         "escape": true,
         // apt install gir1.2-playerctl-2.0
-        "exec": "$HOME/.config/waybar/resources/mediaplayer.py 2> /dev/null",
+        "exec": "python3 $HOME/.config/waybar/resources/mediaplayer.py 2> /dev/null",
         "interval": 1
-    }
+    },
+    "custom/grimshot": {
+        "format": " ",
+        "tooltip": false,
+        "min-length": 3,
+        "on-click": "grim -g \"$(slurp)\" - | swappy -f -",
+        "on-click-middle": "grim -g \"$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | \"\\(.x),\\(.y) \\(.width)x\\(.height)\"' | slurp)\" - | swappy -f -"
+    },
 }
