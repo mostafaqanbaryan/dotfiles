@@ -1,8 +1,34 @@
 {
-    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-left": ["sway/workspaces", "sway/mode", "custom/media1"],
     "modules-center": ["clock", "idle_inhibitor", "custom/shamsi"],
-    "modules-right": ["custom/media", "tray", "custom/scratchpad-indicator", "sway/language", "network", "pulseaudio", "custom/screenshot", "custom/power"],
+    "modules-right": ["tray", "custom/scratchpad-indicator", "sway/language", "network", "pulseaudio", "custom/screenshot", "custom/power"],
 
+    "mpd": {
+        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
+        "format-disconnected": "Disconnected ",
+        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
+        "unknown-tag": "N/A",
+        "interval": 2,
+        "consume-icons": {
+            "on": " "
+        },
+        "random-icons": {
+            "off": "<span color=\"#f53c3c\"></span> ",
+            "on": " "
+        },
+        "repeat-icons": {
+            "on": " "
+        },
+        "single-icons": {
+            "on": "1 "
+        },
+        "state-icons": {
+            "paused": "",
+            "playing": ""
+        },
+        "tooltip-format": "MPD (connected)",
+        "tooltip-format-disconnected": "MPD (disconnected)"
+    },
     "sway/mode": {
         "format": "<span style=\"italic\">{}</span>"
     },
@@ -92,6 +118,17 @@
         "exec": "python3 $HOME/.config/waybar/resources/mediaplayer.py 2> /dev/null",
         "interval": 1
     },
+    "custom/media1": {
+        "format": "{}",
+        "return-type": "json",
+        "max-length": 70,
+        "format-icons": {
+            "spotify": "",
+            "default": "🎜"
+        },
+        // apt install gir1.2-playerctl-2.0
+        "exec": "$HOME/.config/waybar/resources/./player.sh 2> /dev/null"
+    },
     "custom/screenshot": {
         "format": " ",
         "tooltip": false,
@@ -106,6 +143,6 @@
         "return-type": "json",
         "min-length": 14,
         "exec": "$HOME/.config/waybar/resources/shamsi.sh",
-        "interval": 3600
+        "interval": 60
     }
 }
