@@ -16,8 +16,8 @@ alias nethogs 'sudo nethogs'
 alias kodi 'kodi-standalone --windowing=x11'
 
 # Show hostname of remote server in Wezterm
-function _ssh
-    ssh $argv && wezterm_set_user_var SSH_ENV 
+function ssh
+    /usr/bin/ssh -F ~/.ssh/ssh_config $argv && wezterm_set_user_var SSH_ENV 
 end
 
 # Editor
