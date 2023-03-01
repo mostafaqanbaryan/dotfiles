@@ -42,6 +42,8 @@ Plug 'windwp/nvim-autopairs'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'pangloss/vim-javascript', {'branch': 'master', 'for': 'javascript'}
 Plug 'cakebaker/scss-syntax.vim', {'branch': 'master', 'for': 'sass'}
+Plug 'vim-vdebug/vdebug', {'branch': 'master', 'for': 'php'}
+
 
 " Fix class/function name at top
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -415,3 +417,26 @@ lua require 'me.gitsigns'
 lua require 'me.treesitter'
 lua require 'me.statusbar'
 lua require 'me.navigator'
+
+let g:vdebug_options = {
+    \    'port' : 9000,
+    \    'timeout' : 20,
+    \    'server' : '',
+    \    'on_close' : 'stop',
+    \    'break_on_open' : 1,
+    \    'ide_key' : 'vim',
+    \    'debug_window_level' : 0,
+    \    'debug_file_level' : 0,
+    \    'debug_file' : '',
+    \    'watch_window_style' : 'expanded',
+    \    'marker_default' : '⬦',
+    \    'marker_closed_tree' : '▸',
+    \    'marker_open_tree' : '▾',
+    \    'sign_breakpoint' : '▷',
+    \    'sign_current' : '▶',
+    \    'continuous_mode'  : 1,
+    \    'simplified_status': 1,
+    \    'layout': 'vertical',
+    \    'path_maps': {"/home/mostafaqanbaryan/Projects/roboeq/html": "/var/www/html"},
+    \}
+
