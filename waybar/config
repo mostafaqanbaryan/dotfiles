@@ -1,7 +1,7 @@
 {
-    "modules-left": ["sway/workspaces", "sway/mode", "custom/media1"],
+    "modules-left": ["sway/workspaces", "custom/media"],
     "modules-center": ["clock", "idle_inhibitor", "custom/shamsi"],
-    "modules-right": ["tray", "custom/scratchpad-indicator", "sway/language", "network", "pulseaudio", "custom/screenshot", "custom/power"],
+    "modules-right": ["sway/mode", "tray", "custom/scratchpad-indicator", "sway/language", "network", "pulseaudio", "custom/screenshot", "custom/power"],
 
     "mpd": {
         "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
@@ -30,6 +30,7 @@
         "tooltip-format-disconnected": "MPD (disconnected)"
     },
     "sway/mode": {
+        "max-length": 50,
         "format": "<span style=\"italic\">{}</span>"
     },
     "network": {
@@ -106,22 +107,12 @@
         "escape": true
     },
     "custom/media": {
-        "format": "{icon} {}",
-        "return-type": "json",
-        "max-length": 40,
-        "format-icons": {
-            "spotify": "",
-            "default": "🎜"
-        },
-        "escape": true,
-        // apt install gir1.2-playerctl-2.0
-        "exec": "python3 $HOME/.config/waybar/resources/mediaplayer.py 2> /dev/null",
-        "interval": 1
-    },
-    "custom/media1": {
         "format": "{}",
         "return-type": "json",
-        "max-length": 70,
+        "max-length": 40,
+		"on-click": "playerctl play-pause",
+		"on-scroll-up": "playerctl position 5+",
+		"on-scroll-down": "playerctl position 5-",
         "format-icons": {
             "spotify": "",
             "default": "🎜"

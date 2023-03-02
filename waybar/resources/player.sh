@@ -10,15 +10,19 @@ while true; do
 		artist=${artist:1} title=${title:1} arturl=${arturl:1} hpos=${hpos:1} hlen=${hlen:1}
 
 		# build line
-		line="${artist:+$artist ${title:+- }}${title:+$title }${hpos:+$hpos${hlen:+|}}$hlen"
+		line="${artist:+$artist ${title:+- }}${title:+$title }<small>(${hpos:+$hpos${hlen:+/}}$hlen)</small>"
 
 		# json escaping
 		line="${line//\"/\\\"}"
 		((percentage = length ? (100 * (position % length)) / length : 0))
+        if $percentage > 100; then
+            percentage=100;
+        fi
+
 		case $playing in
-		⏸️ | Paused) text='<span foreground=\"#cccc00\" size=\"smaller\">'"$line"'</span>' ;;
-		▶️ | Playing) text="<small>$line</small>" ;;
-		*) text='<span foreground=\"#073642\">⏹</span>' ;;
+		⏸️ | Paused) class="paused" ;;
+		▶️ | Playing) class="playing" ;;
+		*) class='stopped' ;;
 		esac
 
 		# integrations for other services (nwg-wrapper)
@@ -29,8 +33,8 @@ while true; do
 		fi
 
 		# exit if print fails
-		printf '{"text":"%s","tooltip":"%s","class":"%s","percentage":%s}\n' \
-			"$text" "$playing $name | $line" "$percentage" "$percentage" || break 2
+		printf '{"text":"%s","tooltip":"%s","class":["media-percentage-%s", "%s"],"percentage":%s}\n' \
+			"$line" "$playing $line" "$percentage" "$class" "$percentage" || break 2
 
 	done < <(
 		# requires playerctl>=2.0
@@ -43,7 +47,7 @@ while true; do
 	# no current players
 	# exit if print fails
 	echo '<span foreground=#dc322f>⏹</span>' || break
-	sleep 15
+	sleep 3
 
 done
 
