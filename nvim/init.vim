@@ -239,6 +239,10 @@ let g:rooter_buftypes = ['']
 
 " Search in VisualMode
 vnoremap // y/<C-R>"<CR>
+vnoremap // y/<C-R>"<CR>
+
+" Search case insensitive
+nnoremap / /\c<Left><Left>
 
 " Replace word under cursor
 nnoremap cu :%s/<C-R><C-W>//cg<Left><Left><Left>

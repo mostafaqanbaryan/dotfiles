@@ -153,6 +153,11 @@ return {
         "Monego Ligatures",
         "Vazir Code"
     },
+    colors = {
+        tab_bar = {
+            background = '#1A1B26',
+        },
+    },
     font_size = 12,
     line_height = 1.3,
     -- hide_tab_bar_if_only_one_tab = true,
@@ -162,10 +167,10 @@ return {
     warn_about_missing_glyphs = false,
     bidi_enabled = true,
     window_padding = {
-        left = 2,
-        right = 2,
+        left = 0,
+        right = 0,
         top = 0,
-        bottom = 0,
+        bottom = 0
     },
     inactive_pane_hsb = {
         hue = 0.5,
