@@ -185,8 +185,8 @@ nnoremap <C-k> <C-W>k<C-W>_zz
 nnoremap <C-l> <C-W>l<C-W>_zz
 nnoremap <C-h> <C-W>h<C-W>_zz
 nnoremap <C-x> <C-W>x " Moving to nth
-nnoremap <C-q> <C-W>> " Increase split size
-nnoremap <C-a> <C-W>< " Decrease split size
+nnoremap <C-<> <C-W>> " Increase split size
+nnoremap <C->> <C-W>< " Decrease split size
 set wmh=0
 set splitbelow
 set splitright
