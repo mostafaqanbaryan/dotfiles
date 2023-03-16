@@ -36,7 +36,7 @@ include /etc/sway/config-vars.d/*
 include /etc/sway/config.d/*
 include ~/.config/sway/config.d/*.conf
 
-exec wezterm start --always-new-process --class org.wezfurlong.wezterm.musikcube -- musikcube
+exec wezterm start --always-new-process --class org.musikcube -- musikcube
 exec google-chrome --password-store=gnome
 exec wezterm
 
