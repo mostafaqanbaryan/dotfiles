@@ -37,7 +37,7 @@ window#waybar > .horizontal {
 }
 
 #workspaces button.focused {
-	background-color: rgba(0,43,51,0.85);
+	background-color: rgba(255, 255, 255, 0.1);
 }
 
 #clock,
