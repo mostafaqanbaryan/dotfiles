@@ -377,6 +377,7 @@ endfunction
 
 " Prettier on save
 command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
+autocmd BufWritePre *.php execute "Prettier"
 
 " Select suggestion using Enter
 inoremap <silent><expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
