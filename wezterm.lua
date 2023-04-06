@@ -1,6 +1,13 @@
 local wezterm = require 'wezterm';
-local dimmer = {brightness=0.1};
 local act = wezterm.action
+local topbarColor = '#1A1B26'
+local pallete = {
+    '#F14627',
+    '#7A7688',
+    '#16182D',
+    '#BD9699',
+    '#7C525D',
+}
 
 local function isViProcess(pane) 
     -- get_foreground_process_name On Linux, macOS and Windows, 
@@ -35,48 +42,43 @@ wezterm.on('ActivatePaneDirection-down', function(window, pane)
 end)
 
 wezterm.on('update-status', function(window, pane)
-    -- Each element holds the text for a cell in a "powerline" style << fade
-    local cells = {}
     local window_dims = window:get_dimensions()
     local is_big_window = window_dims.pixel_width > 700;
     local is_medium_window = window_dims.pixel_width > 500;
 
-    -- Figure out the cwd and host of the current pane.
-    -- This will pick up the hostname for the remote host if your
-    -- shell is using OSC 7 on the remote host.
-    local cwd_uri = pane:get_current_working_dir()
+    update_right(window, pane, is_big_window, is_medium_window)
+    update_left(window, pane, is_big_window, is_medium_window)
+end)
+
+function update_right(window, pane, is_medium_window, is_big_window)
+    local cells = {}
+    local elements = {}
+    local num_cells = 0
     local is_ssh = not (not pane:get_user_vars().SSH_ENV or pane:get_user_vars().SSH_ENV == '')
-    if cwd_uri then
-        cwd_uri = cwd_uri:sub(8)
-        local slash = cwd_uri:find '/'
-        local cwd = ''
-        local hostname = ''
-        if slash then
-            hostname = cwd_uri:sub(1, slash - 1)
-            -- Remove the domain name portion of the hostname
-            local dot = hostname:find '[.]'
-            if dot then
-             hostname = hostname:sub(1, dot - 1)
-            end
+    local seperator = utf8.char(0xe0b6)
 
-            -- SSH
-            if is_ssh then
-                hostname = '󱘖 ' .. pane:get_user_vars().SSH_ENV
-            end
+    local bg_colors = {
+        pallete[5],
+    }
 
-            -- and extract the cwd from the uri
-            if is_medium_window then
-                cwd = cwd_uri:sub(slash)
-                table.insert(cells, cwd)
-            end
+    local fg_colors = {
+        pallete[3],
+    }
 
-            table.insert(cells, hostname)
-        end
+    -- Color of host/ssh
+    if is_ssh then
+        bg_colors[2] = pallete[1]
+        fg_colors[2] = '#ffffff'
     end
 
+    -- Ssh Hostname
+    if is_ssh then
+        table.insert(cells, '󱘖 ' .. pane:get_user_vars().SSH_ENV)
+    end
+
+    -- Datetime
     if is_big_window then
-        -- I like my date/time in this style: "Wed Mar 3 08:14"
-        local date = wezterm.strftime '%a %b %-d %H:%M:%S'
+        local date = wezterm.strftime '%y/%m/%d'
         table.insert(cells, date)
     end
 
@@ -85,68 +87,56 @@ wezterm.on('update-status', function(window, pane)
         table.insert(cells, string.format('%.0f%%', b.state_of_charge * 100))
     end
 
-    -- The powerline < symbol
-    local LEFT_ARROW = utf8.char(0xe0b3)
-
-    -- The filled in variant of the < symbol
-    local SOLID_LEFT_ARROW = utf8.char(0xe0b2)
-
-    -- Color of host/ssh
-    local hostname_bg = '#52307c'
-    local hostname_fg = '#c0c0c0'
-    if is_ssh then
-        hostname_bg = '#ff6600'
-        hostname_fg = '#ffffff'
-    end
-
-    -- Color palette for the backgrounds of each cell
-    local bg_colors = {
-        '#3c1361',
-        hostname_bg,
-        '#663a82',
-        '#7c5295',
-        '#b491c8',
-    }
-
-    -- Foreground color for the text across the fade
-    local text_fg = '#c0c0c0'
-    local fg_colors = {
-        '#c0c0c0',
-        hostname_fg,
-        '#c0c0c0',
-        '#c0c0c0',
-        '#c0c0c0'
-    }
-
-    -- The elements to be formatted
-    local elements = {}
-
-    -- How many cells have been formatted
-    local num_cells = 0
-
-    -- Translate a cell into elements
-    function push(text, is_last)
-        local cell_no = num_cells + 1
-        table.insert(elements, { Foreground = { Color = bg_colors[cell_no] } })
-        table.insert(elements, { Text = SOLID_LEFT_ARROW })
-        table.insert(elements, { Foreground = { Color = fg_colors[cell_no] } })
-        table.insert(elements, { Background = { Color = bg_colors[cell_no] } })
-        table.insert(elements, { Text = ' ' .. text .. ' ' })
+    while #cells > 0 do
+        local cell = table.remove(cells, 1)
+        push_to_topbar(elements, cell, num_cells, bg_colors, fg_colors, seperator, #cells == 0, true)
         num_cells = num_cells + 1
     end
+    window:set_right_status(wezterm.format(elements))
+end
+
+function update_left(window, pane, is_medium_window, is_big_window)
+    local cells = {}
+    local elements = {}
+    local num_cells = 0
+    local seperator = utf8.char(0xe0ba)
+    local bg_colors = {
+        pallete[4],
+    }
+
+    local fg_colors = {
+        pallete[3],
+    }
+
+    -- Title
+    table.insert(cells, pane:get_title())
 
     while #cells > 0 do
         local cell = table.remove(cells, 1)
-        push(cell, #cells == 0)
+        push_to_topbar(elements, cell, num_cells, bg_colors, fg_colors, seperator, #cells == 0, false)
+        num_cells = num_cells + 1
     end
 
-    window:set_right_status(wezterm.format(elements))
-end)
+    window:set_left_status(wezterm.format(elements))
+end
+
+function push_to_topbar(elements, text, num_cells, bg_colors, fg_colors, seperator, is_last, add_to_left)
+    local cell_no = num_cells + 1
+    if add_to_left then
+        table.insert(elements, { Foreground = { Color = bg_colors[cell_no] } })
+        table.insert(elements, { Text = seperator })
+    end
+    table.insert(elements, { Foreground = { Color = fg_colors[cell_no] } })
+    table.insert(elements, { Background = { Color = bg_colors[cell_no] } })
+    table.insert(elements, { Text = ' ' .. text .. ' ' })
+    if not add_to_left then
+        table.insert(elements, { Background = { Color = topbarColor } })
+        table.insert(elements, { Foreground = { Color = bg_colors[cell_no] } })
+        table.insert(elements, { Text = utf8.char(0xe0b4) })
+    end
+end
 
 return {
-    set_environment_variables = {
-    VTE_VERSION = '6003',
-  },
     automatically_reload_config = true,
     color_scheme = "TokyoNight (Gogh)",
     font = wezterm.font_with_fallback {
@@ -155,12 +145,11 @@ return {
     },
     colors = {
         tab_bar = {
-            background = '#1A1B26',
+            background = topbarColor,
         },
     },
     font_size = 12,
-    line_height = 1.3,
-    -- hide_tab_bar_if_only_one_tab = true,
+    line_height = 1.4,
     use_fancy_tab_bar = false,
     show_tabs_in_tab_bar = false,
     show_new_tab_button_in_tab_bar = false,
