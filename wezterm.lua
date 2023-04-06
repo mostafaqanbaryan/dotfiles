@@ -78,7 +78,7 @@ function update_right(window, pane, is_medium_window, is_big_window)
 
     -- Datetime
     if is_big_window then
-        local date = wezterm.strftime '%y/%m/%d'
+        local date = wezterm.strftime '%Y/%m/%d'
         table.insert(cells, date)
     end
 

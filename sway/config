@@ -15,22 +15,22 @@ set $term wezterm
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu albert show | xargs swaymsg exec --
+set $menu rofi -show drun | xargs swaymsg exec --
 
 set $lockscreen "~/dotfiles/lockscreen.jpg"
 set $wallpaper "~/dotfiles/wallpaper.jpg"
 
 # Set names for workspaces
-set $workspace1 "1:  "
-set $workspace2 "2:  "
-set $workspace3 "3:  "
-set $workspace4 "4"
-set $workspace5 "5"
+set $workspace1 " "
+set $workspace2 " "
+set $workspace3 " "
+set $workspace4 " "
+set $workspace5 " "
 set $workspace6 "6"
 set $workspace7 "7"
 set $workspace8 "8"
 set $workspace9 "9"
-set $workspace10 "10:  "
+set $workspace10 " "
 
 include /etc/sway/config-vars.d/*
 include /etc/sway/config.d/*
@@ -39,16 +39,15 @@ include ~/.config/sway/config.d/*.conf
 exec wezterm start --always-new-process --class org.musikcube -- musikcube
 exec google-chrome --password-store=gnome
 exec wezterm
+exec nautilus
 
 default_border none
 default_floating_border none
 titlebar_padding 1
 titlebar_border_thickness 0
 
-### Launcher
-# https://github.com/albertlauncher/albert
-exec albert
-
 ### Notification center
-# https://github.com/ErikReider/SwayNotificationCenter
 exec swaync
+
+### Clipboard history
+exec wl-paste --watch cliphist store

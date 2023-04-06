@@ -10,7 +10,7 @@ My current setup and tools I use:
 - [Neovim](https://github.com/neovim/neovim) as my Editor/IDE
 - [Ranger](https://github.com/ranger/ranger) as filemanager
 - [Musikcube](https://github.com/clangen/musikcube) as my player
-- [Albert](https://github.com/albertlauncher/albert) as launcher
+- [Rofi](https://github.com/davatorium/rofi) as launcher
 
 ## Softwares
 - [FZF](https://github.com/junegunn/fzf) fuzzy in terminal
