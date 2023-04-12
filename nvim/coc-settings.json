@@ -1,4 +1,4 @@
 {
-	"eslint.lintTask.options": [".", "--ext", ".ts"],
-	"coc.preferences.formatOnSaveFiletypes": ["typescript", "typescriptreact"]
+	"eslint.lintTask.options": [".", "--ext", ".ts", ".jsx"],
+	"coc.preferences.formatOnSaveFiletypes": ["typescript", "typescriptreact", "javascriptreact"]
 }
