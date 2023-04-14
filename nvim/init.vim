@@ -22,9 +22,12 @@ Plug 'junegunn/fzf.vim', {'branch': 'master'}
 " EditorConfig
 Plug 'editorconfig/editorconfig-vim', {'branch': 'master'}
 
+" Markdown
+Plug 'iamcco/markdown-preview.nvim', {'do': 'cd app && yarn install', 'for': 'markdown'}
+
 " Note
-Plug 'xolox/vim-misc', {'branch': 'master'}
-Plug 'xolox/vim-notes', {'branch': 'master'}
+" Plug 'xolox/vim-misc', {'branch': 'master'}
+" Plug 'xolox/vim-notes', {'branch': 'master'}
 
 " Ranger
 Plug 'kevinhwang91/rnvimr'
@@ -44,12 +47,9 @@ Plug 'pangloss/vim-javascript', {'branch': 'master', 'for': 'javascript'}
 Plug 'cakebaker/scss-syntax.vim', {'branch': 'master', 'for': 'sass'}
 Plug 'vim-vdebug/vdebug', {'branch': 'master', 'for': 'php'}
 
-
 " Fix class/function name at top
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-context'
-" Plug 'neovim/nvim-lspconfig', {'branch': 'master'}
-" Plug 'SmiteshP/nvim-navic', {'branch': 'master'}
 
 " Git
 Plug 'tpope/vim-fugitive', {'branch': 'master'}
@@ -413,6 +413,12 @@ nnoremap <leader>p :PRg<space>
 vnoremap <leader>p y:PRg <C-r>"<CR>
 nnoremap <leader>/ :call fzf#vim#grep("grep function -r " . expand("%"), 0)<LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT>
 imap <c-x><c-f> <plug>(fzf-complete-path)
+
+" Markdown
+let g:mkdp_auto_start = 0
+let g:mkdp_auto_close = 0
+let g:mkdp_refresh_slow = 0
+let g:mkdp_port = 9981
 
 lua require 'colorizer'.setup()
 lua require 'neoscroll'.setup()
