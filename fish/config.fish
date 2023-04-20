@@ -53,15 +53,17 @@ bind \e\[3\;5~ kill-word
 alias coffee 'termdown "3m" && sh -c "speaker-test -t sine -f 1000 -l 1 & sleep .5 && kill -9 \$!" 2>&1 > /dev/null'
 alias download 'aria2c -c -x 10 -s 10'
 
-# Get vim session
-function getVimSession
-    set -l branch_name (git branch 2>/dev/null | sed -n '/\* /s///p')
-    set -l branch_name (echo $branch_name | sed -En 's/^(feature|bugFix|hotFix)\///p')
-    set -l branch_name (echo $branch_name | sed -En 's/(-v[0-9]+|AfterMerge)?$//p')
-    vim -S ~/sessions/$branch_name.vim
-end
-bind \cS getVimSession
-
 ## SSH
 set -Ux GNOME_KEYRING_CONTROL /run/user/1000/keyring
 set -Ux SSH_AUTH_SOCK /run/user/1000/keyring/ssh
+
+## Vi Mode
+fish_vi_key_bindings
+set fish_cursor_default block
+set fish_cursor_insert line
+set fish_cursor_replace_one underscore
+set fish_cursor_visual underscore
+
+# Search by Ctrl+p and Ctrl+n
+bind -M insert \cp history-search-backward
+bind -M insert \cn history-search-forward
