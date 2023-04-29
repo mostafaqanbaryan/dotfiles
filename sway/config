@@ -41,10 +41,10 @@ exec google-chrome --password-store=gnome
 exec wezterm
 exec nautilus
 
-default_border none
-default_floating_border none
-titlebar_padding 1
-titlebar_border_thickness 0
+default_floating_border pixel 2
+default_border pixel 2
+client.focused #BD9699 #F14627 #222222 #BD9699 #F14627
+client.unfocused #BD9699 #BD9699 #222222 #F14627 #BD9699
 
 ### Notification center
 exec swaync
