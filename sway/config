@@ -41,6 +41,7 @@ exec google-chrome --password-store=gnome
 exec wezterm
 exec nautilus
 
+smart_borders on
 default_floating_border pixel 2
 default_border pixel 2
 client.focused #BD9699 #F14627 #222222 #BD9699 #F14627
