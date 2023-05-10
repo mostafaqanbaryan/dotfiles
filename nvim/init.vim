@@ -168,7 +168,7 @@ nnoremap L $
 nnoremap <Leader>[ kA{<Esc>jo}<Esc>
 
 " Copy full address
-nnoremap <Leader>y :let @+=expand('%:p')<CR>
+nnoremap <Leader>y :let @+=expand('%')<CR>
 
 " Add indent for p/li in html
 let g:html_indent_tags = 'li\│p'
