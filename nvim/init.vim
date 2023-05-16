@@ -310,10 +310,10 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 let g:fugitive_gitlab_domains = ['https://my.gitlab.com']
 nnoremap <Leader>g :Git<CR>
 " Conflict
-nnoremap gdh :diffget //2<CR>
-vnoremap gdh :diffget //2<CR>
-nnoremap gdl :diffget //3<CR>
-vnoremap gdl :diffget //3<CR>
+nnoremap g[ :diffget //2<CR>
+vnoremap g[ :diffget //2<CR>
+nnoremap g] :diffget //3<CR>
+vnoremap g] :diffget //3<CR>
 
 " ReRender syntax highlights
 nnoremap <F12> :syntax sync fromstart<CR>
