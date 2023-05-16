@@ -214,15 +214,14 @@ endif
 
 lua require 'me.tokyonight'
 
-colorscheme tokyonight-night
 hi TreesitterContext guibg=#232433
 hi TreesitterContextLineNumber guifg=#98C379
 
 " Using Catppuccin colors
 hi Folded guibg=NONE
-hi Folded guifg=#7a6750
+hi Folded guifg=#737aa2
 hi Folded ctermbg=NONE
-hi Search guibg=#404456  
+" hi Search guibg=#404456  
 hi Search guifg=#ff6000
 
 " Title as filename
