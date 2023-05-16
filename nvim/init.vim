@@ -215,7 +215,7 @@ endif
 lua require 'me.tokyonight'
 
 colorscheme tokyonight-night
-hi TreesitterContext guibg=#2C314C
+hi TreesitterContext guibg=#232433
 hi TreesitterContextLineNumber guifg=#98C379
 
 " Using Catppuccin colors
