@@ -49,7 +49,8 @@ sudo pacman -S \
     grim \
     slurp \
     sway \
-    swaybg
+    swaybg \
+    swaylock
 rm -rf ~/.config/sway 2>&1 /dev/null
 ln -s ${PWD}/sway ~/.config/sway
 
