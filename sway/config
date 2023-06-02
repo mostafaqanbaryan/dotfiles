@@ -55,3 +55,6 @@ exec swaync
 
 ### Clipboard history
 exec wl-paste --watch cliphist store
+
+### Share screen
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway

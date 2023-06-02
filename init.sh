@@ -51,7 +51,8 @@ sudo pacman -S \
     sway \
     swaybg \
     swaylock \
-    swayidle
+    swayidle \
+    xdg-desktop-portal-wlr
 rm -rf ~/.config/sway 2>&1 /dev/null
 ln -s ${PWD}/sway ~/.config/sway
 
