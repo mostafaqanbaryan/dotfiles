@@ -39,7 +39,7 @@
         "format-ethernet": "{ifname} ",
         "format-disconnected": "", 
         "max-length": 50,
-        "on-double-click": "gnome-control-center wifi"
+        "on-click": "networkmanager_dmenu"
     },
     "idle_inhibitor": {
         "format": "{icon}",

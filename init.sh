@@ -62,6 +62,9 @@ sudo pacman -S \
 rm -rf ~/.config/waybar 2>&1 /dev/null
 ln -s ${PWD}/waybar ~/.config/waybar
 
+# Network manager by Rofi
+ln -s ${PWD}/networkmanager-dmenu ~/.config/networkmanager-dmenu
+
 # Fonts
 rm -rf ~/.fonts 2>&1 /dev/null
 ln -s ${PWD}/fonts ~/.fonts
