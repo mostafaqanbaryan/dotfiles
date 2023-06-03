@@ -27,17 +27,13 @@ function update_right(window, pane, is_medium_window, is_big_window)
 
     local bg_colors = {
         pallete[5],
+        pallete[1],
     }
 
     local fg_colors = {
         pallete[3],
+        '#ffffff',
     }
-
-    -- Color of host/ssh
-    if is_ssh then
-        bg_colors[2] = pallete[1]
-        fg_colors[2] = '#ffffff'
-    end
 
     -- Ssh Hostname
     if is_ssh then
