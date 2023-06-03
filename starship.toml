@@ -1,5 +1,11 @@
 add_newline = true
 
+[character]
+success_symbol = '[\[INSERT\] ➜](bold green) '
+error_symbol = '[\[INSERT\] ✗](bold red) '
+vimcmd_symbol = '[\[NORMAL\] ➜](bold #FF6600) '
+vimcmd_visual_symbol = '[\[VISUAL\] ➜](bold blue) '
+
 [buf]
 format = "via [$symbol]($style)"
 
