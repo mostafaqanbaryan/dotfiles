@@ -29,6 +29,9 @@ Plug 'iamcco/markdown-preview.nvim', {'do': 'cd app && yarn install', 'for': 'ma
 " Plug 'xolox/vim-misc', {'branch': 'master'}
 " Plug 'xolox/vim-notes', {'branch': 'master'}
 
+" Leap
+Plug 'ggandor/leap.nvim', {'branch': 'main'}
+
 " Ranger
 Plug 'kevinhwang91/rnvimr'
 
@@ -435,6 +438,7 @@ lua require 'me.gitsigns'
 lua require 'me.treesitter'
 lua require 'me.statusbar'
 lua require 'me.navigator'
+lua require('leap').add_default_mappings()
 
 let g:vdebug_options = {
     \    'port' : 9000,
