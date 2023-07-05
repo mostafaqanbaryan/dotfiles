@@ -15,7 +15,10 @@ set $term wezterm
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu rofi -show drun | xargs swaymsg exec --
+set $rofi_theme "$HOME/.config/rofi/launchers/type-5"
+set $rofi_style 'style-2'
+
+set $menu rofi -show drun -theme $rofi_theme/$rofi_style.rasi | xargs swaymsg exec --
 
 set $lockscreen "~/dotfiles/lockscreen.jpg"
 set $wallpaper "~/dotfiles/wallpaper.jpg"
