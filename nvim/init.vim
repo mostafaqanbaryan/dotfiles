@@ -48,7 +48,9 @@ Plug 'windwp/nvim-autopairs'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'pangloss/vim-javascript', {'branch': 'master', 'for': 'javascript'}
 Plug 'cakebaker/scss-syntax.vim', {'branch': 'master', 'for': 'sass'}
-Plug 'vim-vdebug/vdebug', {'branch': 'master', 'for': 'php'}
+Plug 'AndrewRadev/splitjoin.vim', {'branch': 'main'}
+Plug 'kevinhwang91/nvim-ufo', {'branch': 'main'}
+Plug 'kevinhwang91/promise-async', {'branch': 'main'}
 
 " Fix class/function name at top
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -74,6 +76,7 @@ Plug 'mostafaqanbaryan/vim-snippets', {'branch': 'master'}
 Plug 'tpope/vim-surround', {'branch': 'master'}
 Plug 'tpope/vim-unimpaired', {'branch': 'master'}
 Plug 'norcalli/nvim-colorizer.lua', {'branch': 'master'}
+Plug 'm4xshen/hardtime.nvim', {'branch': 'main'}
 
 " Welcome
 Plug 'mhinz/vim-startify', {'branch': 'master'}
@@ -121,8 +124,6 @@ set backspace=indent,eol,start
 set timeout timeoutlen=1000 ttimeoutlen=100
 set linebreak
 set cindent!
-set foldmethod=indent
-set foldlevel=2
 set wrap
 filetype plugin indent on
 let g:startify_session_dir = '~/sessions'
@@ -156,16 +157,13 @@ nnoremap <Leader>l :redraw!<cr>
 " clear search
 nnoremap <silent> <leader>\ :let @/=''<CR>:nohlsearch<CR>
 
-" Cut/Copy/Paste outside vim
-nnoremap <C-x><C-x> "+dd
+" Copy/Paste outside vim
 nnoremap <C-c><C-c> "+yiw
 vnoremap <C-c><C-c> "+y
 nnoremap <C-p><C-p> "+p
 vnoremap <C-p><C-p> <Esc>o<Esc>"+p
 
 " Begin/End line
-nnoremap H _
-nnoremap L $
 
 " Add brace to current line
 nnoremap <Leader>[ kA{<Esc>jo}<Esc>
@@ -187,7 +185,6 @@ nnoremap <C-j> <C-W>j<C-W>_zz
 nnoremap <C-k> <C-W>k<C-W>_zz
 nnoremap <C-l> <C-W>l<C-W>_zz
 nnoremap <C-h> <C-W>h<C-W>_zz
-nnoremap <C-x> <C-W>x " Moving to nth
 nnoremap <C-<> <C-W>> " Increase split size
 nnoremap <C->> <C-W>< " Decrease split size
 set wmh=0
@@ -438,7 +435,9 @@ lua require 'me.gitsigns'
 lua require 'me.treesitter'
 lua require 'me.statusbar'
 lua require 'me.navigator'
+lua require 'me.ufo'
 lua require('leap').add_default_mappings()
+lua require("hardtime").setup({ disabled_filetypes = { "gitcommit", "fugitive", "qf", "netrw", "NvimTree", "lazy", "mason" } })
 
 let g:vdebug_options = {
     \    'port' : 9000,
