@@ -25,13 +25,6 @@ Plug 'editorconfig/editorconfig-vim', {'branch': 'master'}
 " Markdown
 Plug 'iamcco/markdown-preview.nvim', {'do': 'cd app && yarn install', 'for': 'markdown'}
 
-" Note
-" Plug 'xolox/vim-misc', {'branch': 'master'}
-" Plug 'xolox/vim-notes', {'branch': 'master'}
-
-" Leap
-Plug 'ggandor/leap.nvim', {'branch': 'main'}
-
 " Ranger
 Plug 'kevinhwang91/rnvimr'
 
@@ -45,7 +38,15 @@ Plug 'karb94/neoscroll.nvim'
 Plug 'windwp/nvim-autopairs'
  
 " LSP
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
+Plug 'williamboman/mason-lspconfig.nvim'
+
 Plug 'pangloss/vim-javascript', {'branch': 'master', 'for': 'javascript'}
 Plug 'cakebaker/scss-syntax.vim', {'branch': 'master', 'for': 'sass'}
 Plug 'AndrewRadev/splitjoin.vim', {'branch': 'main'}
@@ -69,7 +70,10 @@ Plug 'kyazdani42/nvim-web-devicons', {'branch': 'master'}
 Plug 'tomtom/tcomment_vim', {'branch': 'master'}
 
 Plug 'godlygeek/tabular', {'branch': 'master'}
+
 Plug 'SirVer/ultisnips', {'branch': 'master'}
+Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+
 Plug 'alvan/vim-closetag', {'branch': 'master', 'for': 'html'}
 Plug 'terryma/vim-multiple-cursors', {'branch': 'master'}
 Plug 'mostafaqanbaryan/vim-snippets', {'branch': 'master'}
@@ -88,6 +92,7 @@ lua require('impatient')
 
 " <Leader> as <space>
 let mapleader = ' '
+
 
 " RTL
 set termbidi
@@ -108,8 +113,6 @@ set smarttab
 set softtabstop=4
 set tabstop=4
 set laststatus=3
-set wildmenu
-set wildmode=list:longest,full
 set expandtab
 set preserveindent
 set list
@@ -318,75 +321,9 @@ vnoremap g] :diffget //3<CR>
 nnoremap <F12> :syntax sync fromstart<CR>
 inoremap <F12> <ESC>:syntax sync fromstart<CR>a
 
-" COC mapping
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
-" Symbol renaming.
-nmap <leader>cu <Plug>(coc-rename)
-" Formatting selected code.
-xmap <leader>cf  <Plug>(coc-format-selected)
-nmap <leader>cf  <Plug>(coc-format-selected)
-
-augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder.
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
-
-" Map function and class text objects
-" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-xmap if <Plug>(coc-funcobj-i)
-omap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap af <Plug>(coc-funcobj-a)
-xmap ic <Plug>(coc-classobj-i)
-omap ic <Plug>(coc-classobj-i)
-xmap ac <Plug>(coc-classobj-a)
-omap ac <Plug>(coc-classobj-a)
-
-" Remap <C-f> and <C-b> for scroll float windows/popups.
-nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-
-" Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
-
-" Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocAction('format')
-
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-" nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gd :call CocAction('jumpDefinition')<CR>
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-let g:coc_global_extensions = ['coc-json', 'coc-tsserver', 'coc-phpls', 'coc-html', 'coc-prettier', 'coc-css', 'coc-eslint', 'coc-svg', 'coc-sql', 'coc-snippets', '@yaegassy/coc-tailwindcss3']
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
-endfunction
-
 " Prettier on save
-command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
-autocmd BufWritePre *.php execute "Prettier"
-
-" Select suggestion using Enter
-inoremap <silent><expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+" command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
+" autocmd BufWritePre *.php execute "Prettier"
 
 " Terminal mapping
 nnoremap \` :term<CR>
@@ -427,37 +364,4 @@ let g:mkdp_auto_close = 0
 let g:mkdp_refresh_slow = 0
 let g:mkdp_port = 9981
 
-lua require 'colorizer'.setup()
-lua require 'neoscroll'.setup()
-lua require 'nvim-autopairs'.setup()
-lua require 'me.toggleterm'
-lua require 'me.gitsigns'
-lua require 'me.treesitter'
-lua require 'me.statusbar'
-lua require 'me.navigator'
-lua require 'me.ufo'
-lua require('leap').add_default_mappings()
-lua require("hardtime").setup({ disabled_filetypes = { "gitcommit", "fugitive", "qf", "netrw", "NvimTree", "lazy", "mason" } })
-
-let g:vdebug_options = {
-    \    'port' : 9000,
-    \    'timeout' : 20,
-    \    'server' : '',
-    \    'on_close' : 'stop',
-    \    'break_on_open' : 1,
-    \    'ide_key' : 'vim',
-    \    'debug_window_level' : 0,
-    \    'debug_file_level' : 0,
-    \    'debug_file' : '',
-    \    'watch_window_style' : 'expanded',
-    \    'marker_default' : '⬦',
-    \    'marker_closed_tree' : '▸',
-    \    'marker_open_tree' : '▾',
-    \    'sign_breakpoint' : '▷',
-    \    'sign_current' : '▶',
-    \    'continuous_mode'  : 1,
-    \    'simplified_status': 1,
-    \    'layout': 'vertical',
-    \    'path_maps': {"/home/mostafaqanbaryan/Projects/roboeq/html": "/var/www/html"},
-    \}
-
+lua require 'me.init'
