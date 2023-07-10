@@ -50,8 +50,7 @@ Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'pangloss/vim-javascript', {'branch': 'master', 'for': 'javascript'}
 Plug 'cakebaker/scss-syntax.vim', {'branch': 'master', 'for': 'sass'}
 Plug 'AndrewRadev/splitjoin.vim', {'branch': 'main'}
-Plug 'kevinhwang91/nvim-ufo', {'branch': 'main'}
-Plug 'kevinhwang91/promise-async', {'branch': 'main'}
+Plug 'anuvyklack/pretty-fold.nvim', {'branch': 'master'}
 
 " Fix class/function name at top
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
