@@ -1,10 +1,10 @@
 local wezterm = require 'wezterm';
 local act = wezterm.action
-local topbarColor = '#1A1B26'
+local topbarColor = '#24273a'
 local pallete = {
     '#F14627',
     '#7A7688',
-    '#16182D',
+    '#24273a',
     '#BD9699',
     '#7C525D',
 }
@@ -102,7 +102,7 @@ end
 
 return {
     automatically_reload_config = true,
-    color_scheme = "TokyoNight (Gogh)",
+    color_scheme = "Catppuccin Macchiato",
     font = wezterm.font_with_fallback {
         "Monego Ligatures",
         "Vazir Code"
@@ -141,7 +141,7 @@ return {
         {key="z", mods="SUPER", action="TogglePaneZoomState"},
         {key="F11", mods="", action="ToggleFullScreen"},
     },
-    
+
     set_environment_variables = {
         VTE_VERSION = '6003',
     },

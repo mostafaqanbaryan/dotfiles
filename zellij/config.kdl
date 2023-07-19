@@ -1,0 +1,232 @@
+// ############################################################
+// ###   ###  Alt-centered configuration for Zellij  ###   ####
+// ############################################################
+// - 1 prefix key (Alt) for most common actions in normal mode
+// - Less common actions require switching mode or are removed
+// - Press escape, enter or space to switch back to normal mode
+// - Press Alt-q for quitting and Alt-d for detaching
+//
+// To access other modes from normal mode press
+// 1. Alt-r for resize, 2. Alt-p for pane,
+// 3. .. move, 4. .. tab, 5. .. scroll,
+// 6. in scroll mode s to type text, 7. enter to search.
+//
+// Run `zellij setup --check` for troubleshooting and inspecting
+// current config locations and features that are enabled.
+
+keybinds {
+    normal clear-defaults=true {
+        bind "Ctrl l" { SwitchToMode "Tmux"; }
+    }
+
+    tmux clear-defaults=true {
+        bind "[" { SwitchToMode "Scroll"; }
+        bind "Esc" { SwitchToMode "Normal"; }
+        bind "\"" { NewPane "Down"; SwitchToMode "Normal"; }
+        bind "%" { NewPane "Right"; SwitchToMode "Normal"; }
+        bind "f" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
+        bind "t" { NewTab; SwitchToMode "Normal"; }
+        bind "," { SwitchToMode "RenameTab"; }
+        bind "p" { GoToPreviousTab; SwitchToMode "Normal"; }
+        bind "n" { GoToNextTab; SwitchToMode "Normal"; }
+        bind "Left" { MoveFocus "Left"; SwitchToMode "Normal"; }
+        bind "Right" { MoveFocus "Right"; SwitchToMode "Normal"; }
+        bind "Down" { MoveFocus "Down"; SwitchToMode "Normal"; }
+        bind "Up" { MoveFocus "Up"; SwitchToMode "Normal"; }
+        bind "h" { MoveFocus "Left"; SwitchToMode "Normal"; }
+        bind "l" { MoveFocus "Right"; SwitchToMode "Normal"; }
+        bind "j" { MoveFocus "Down"; SwitchToMode "Normal"; }
+        bind "k" { MoveFocus "Up"; SwitchToMode "Normal"; }
+        bind "o" { FocusNextPane; }
+        bind "d" { Detach; }
+        bind "q" { Quit; }
+        bind "x" { CloseFocus; SwitchToMode "Normal"; }
+        bind "Space" { ToggleFloatingPanes; SwitchToMode "Normal"; }
+
+        bind "1" { GoToTab 1; SwitchToMode "Normal"; }
+        bind "2" { GoToTab 2; SwitchToMode "Normal"; }
+        bind "3" { GoToTab 3; SwitchToMode "Normal"; }
+        bind "4" { GoToTab 4; SwitchToMode "Normal"; }
+        bind "5" { GoToTab 5; SwitchToMode "Normal"; }
+        bind "6" { GoToTab 6; SwitchToMode "Normal"; }
+        bind "7" { GoToTab 7; SwitchToMode "Normal"; }
+        bind "8" { GoToTab 8; SwitchToMode "Normal"; }
+        bind "9" { GoToTab 9; SwitchToMode "Normal"; }
+    }
+
+    pane clear-defaults=true {
+        bind "Enter" "Esc" "Space" { SwitchToMode "normal"; }
+        bind "h" "Left" { NewPane "Left"; }
+        bind "l" "Right" { NewPane "Right"; }
+        bind "j" "Down" { NewPane "Down"; }
+        bind "k" "Up" { NewPane "Up"; }
+        bind "Alt h" "Left" { MoveFocus "Left"; }
+        bind "Alt l" "Right" { MoveFocus "Right"; }
+        bind "Alt j" "Down" { MoveFocus "Down"; }
+        bind "Alt k" "Up" { MoveFocus "Up"; }
+        bind "p" { SwitchFocus; }
+        bind "n" { NewPane; }
+        bind "x" { CloseFocus; }
+        bind "f" { ToggleFocusFullscreen; }
+        bind "z" { TogglePaneFrames; }
+    }
+
+    tab clear-defaults=true {
+        bind "Enter" "Esc" "Space" { SwitchToMode "normal"; }
+        bind "h" "Left" { GoToPreviousTab; }
+        bind "l" "Right" { GoToNextTab; }
+        bind "n" { NewTab; }
+        bind "x" { CloseTab; }
+        bind "s" { ToggleActiveSyncTab; }
+        bind "Alt h" { MoveFocus "Left"; }
+        bind "Alt l" { MoveFocus "Right"; }
+        bind "Alt j" { MoveFocus "Down"; }
+        bind "Alt k" { MoveFocus "Up"; }
+        bind "1" { GoToTab 1; }
+        bind "2" { GoToTab 2; }
+        bind "3" { GoToTab 3; }
+        bind "4" { GoToTab 4; }
+        bind "5" { GoToTab 5; }
+        bind "6" { GoToTab 6; }
+        bind "7" { GoToTab 7; }
+        bind "8" { GoToTab 8; }
+        bind "9" { GoToTab 9; }
+        bind "Tab" { ToggleTab; }
+    }
+
+    resize clear-defaults=true {
+        bind "Enter" "Esc" "Space" { SwitchToMode "normal"; }
+        bind "h" "Left" { Resize "Left"; }
+        bind "j" "Down" { Resize "Down"; }
+        bind "k" "Up" { Resize "Up"; }
+        bind "l" "Right" { Resize "Right"; }
+        bind "Alt =" { Resize "Increase"; }
+        bind "Alt +" { Resize "Increase"; }
+        bind "Alt -" { Resize "Decrease"; }
+        bind "Alt n" { NewPane; }
+        bind "Alt h" { MoveFocus "Left"; }
+        bind "Alt l" { MoveFocus "Right"; }
+        bind "Alt j" { MoveFocus "Down"; }
+        bind "Alt k" { MoveFocus "Up"; }
+    }
+
+    move clear-defaults=true {
+        bind "Enter" "Esc" "Space" { SwitchToMode "normal"; }
+        bind "h" "Left" { MovePane "Left"; }
+        bind "j" "Down" { MovePane "Down"; }
+        bind "k" "Up" { MovePane "Up"; }
+        bind "l" "Right" { MovePane "Right"; }
+        bind "Alt n" { NewPane; }
+        bind "Alt h" { MoveFocus "Left"; }
+        bind "Alt l" { MoveFocus "Right"; }
+        bind "Alt j" { MoveFocus "Down"; }
+        bind "Alt k" { MoveFocus "Up"; }
+    }
+
+    scroll clear-defaults=true {
+        bind "e" { EditScrollback; SwitchToMode "normal"; }
+        bind "Enter" "Esc" { SwitchToMode "normal"; }
+        bind "Alt c" { ScrollToBottom; SwitchToMode "normal"; }
+        bind "j" "Down" { ScrollDown; }
+        bind "k" "Up" { ScrollUp; }
+        bind "Alt f" "PageDown" "Right" "l" { PageScrollDown; }
+        bind "Alt b" "PageUp" "Left" "h" { PageScrollUp; }
+        bind "d" { HalfPageScrollDown; }
+        bind "u" { HalfPageScrollUp; }
+        bind "Alt h" { MoveFocus "Left"; }
+        bind "Alt l" { MoveFocus "Right"; }
+        bind "Alt j" { MoveFocus "Down"; }
+        bind "Alt k" { MoveFocus "Up"; }
+        bind "s" { SwitchToMode "entersearch"; SearchInput 0; }
+    }
+
+    search clear-defaults=true {
+        bind "Alt s" "Enter" "Esc" "Space" { SwitchToMode "normal"; }
+        bind "s" { SwitchToMode "entersearch"; SearchInput 0; }
+        bind "n" { Search "Down"; }
+        bind "p" { Search "Up"; }
+        bind "c" { SearchToggleOption "CaseSensitivity"; }
+        bind "w" { SearchToggleOption "Wrap"; }
+        bind "o" { SearchToggleOption "WholeWord"; }
+        bind "Alt h" "Alt Left" { MoveFocusOrTab "Left"; }
+        bind "Alt l" "Alt Right" { MoveFocusOrTab "Right"; }
+        bind "Alt j" "Alt Down" { MoveFocus "Down"; }
+        bind "Alt k" "Alt Up" { MoveFocus "Up"; }
+    }
+
+    entersearch clear-defaults=true {
+        bind "Enter" { SwitchToMode "search"; }
+        bind "Alt c" "Esc" { SearchInput 27; SwitchToMode "scroll"; }
+        bind "Alt h" "Alt Left" { MoveFocusOrTab "Left"; }
+        bind "Alt l" "Alt Right" { MoveFocusOrTab "Right"; }
+        bind "Alt j" "Alt Down" { MoveFocus "Down"; }
+        bind "Alt k" "Alt Up" { MoveFocus "Up"; }
+    }
+
+    locked clear-defaults=true {}
+    session clear-defaults=true {}
+}
+
+themes {
+  catppuccin-latte{
+    bg "#acb0be";
+    fg "#acb0be";
+    red "#d20f39";
+    green "#40a02b";
+    blue "#1e66f5";
+    yellow "#df8e1d";
+    magenta "#ea76cb";
+    orange "#fe640b";
+    cyan "#04a5e5";
+    black "#4c4f69";
+    white "#dce0e8";
+  }
+
+  catppuccin-frappe{
+    bg "#626880";
+    fg "#c6d0f5";
+    red "#e78284";
+    green "#a6d189";
+    blue "#8caaee";
+    yellow "#e5c890";
+    magenta "#f4b8e4";
+    orange "#ef9f76";
+    cyan "#99d1db";
+    black "#292c3c";
+    white "#c6d0f5";
+  }
+
+  catppuccin-macchiato{
+    bg "#5b6078";
+    fg "#cad3f5";
+    red "#ed8796";
+    green "#a6da95";
+    blue "#8aadf4";
+    yellow "#eed49f";
+    magenta "#f5bde6";
+    orange "#f5a97f";
+    cyan "#91d7e3";
+    black "#24273a";
+    white "#cad3f5";
+  }
+
+  catppuccin-mocha{
+    bg "#585b70";
+    fg "#cdd6f4";
+    red "#f38ba8";
+    green "#a6e3a1";
+    blue "#89b4fa";
+    yellow "#f9e2af";
+    magenta "#f5c2e7";
+    orange "#fab387";
+    cyan "#89dceb";
+    black "#181825";
+    white "#cdd6f4";
+  }
+}
+
+theme "catppuccin-macchiato"
+pane_frames false
+mouse_mode true
+scroll_buffer_size 100000
+default_layout "projects"
