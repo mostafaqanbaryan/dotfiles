@@ -75,6 +75,9 @@ Plug 'tpope/vim-surround', {'branch': 'master'}
 Plug 'tpope/vim-unimpaired', {'branch': 'master'}
 Plug 'norcalli/nvim-colorizer.lua', {'branch': 'master'}
 
+" Objects
+Plug 'michaeljsmith/vim-indent-object', {'branch': 'master'}
+
 " Welcome
 Plug 'mhinz/vim-startify', {'branch': 'master'}
 
