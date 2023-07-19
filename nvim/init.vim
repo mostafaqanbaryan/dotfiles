@@ -99,13 +99,11 @@ set smarttab
 set softtabstop=4
 set tabstop=4
 set laststatus=3
-set wildmenu
-set wildmode=list:longest,full
 set expandtab
 set preserveindent
 set list
 set lcs=tab:\ \ 
-set scrolloff=4
+set scrolloff=7
 set ruler
 set undolevels=100
 set undofile " Maintain undo history between sessions
@@ -150,16 +148,11 @@ nnoremap <Leader>l :redraw!<cr>
 " clear search
 nnoremap <silent> <leader>\ :let @/=''<CR>:nohlsearch<CR>
 
-" Cut/Copy/Paste outside vim
-nnoremap <C-x><C-x> "+dd
+" Copy/Paste outside vim
 nnoremap <C-c><C-c> "+yiw
 vnoremap <C-c><C-c> "+y
 nnoremap <C-p><C-p> "+p
 vnoremap <C-p><C-p> <Esc>o<Esc>"+p
-
-" Begin/End line
-nnoremap H _
-nnoremap L $
 
 " Add brace to current line
 nnoremap <Leader>[ kA{<Esc>jo}<Esc>
@@ -181,7 +174,6 @@ nnoremap <C-j> <C-W>j<C-W>_zz
 nnoremap <C-k> <C-W>k<C-W>_zz
 nnoremap <C-l> <C-W>l<C-W>_zz
 nnoremap <C-h> <C-W>h<C-W>_zz
-nnoremap <C-x> <C-W>x " Moving to nth
 nnoremap <C-<> <C-W>> " Increase split size
 nnoremap <C->> <C-W>< " Decrease split size
 set wmh=0
@@ -289,6 +281,11 @@ augroup AutoSaveFolds
     au BufWinLeave *.* mkview 1
     au BufWinEnter *.* silent! loadview 1
 augroup END
+
+nnoremap <C-u> <C-u>zz
+nnoremap <C-d> <C-d>zz
+nnoremap <C-f> <C-f>zz
+nnoremap <C-b> <C-b>zz
 
 " Tabular
 nnoremap <Leader>= :Tab /=<CR> :%retab!<CR>
