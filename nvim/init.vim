@@ -25,21 +25,11 @@ Plug 'editorconfig/editorconfig-vim', {'branch': 'master'}
 " Markdown
 Plug 'iamcco/markdown-preview.nvim', {'do': 'cd app && yarn install', 'for': 'markdown'}
 
-" Note
-" Plug 'xolox/vim-misc', {'branch': 'master'}
-" Plug 'xolox/vim-notes', {'branch': 'master'}
-
-" Leap
-Plug 'ggandor/leap.nvim', {'branch': 'main'}
-
 " Ranger
 Plug 'kevinhwang91/rnvimr'
 
 " Wezterm
 Plug 'numToStr/Navigator.nvim'
-
-" Scroll
-Plug 'karb94/neoscroll.nvim'
 
 " Autopairs
 Plug 'windwp/nvim-autopairs'
@@ -48,7 +38,7 @@ Plug 'windwp/nvim-autopairs'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'pangloss/vim-javascript', {'branch': 'master', 'for': 'javascript'}
 Plug 'cakebaker/scss-syntax.vim', {'branch': 'master', 'for': 'sass'}
-Plug 'vim-vdebug/vdebug', {'branch': 'master', 'for': 'php'}
+Plug 'anuvyklack/pretty-fold.nvim', {'branch': 'master'}
 
 " Fix class/function name at top
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -74,6 +64,7 @@ Plug 'mostafaqanbaryan/vim-snippets', {'branch': 'master'}
 Plug 'tpope/vim-surround', {'branch': 'master'}
 Plug 'tpope/vim-unimpaired', {'branch': 'master'}
 Plug 'norcalli/nvim-colorizer.lua', {'branch': 'master'}
+Plug 'm4xshen/hardtime.nvim', {'branch': 'main'}
 
 " Objects
 Plug 'michaeljsmith/vim-indent-object', {'branch': 'master'}
@@ -140,17 +131,17 @@ function SaveSessionOnLeave()
         execute "mksession! " . v:this_session
     else
         let branchName = trim(substitute(system("git rev-parse --abbrev-ref HEAD"), "^[^/]*/", "", ""))
-		if branchName != ""
-			execute "mksession! ~/sessions/" . branchName . ".vim"
+        if branchName != ""
+            execute "mksession! ~/sessions/" . branchName . ".vim"
         else 
-		    let SNX = input("Input a name for session? ")
-		    if SNX != ""
-			    execute "mksession! ~/sessions/" . SNX . ".vim"
+            let SNX = input("Input a name for session? ")
+            if SNX != ""
+                execute "mksession! ~/sessions/" . SNX . ".vim"
             else
-			    execute "mksession! ~/sessions/latest.vim"
-		    endif
-		endif
-	endif
+                execute "mksession! ~/sessions/latest.vim"
+            endif
+        endif
+    endif
 endfunction
 
 " Clear and Redraw screen when an error happens
@@ -434,34 +425,11 @@ let g:mkdp_refresh_slow = 0
 let g:mkdp_port = 9981
 
 lua require 'colorizer'.setup()
-lua require 'neoscroll'.setup()
 lua require 'nvim-autopairs'.setup()
 lua require 'me.toggleterm'
 lua require 'me.gitsigns'
 lua require 'me.treesitter'
 lua require 'me.statusbar'
 lua require 'me.navigator'
-lua require('leap').add_default_mappings()
-
-let g:vdebug_options = {
-    \    'port' : 9000,
-    \    'timeout' : 20,
-    \    'server' : '',
-    \    'on_close' : 'stop',
-    \    'break_on_open' : 1,
-    \    'ide_key' : 'vim',
-    \    'debug_window_level' : 0,
-    \    'debug_file_level' : 0,
-    \    'debug_file' : '',
-    \    'watch_window_style' : 'expanded',
-    \    'marker_default' : '⬦',
-    \    'marker_closed_tree' : '▸',
-    \    'marker_open_tree' : '▾',
-    \    'sign_breakpoint' : '▷',
-    \    'sign_current' : '▶',
-    \    'continuous_mode'  : 1,
-    \    'simplified_status': 1,
-    \    'layout': 'vertical',
-    \    'path_maps': {"/home/mostafaqanbaryan/Projects/roboeq/html": "/var/www/html"},
-    \}
-
+lua require 'me.fold'
+lua require('hardtime').setup({ disabled_filetypes = { "gitcommit", "fugitive", "qf", "netrw", "NvimTree", "lazy", "mason" } })
