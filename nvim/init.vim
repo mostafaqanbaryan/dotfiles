@@ -421,12 +421,4 @@ let g:mkdp_auto_close = 0
 let g:mkdp_refresh_slow = 0
 let g:mkdp_port = 9981
 
-lua require 'colorizer'.setup()
-lua require 'nvim-autopairs'.setup()
-lua require 'me.toggleterm'
-lua require 'me.gitsigns'
-lua require 'me.treesitter'
-lua require 'me.statusbar'
-lua require 'me.navigator'
-lua require 'me.fold'
-lua require('hardtime').setup({ disabled_filetypes = { "gitcommit", "fugitive", "qf", "netrw", "NvimTree", "lazy", "mason" } })
+lua require 'init'
