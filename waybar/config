@@ -1,7 +1,7 @@
 {
     "modules-left": ["sway/workspaces", "custom/media"],
     "modules-center": ["clock", "idle_inhibitor", "custom/shamsi"],
-    "modules-right": ["sway/mode", "tray", "custom/scratchpad-indicator", "sway/language", "network", "pulseaudio", "custom/screenshot", "custom/power"],
+    "modules-right": ["sway/mode", "tray", "custom/scratchpad-indicator", "sway/language", "custom/updates", "network", "pulseaudio", "custom/screenshot", "custom/power"],
 
     "mpd": {
         "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
@@ -135,5 +135,10 @@
         "min-length": 14,
         "exec": "$HOME/.config/waybar/resources/shamsi.sh",
         "interval": 60
+    },
+    "custom/updates": {
+        "format": "{} Updates 󰚰",
+        "exec": "checkupdates | wc -l",
+        "interval": 600
     }
 }
