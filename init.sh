@@ -14,6 +14,7 @@ ln -s ${PWD}/fish/config.fish ~/.config/fish/config.fish
 sudo pacman -S \
     neovim \
     bat \
+    ripgrep \
     fzf
 rm ~/.config/nvim -rf 2>&1 /dev/null
 ln -s ${PWD}/nvim ~/.config/nvim
