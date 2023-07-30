@@ -145,4 +145,8 @@ return {
     set_environment_variables = {
         VTE_VERSION = '6003',
     },
+
+    quick_select_patterns = {
+        '[^\\s]*[0-9]\\.[^\\s]*'
+    }
 }
