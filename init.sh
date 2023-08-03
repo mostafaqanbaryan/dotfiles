@@ -15,6 +15,7 @@ sudo pacman -S \
     neovim \
     bat \
     ripgrep \
+    noto-fonts-emoji \
     fzf
 rm ~/.config/nvim -rf 2>&1 /dev/null
 ln -s ${PWD}/nvim ~/.config/nvim
@@ -68,6 +69,8 @@ ln -s ${PWD}/waybar ~/.config/waybar
 ln -s ${PWD}/networkmanager-dmenu ~/.config/networkmanager-dmenu
 
 # Fonts
+# https://github.com/rastikerdar/vazir-code-font/releases
+# https://www.nerdfonts.com/font-downloads > Symbols Nerd Font
 rm -rf ~/.fonts 2>&1 /dev/null
 ln -s ${PWD}/fonts ~/.fonts
 

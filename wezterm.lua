@@ -132,13 +132,9 @@ return {
     },
 
     keys = {
-        {key="h", mods="META", action=act.SendKey{ key = 'LeftArrow' }},
         {key="j", mods="META", action=act.SendKey{ key = 'DownArrow' }},
         {key="k", mods="META", action=act.SendKey{ key = 'UpArrow' }},
-        {key="l", mods="META", action=act.SendKey{ key = 'RightArrow' }},
 
-        {key="w", mods="SUPER", action=act{CloseCurrentPane={confirm=true}}},
-        {key="z", mods="SUPER", action="TogglePaneZoomState"},
         {key="F11", mods="", action="ToggleFullScreen"},
     },
 
