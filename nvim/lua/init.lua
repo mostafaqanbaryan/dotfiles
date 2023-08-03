@@ -6,4 +6,4 @@ require 'me.treesitter'
 require 'me.statusbar'
 require 'me.navigator'
 require 'me.fold'
-require 'hardtime'.setup({ disabled_filetypes = { "gitcommit", "fugitive", "qf", "netrw", "NvimTree", "lazy", "mason" } })
+-- require 'hardtime'.setup({ disabled_filetypes = { "gitcommit", "fugitive", "qf", "netrw", "NvimTree", "lazy", "mason" } })
