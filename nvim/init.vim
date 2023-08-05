@@ -38,7 +38,7 @@ Plug 'windwp/nvim-autopairs'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'pangloss/vim-javascript', {'branch': 'master', 'for': 'javascript'}
 Plug 'cakebaker/scss-syntax.vim', {'branch': 'master', 'for': 'sass'}
-Plug 'anuvyklack/pretty-fold.nvim', {'branch': 'master'}
+Plug 'HiPhish/rainbow-delimiters.nvim', {'branch': 'master'}
 
 " Fix class/function name at top
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -64,7 +64,6 @@ Plug 'mostafaqanbaryan/vim-snippets', {'branch': 'master'}
 Plug 'tpope/vim-surround', {'branch': 'master'}
 Plug 'tpope/vim-unimpaired', {'branch': 'master'}
 Plug 'norcalli/nvim-colorizer.lua', {'branch': 'master'}
-Plug 'm4xshen/hardtime.nvim', {'branch': 'main'}
 
 " Objects
 Plug 'michaeljsmith/vim-indent-object', {'branch': 'master'}
@@ -410,8 +409,8 @@ command! -bang PFiles call fzf#vim#files('~/Projects', <bang>0)
 nnoremap <Leader>f :GFiles<CR>
 nnoremap <Leader>z :PFiles<CR>
 nnoremap <Leader>bf :Buffers<CR>
-nnoremap <leader>p :PRg<space>
-vnoremap <leader>p y:PRg <C-r>"<CR>
+nnoremap <leader>p :exec ":PRg " . escape(input("Search in files: "), "()[]{}")<CR>
+vnoremap <leader>p "cy :exec ":PRg " . escape(getreg("c"), "()[]{}")<CR>
 nnoremap <leader>/ :call fzf#vim#grep("grep function -r " . expand("%"), 0)<LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT>
 imap <c-x><c-f> <plug>(fzf-complete-path)
 

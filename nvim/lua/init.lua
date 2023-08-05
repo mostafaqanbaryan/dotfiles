@@ -1,9 +1,19 @@
 require 'colorizer'.setup()
-require 'nvim-autopairs'.setup()
+require 'nvim-autopairs'.setup({
+    check_ts = true,
+    ts_config = {
+        lua = {'string'},-- it will not add a pair on that treesitter node
+        javascript = {'template_string'},
+        java = false,-- don't check treesitter on java
+    }
+})
 require 'me.toggleterm'
 require 'me.gitsigns'
 require 'me.treesitter'
 require 'me.statusbar'
 require 'me.navigator'
-require 'me.fold'
--- require 'hardtime'.setup({ disabled_filetypes = { "gitcommit", "fugitive", "qf", "netrw", "NvimTree", "lazy", "mason" } })
+require 'me.delimiters'
+
+require("indent_blankline").setup({
+    show_current_context = true,
+})
