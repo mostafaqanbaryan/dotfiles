@@ -7,6 +7,12 @@ layout {
         }
     }
 
+    swap_floating_layout{
+        floating_panes{
+            pane x="12%" y="10%" width="75%" height="75%"
+        }
+    }
+
     tab name="Roboeq" cwd="roboeq" 
     tab name="Backend" cwd="roboeq-panel" 
     tab name="Frontend" cwd="roboeq-panel-front" 
