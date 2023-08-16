@@ -39,15 +39,18 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'pangloss/vim-javascript', {'branch': 'master', 'for': 'javascript'}
 Plug 'cakebaker/scss-syntax.vim', {'branch': 'master', 'for': 'sass'}
 Plug 'HiPhish/rainbow-delimiters.nvim', {'branch': 'master'}
+Plug 'lukas-reineke/indent-blankline.nvim', {'branch': 'master'}
 
 " Fix class/function name at top
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/nvim-treesitter-context'
 
 " Git
 Plug 'tpope/vim-fugitive', {'branch': 'master'}
 Plug 'shumphrey/fugitive-gitlab.vim', {'branch': 'master', 'on': 'Gbrowse'}
 Plug 'lewis6991/gitsigns.nvim', {'branch': 'main'}
+Plug 'sindrets/diffview.nvim', {'branch': 'main'}
 
 " Statusbar
 Plug 'nvim-lualine/lualine.nvim', {'branch': 'master'}
@@ -64,9 +67,6 @@ Plug 'mostafaqanbaryan/vim-snippets', {'branch': 'master'}
 Plug 'tpope/vim-surround', {'branch': 'master'}
 Plug 'tpope/vim-unimpaired', {'branch': 'master'}
 Plug 'norcalli/nvim-colorizer.lua', {'branch': 'master'}
-
-" Objects
-Plug 'michaeljsmith/vim-indent-object', {'branch': 'master'}
 
 " Welcome
 Plug 'mhinz/vim-startify', {'branch': 'master'}
@@ -100,13 +100,14 @@ set tabstop=4
 set laststatus=3
 set expandtab
 set preserveindent
-set list
-set lcs=tab:\ \ 
 set scrolloff=7
 set ruler
+
+ " Maintain undo history between sessions
 set undolevels=100
-set undofile " Maintain undo history between sessions
+set undofile
 set undodir=~/.config/nvim/undodir
+
 set updatetime=400
 set backspace=indent,eol,start
 set timeout timeoutlen=1000 ttimeoutlen=100
@@ -115,6 +116,16 @@ set cindent!
 set foldmethod=indent
 set foldlevel=2
 set wrap
+set breakindent
+set signcolumn=yes
+
+" Sync nvim clipboard with OS
+set clipboard=unnamedplus
+
+" Case insensitive UNLESS using uppercase characters
+set ignorecase
+set smartcase
+
 filetype plugin indent on
 let g:startify_session_dir = '~/sessions'
 
@@ -230,9 +241,6 @@ let g:rooter_buftypes = ['']
 vnoremap // y/<C-R>"<CR>
 vnoremap // y/<C-R>"<CR>
 
-" Search case insensitive
-nnoremap / /\c<Left><Left>
-
 " Replace word under cursor
 nnoremap cu :%s/<C-R><C-W>//cg<Left><Left><Left>
 
@@ -332,17 +340,6 @@ augroup mygroup
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
-" Map function and class text objects
-" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-xmap if <Plug>(coc-funcobj-i)
-omap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap af <Plug>(coc-funcobj-a)
-xmap ic <Plug>(coc-classobj-i)
-omap ic <Plug>(coc-classobj-i)
-xmap ac <Plug>(coc-classobj-a)
-omap ac <Plug>(coc-classobj-a)
-
 " Remap <C-f> and <C-b> for scroll float windows/popups.
 nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
 nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
@@ -409,8 +406,8 @@ command! -bang PFiles call fzf#vim#files('~/Projects', <bang>0)
 nnoremap <Leader>f :GFiles<CR>
 nnoremap <Leader>z :PFiles<CR>
 nnoremap <Leader>bf :Buffers<CR>
-nnoremap <leader>p :exec ":PRg " . escape(input("Search in files: "), "()[]{}")<CR>
-vnoremap <leader>p "cy :exec ":PRg " . escape(getreg("c"), "()[]{}")<CR>
+nnoremap <leader>p :exec ":PRg " . escape(input("Search in files: "), "()[]{}$")<CR>
+vnoremap <leader>p "cy :exec ":PRg " . escape(getreg("c"), "()[]{}$")<CR>
 nnoremap <leader>/ :call fzf#vim#grep("grep function -r " . expand("%"), 0)<LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT>
 imap <c-x><c-f> <plug>(fzf-complete-path)
 
