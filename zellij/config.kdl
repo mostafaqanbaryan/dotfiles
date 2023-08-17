@@ -247,4 +247,4 @@ theme "catppuccin-macchiato"
 pane_frames false
 mouse_mode true
 scroll_buffer_size 100000
-default_layout "projects"
+default_layout "default"
