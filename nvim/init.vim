@@ -132,6 +132,10 @@ let g:startify_session_dir = '~/sessions'
 :command! -nargs=0 Config :exe 'edit ' . stdpath('config') . '/init.vim'
 :command! -nargs=0 Reload :exe 'source ' . stdpath('config') . '/init.vim'
 
+" Wordpress
+:command Sass :silent exe '!sass ' . expand('%:p') . ' ' . expand('%:p:r') . '.css'
+:command Minify :silent exe '!echo "nothing exists yet '
+
 " Save session on close
 autocmd VimLeavePre * call SaveSessionOnLeave()
 function SaveSessionOnLeave()
