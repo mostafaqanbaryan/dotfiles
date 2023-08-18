@@ -9,9 +9,9 @@ alias nethogs 'sudo nethogs'
 alias kodi 'kodi-standalone --windowing=x11'
 
 # Editor
-alias vim "nvim"
+alias vim "set -q ZELLIJ && nvim || zellij"
 set -x EDITOR "nvim"
-abbr v "nvim"
+abbr v "vim"
 
 # Dockers
 abbr dcu "docker-compose -f docker-compose.yml up -d"
