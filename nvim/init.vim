@@ -35,7 +35,7 @@ Plug 'numToStr/Navigator.nvim'
 Plug 'windwp/nvim-autopairs'
  
 " LSP
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocUpdate'}
 Plug 'pangloss/vim-javascript', {'branch': 'master', 'for': 'javascript'}
 Plug 'cakebaker/scss-syntax.vim', {'branch': 'master', 'for': 'sass'}
 Plug 'HiPhish/rainbow-delimiters.nvim', {'branch': 'master'}
