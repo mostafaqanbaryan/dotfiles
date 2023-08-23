@@ -74,3 +74,6 @@ set fish_cursor_default block
 set fish_cursor_insert line
 set fish_cursor_replace_one underscore
 set fish_cursor_visual underscore
+
+## Rust
+set -Ua fish_user_paths $HOME/.cargo/bin
