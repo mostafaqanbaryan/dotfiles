@@ -20,8 +20,8 @@ set $rofi_style 'style-2'
 
 set $menu rofi -show drun -theme $rofi_theme/$rofi_style.rasi | xargs swaymsg exec --
 
-set $lockscreen "~/dotfiles/lockscreen.jpg"
-set $wallpaper "~/dotfiles/wallpaper.jpg"
+set $lockscreen "~/lockscreen.jpg"
+set $wallpaper "~/wallpaper.jpg"
 
 # Set names for workspaces
 set $workspace1 " "

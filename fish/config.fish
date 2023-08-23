@@ -2,11 +2,21 @@ function fish_greeting
     starship init fish | source
 end
 
-source ~/env.fish
+function cd -w='cd'
+  builtin cd $argv || return
+  check_directory_for_new_repository
+end
 
-alias PHPERROR 'sudo tail -f /var/log/php-fpm/www-error.log'
-alias nethogs 'sudo nethogs'
-alias kodi 'kodi-standalone --windowing=x11'
+function check_directory_for_new_repository
+  set current_repository (git rev-parse --show-toplevel 2> /dev/null)
+  if [ "$current_repository" ] && \
+    [ "$current_repository" != "$last_repository" ]
+    onefetch
+  end
+  set -gx last_repository $current_repository
+end
+
+source ~/env.fish
 
 # Editor
 alias vim "set -q ZELLIJ && nvim || zellij"
@@ -64,3 +74,6 @@ set fish_cursor_default block
 set fish_cursor_insert line
 set fish_cursor_replace_one underscore
 set fish_cursor_visual underscore
+
+## Rust
+set -Ua fish_user_paths $HOME/.cargo/bin
