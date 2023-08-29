@@ -19,7 +19,7 @@ end
 source ~/env.fish
 
 # Editor
-alias vim "set -q ZELLIJ && nvim || zellij"
+alias vim "nvim"
 set -x EDITOR "nvim"
 abbr v "vim"
 
