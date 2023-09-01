@@ -7,3 +7,6 @@
 [submodule "monego"]
 	path = monego
 	url = https://github.com/cseelus/monego
+[submodule "bitwarden-rofi"]
+	path = bitwarden-rofi
+	url = git@github.com:mostafaqanbaryan/bitwarden-rofi.git
