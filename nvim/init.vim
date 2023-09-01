@@ -119,9 +119,6 @@ set wrap
 set breakindent
 set signcolumn=yes
 
-" Sync nvim clipboard with OS
-set clipboard=unnamedplus
-
 " Case insensitive UNLESS using uppercase characters
 set ignorecase
 set smartcase
@@ -214,8 +211,6 @@ if exists('+termguicolors')
     set termguicolors
 endif
 " let g:airline_theme='deus'
-
-lua require 'me.tokyonight'
 
 hi TreesitterContext guibg=#232433
 hi TreesitterContextLineNumber guifg=#98C379

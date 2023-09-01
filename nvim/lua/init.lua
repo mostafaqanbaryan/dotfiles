@@ -13,7 +13,9 @@ require 'me.treesitter'
 require 'me.statusbar'
 require 'me.navigator'
 require 'me.delimiters'
+require 'me.tokyonight'
 
 require("indent_blankline").setup({
     show_current_context = true,
 })
+
