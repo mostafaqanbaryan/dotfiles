@@ -210,17 +210,6 @@ if exists('+termguicolors')
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
     set termguicolors
 endif
-" let g:airline_theme='deus'
-
-hi TreesitterContext guibg=#232433
-hi TreesitterContextLineNumber guifg=#98C379
-
-" Using Catppuccin colors
-hi Folded guibg=NONE
-hi Folded guifg=#737aa2
-hi Folded ctermbg=NONE
-" hi Search guibg=#404456  
-hi Search guifg=#ff6000
 
 " Title as filename
 autocmd BufEnter * let &titlestring = expand("%:t") . " (" . expand("%:~:h") . ") - Vim"

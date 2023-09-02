@@ -26,3 +26,9 @@ require("tokyonight").setup({
   on_highlights = function(highlights, colors) end,
 })
 vim.cmd[[colorscheme tokyonight]]
+vim.cmd[[hi TreesitterContext guibg=#232433]]
+vim.cmd[[hi TreesitterContextLineNumber guifg=#98C379]]
+vim.cmd[[hi Folded guibg=NONE]]
+vim.cmd[[hi Folded guifg=#737aa2]]
+vim.cmd[[hi Folded ctermbg=NONE]]
+vim.cmd[[hi Search guifg=#ff6000]]
