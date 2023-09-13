@@ -1,6 +1,9 @@
 {
 	"rust-analyzer.enable": true,
 	"eslint.lintTask.options": [".", "--ext", ".ts", ".jsx"],
+	"codeLens.enable": true,
+	"diagnostic.virtualText": true,
+	"diagnostic.virtualTextCurrentLineOnly": false,
   	"coc.preferences.formatOnType": true,
   	"coc.preferences.formatOnTypeFiletypes": [
     	"rust",
