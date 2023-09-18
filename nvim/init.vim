@@ -45,6 +45,7 @@ Plug 'lukas-reineke/indent-blankline.nvim', {'branch': 'master'}
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/nvim-treesitter-context'
+Plug 'kiyoon/treesitter-indent-object.nvim'
 
 " Git
 Plug 'tpope/vim-fugitive', {'branch': 'master'}
