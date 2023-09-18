@@ -68,6 +68,11 @@ Plug 'tpope/vim-surround', {'branch': 'master'}
 Plug 'tpope/vim-unimpaired', {'branch': 'master'}
 Plug 'norcalli/nvim-colorizer.lua', {'branch': 'master'}
 
+" Hardtime
+Plug 'm4xshen/hardtime.nvim'
+Plug 'MunifTanjim/nui.nvim'
+Plug 'nvim-lua/plenary.nvim'
+
 " Welcome
 Plug 'mhinz/vim-startify', {'branch': 'master'}
 

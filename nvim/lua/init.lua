@@ -15,6 +15,11 @@ require 'me.navigator'
 require 'me.delimiters'
 require 'me.tokyonight'
 
+require 'hardtime'.setup({
+    disabled_filetypes = { "gitcommit", "fugitive", "qf", "netrw", "NvimTree", "lazy", "mason" },
+    allow_different_key = true
+})
+
 require("indent_blankline").setup({
     show_current_context = true,
 })
