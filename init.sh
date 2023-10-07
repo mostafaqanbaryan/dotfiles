@@ -52,9 +52,14 @@ sudo pacman -S \
     slurp \
     sway \
     swaybg \
-    swaylock \
     swayidle \
-    xdg-desktop-portal-wlr
+    xdg-desktop-portal-wlr \
+    zellij
+
+yay -Sy \
+    swaylock-effects-git \
+    google-chrome
+
 rm -rf ~/.config/sway 2>&1 /dev/null
 ln -s ${PWD}/sway ~/.config/sway
 
