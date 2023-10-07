@@ -13,3 +13,4 @@ nvim/.netrwhist
 *.swp
 services/default.target.wants
 services/sockets.target.wants
+zellij/plugins
