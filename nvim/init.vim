@@ -26,7 +26,8 @@ Plug 'editorconfig/editorconfig-vim', {'branch': 'master'}
 Plug 'iamcco/markdown-preview.nvim', {'do': 'cd app && yarn install', 'for': 'markdown'}
 
 " Ranger
-Plug 'kevinhwang91/rnvimr'
+" Plug 'kevinhwang91/rnvimr'
+Plug 'luukvbaal/nnn.nvim'
 
 " Wezterm
 Plug 'numToStr/Navigator.nvim'

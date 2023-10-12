@@ -10,8 +10,8 @@ if [ -z "$SWAYSOCK" ]; then
 fi
 
 tmp=/tmp/lockscreen.jpg
-lockscreen=${LOCK_SCREEN_WALLPAPER_PATH:-"$HOME/lockscreen.jpg"}
+lockscreen=${LOCK_SCREEN_WALLPAPER_PATH:-"$HOME/wallpapers/"}
 output=${WALLPAPER_OUTPUT:-"*"}
 baseurl="https://www.bing.com/"
 wluri=$(curl $baseurl"HPImageArchive.aspx?format=js&idx=0&n=20&mkt=en-US" -s | jq '.images[].url' --raw-output | shuf -n 1)
-curl "$baseurl$wluri" -s > $lockscreen
+wget "$baseurl$wluri" -P $lockscreen
