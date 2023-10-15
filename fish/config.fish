@@ -63,6 +63,7 @@ bind -M insert \ca forward-bigword
 alias coffee 'termdown "3m" && sh -c "speaker-test -t sine -f 1000 -l 1 & sleep .5 && kill -9 \$!" 2>&1 > /dev/null'
 alias download 'aria2c -c -x 10 -s 10'
 alias kodi 'kodi --standalone --windowing=x11'
+alias nnn 'nnn -deoH'
 
 ## SSH
 set -Ux GNOME_KEYRING_CONTROL /run/user/1000/keyring
@@ -77,3 +78,7 @@ set fish_cursor_visual underscore
 
 ## Rust
 set -Ua fish_user_paths $HOME/.cargo/bin
+
+## Default applications
+set -Ux BROWSER google-chrome-stable
+set -Ux EDITOR nvim
