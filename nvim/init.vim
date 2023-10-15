@@ -62,6 +62,7 @@ Plug 'tomtom/tcomment_vim', {'branch': 'master'}
 
 Plug 'L3MON4D3/LuaSnip', {'tag': 'v2.*', 'do': 'make install_jsregexp'} " Replace <CurrentMajor> by the latest released major (first number of latest release)
 Plug 'honza/vim-snippets'
+
 Plug 'godlygeek/tabular', {'branch': 'master'}
 Plug 'alvan/vim-closetag', {'branch': 'master', 'for': 'html'}
 Plug 'terryma/vim-multiple-cursors', {'branch': 'master'}
@@ -139,26 +140,6 @@ let g:startify_session_dir = '~/sessions'
 " Wordpress
 :command Sass :silent exe '!sass ' . expand('%:p') . ' ' . expand('%:p:r') . '.css'
 :command Minify :silent exe '!echo "nothing exists yet '
-
-" Save session on close
-autocmd VimLeavePre * call SaveSessionOnLeave()
-function SaveSessionOnLeave()
-    if v:this_session != "" && v:this_session != expand('~/sessions/latest.vim')
-        execute "mksession! " . v:this_session
-    else
-        let branchName = trim(substitute(system("git rev-parse --abbrev-ref HEAD"), "^[^/]*/", "", ""))
-        if branchName != ""
-            execute "mksession! ~/sessions/" . branchName . ".vim"
-        else 
-            let SNX = input("Input a name for session? ")
-            if SNX != ""
-                execute "mksession! ~/sessions/" . SNX . ".vim"
-            else
-                execute "mksession! ~/sessions/latest.vim"
-            endif
-        endif
-    endif
-endfunction
 
 " Clear and Redraw screen when an error happens
 nnoremap <Leader>l :redraw!<cr>
