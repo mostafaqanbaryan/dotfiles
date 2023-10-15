@@ -60,8 +60,9 @@ Plug 'kyazdani42/nvim-web-devicons', {'branch': 'master'}
 " Comment
 Plug 'tomtom/tcomment_vim', {'branch': 'master'}
 
+Plug 'L3MON4D3/LuaSnip', {'tag': 'v2.*', 'do': 'make install_jsregexp'} " Replace <CurrentMajor> by the latest released major (first number of latest release)
+Plug 'honza/vim-snippets'
 Plug 'godlygeek/tabular', {'branch': 'master'}
-Plug 'SirVer/ultisnips', {'branch': 'master'}
 Plug 'alvan/vim-closetag', {'branch': 'master', 'for': 'html'}
 Plug 'terryma/vim-multiple-cursors', {'branch': 'master'}
 Plug 'mostafaqanbaryan/vim-snippets', {'branch': 'master'}
@@ -367,11 +368,6 @@ nnoremap \` :term<CR>
 
 " Words with - should be treated as 2 words
 set iskeyword-=-
-
-" Snippets Trigger configuration
-let g:UltiSnipsExpandTrigger="<Tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 augroup quickfix
     autocmd!

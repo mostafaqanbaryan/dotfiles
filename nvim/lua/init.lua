@@ -20,6 +20,7 @@ require("ibl").setup()
 require("nnn").setup()
 
 require("treesitter_indent_object").setup()
+require("luasnip.loaders.from_snipmate").lazy_load()
 
 vim.keymap.set({"x", "o"}, "ai", "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_outer()<CR>")
 vim.keymap.set({"x", "o"}, "aI", "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_outer(true)<CR>")
