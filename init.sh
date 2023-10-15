@@ -81,6 +81,13 @@ ln -s ${PWD}/waybar ~/.config/waybar
 # Network manager by Rofi
 ln -s ${PWD}/networkmanager-dmenu ~/.config/networkmanager-dmenu
 
+# Rofi themes for powermenu and launcher
+pushd /tmp && git clone --depth=1 https://github.com/adi1090x/rofi.git && cd /tmp/rofi
+chmod +x setup.sh
+./setup.sh
+popd
+rm -rf /tmp/rofi
+
 # Fonts
 # https://github.com/rastikerdar/vazir-code-font/releases
 # https://www.nerdfonts.com/font-downloads > Symbols Nerd Font | Symbols Only
