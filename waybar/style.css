@@ -36,7 +36,7 @@ window#waybar > .horizontal {
 	background-color: rgba(0,153,153,1);
 }
 
-#workspaces button.focused {
+#workspaces button.active {
 	background-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -55,6 +55,7 @@ window#waybar > .horizontal {
 #idle_inhibitor {
     padding: 0 10px;
 }
+
 #mode {
     color: #cc3436;
     font-weight: bold;
@@ -86,9 +87,8 @@ window#waybar > .horizontal {
 }
 
 #custom-updates{
-    border-right: 1px solid rgba(255,255,255,0.1);
     padding-left: 8px;
-    padding-right: 8px;
+    padding-right: 4px;
 }
 
 #network{

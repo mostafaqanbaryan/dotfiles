@@ -1,8 +1,20 @@
 {
     "modules-left": ["hyprland/workspaces", "custom/media", "hyprland/window"],
     "modules-center": ["clock", "idle_inhibitor", "custom/shamsi"],
-    "modules-right": ["hyprland/submap", "tray", "custom/scratchpad-indicator", "hyprland/language", "custom/updates", "network", "pulseaudio", "custom/screenshot", "custom/power"],
+    "modules-right": ["hyprland/submap", "tray", "custom/scratchpad-indicator", "hyprland/language", "network", "custom/updates", "pulseaudio", "custom/screenshot", "custom/power"],
 
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "5": "",
+            "10": "",
+            "default": ""
+        }
+    },
     "hyprland/window": {
         "format": "  <small>{}</small>",
         "separate-outputs": true
@@ -40,8 +52,9 @@
         "tooltip-format": "{essid} ({signalStrength}%) ",
         "format-wifi": "{essid} ({signalStrength}%) ",
         "format-ethernet": "{ifname} ",
-        "format-disconnected": "", 
+        "format-disconnected": "⚠", 
         "max-length": 50,
+        "tooltip-format": "{essid}\r{ipaddr}",
         "on-click": "sleep 0.1 && networkmanager_dmenu"
     },
     "idle_inhibitor": {
@@ -60,6 +73,15 @@
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}",
         "format": "{:%H:%M:%OS}",
+        "calendar": {
+            "mode": "month",
+            "on-scroll": 1
+        },
+        "actions":  {
+            "on-click-right": "mode",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        },
         "interval": 1,
     },
     "pulseaudio": {
@@ -140,7 +162,7 @@
         "interval": 60
     },
     "custom/updates": {
-        "format": "{} Updates 󰚰",
+        "format": "{} 󰚰",
         "exec": "checkupdates | wc -l",
         "interval": 600
     },
