@@ -1,8 +1,12 @@
 {
-    "modules-left": ["hyprland/workspaces", "custom/media"],
+    "modules-left": ["hyprland/workspaces", "custom/media", "hyprland/window"],
     "modules-center": ["clock", "idle_inhibitor", "custom/shamsi"],
-    "modules-right": ["hyprland/mode", "tray", "custom/scratchpad-indicator", "hyprland/language", "custom/updates", "network", "pulseaudio", "custom/screenshot", "custom/power"],
+    "modules-right": ["hyprland/submap", "tray", "custom/scratchpad-indicator", "hyprland/language", "custom/updates", "network", "pulseaudio", "custom/screenshot", "custom/power"],
 
+    "hyprland/window": {
+        "format": "  <small>{}</small>",
+        "separate-outputs": true
+    },
     "mpd": {
         "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
         "format-disconnected": "Disconnected ",
@@ -29,8 +33,7 @@
         "tooltip-format": "MPD (connected)",
         "tooltip-format-disconnected": "MPD (disconnected)"
     },
-    "sway/mode": {
-        "max-length": 50,
+    "hyprland/submap": {
         "format": "<span style=\"italic\">{}</span>"
     },
     "network": {
