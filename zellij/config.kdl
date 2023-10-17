@@ -8,14 +8,8 @@ keybinds clear-defaults=true {
         bind "Alt ;" { ToggleFloatingPanes; }
         bind "Alt a" { TogglePaneEmbedOrFloating; }
         bind "Alt f" { SwitchToMode "entersearch"; SearchInput 0; }
-        bind "Alt x" { SwitchToMode "scroll"; }
+        bind "Alt s" { SwitchToMode "scroll"; }
         bind "Alt r" { SwitchToMode "Resize"; }
-        bind "Alt s" { 
-            LaunchOrFocusPlugin "zellij:session-manager" {
-                floating true
-                move_to_focused_tab true
-            };
-        }
         bind "Alt q" { Detach; }
         bind "Alt 1" { GoToTab 1; }
         bind "Alt 2" { GoToTab 2; }
