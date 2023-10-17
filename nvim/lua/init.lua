@@ -17,7 +17,6 @@ require 'me.delimiters'
 require 'me.tokyonight'
 
 require("ibl").setup()
-require("nnn").setup()
 
 require("treesitter_indent_object").setup()
 require("luasnip.loaders.from_snipmate").lazy_load()
