@@ -34,9 +34,7 @@ ln -s ${PWD}/wezterm.lua ~/.wezterm.lua
 cp ${PWD}/terminal.jpg ~/terminal.jpg
 
 # Filemanager
-sudo pacman -S \
-    nautilus \
-    ranger
+yay -S ranger python-pynvim ueberzug
 rm ~/.config/ranger/ranger.conf 2>&1 /dev/null
 mkdir ~/.config/ranger -p
 ln -s ${PWD}/ranger.conf ~/.config/ranger/ranger.conf
