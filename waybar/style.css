@@ -40,6 +40,12 @@ window#waybar > .horizontal {
 	background-color: rgba(255, 255, 255, 0.1);
 }
 
+#window{
+    margin-left: 5px;
+    padding-left: 8px;
+    border-left: 1px solid rgba(255,255,255,0.1);
+}
+
 #clock,
 #battery,
 #cpu,
@@ -50,8 +56,11 @@ window#waybar > .horizontal {
 #custom-media,
 #tray,
 #mode,
+#language,
 #custom-power,
 #custom-menu,
+#custom-notification,
+#custom-updates,
 #idle_inhibitor {
     padding: 0 10px;
 }
@@ -87,24 +96,23 @@ window#waybar > .horizontal {
 }
 
 #custom-updates{
-    padding-left: 8px;
-    padding-right: 4px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+#custom-notification {
+    border-right: 1px solid rgba(255,255,255,0.1);
 }
 
 #network{
     border-right: 1px solid rgba(255,255,255,0.1);
-    padding-right: 16px;
 }
 
 #language{
     border-right: 1px solid rgba(255,255,255,0.1);
-    padding-right: 10px;
 }
 
 #custom-media{
     font-size: 10px;
-    padding-left: 8px;
-    margin-left: 4px;
     border-radius: 5px;
 }
 

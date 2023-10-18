@@ -1,7 +1,7 @@
 {
-    "modules-left": ["hyprland/workspaces", "custom/media", "hyprland/window"],
+    "modules-left": ["hyprland/workspaces", "hyprland/window"],
     "modules-center": ["clock", "idle_inhibitor", "custom/shamsi"],
-    "modules-right": ["hyprland/submap", "tray", "custom/scratchpad-indicator", "hyprland/language", "network", "custom/updates", "pulseaudio", "custom/screenshot", "custom/power"],
+    "modules-right": ["hyprland/submap", "tray", "custom/scratchpad-indicator", "custom/media", "hyprland/language", "network", "custom/notification", "custom/updates", "pulseaudio", "custom/screenshot", "custom/power"],
 
     "hyprland/workspaces": {
         "format": "{icon}",
@@ -16,7 +16,7 @@
         }
     },
     "hyprland/window": {
-        "format": "  <small>{}</small>",
+        "format": "<small>{}</small>",
         "separate-outputs": true
     },
     "mpd": {
@@ -116,19 +116,23 @@
         "on-click-right": "sleep 0.1 && swaymsg 'move scratchpad'"
     },
     "custom/notification": {
-        "tooltip": true,
-        "format": "{icon}",
+        "tooltip": false,
+        "format": "{} {icon}",
         "format-icons": {
-            "notification": "<span foreground='red'><sup></sup></span>",
+            "notification": " <span foreground='red'><sup></sup></span>",
             "none": "",
-            "dnd-notification": "<span foreground='red'><sup></sup></span>",
-            "dnd-none": ""
+            "dnd-notification": " <span foreground='red'><sup></sup></span>",
+            "dnd-none": "",
+            "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "inhibited-none": "",
+            "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-inhibited-none": ""
         },
         "return-type": "json",
         "exec-if": "which swaync-client",
         "exec": "swaync-client -swb",
-        "on-click": "sleep 0.1 && swaync-client -t -sw",
-        "on-click-right": "sleep 0.1 && swaync-client -d -sw",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
         "escape": true
     },
     "custom/media": {
@@ -146,7 +150,7 @@
         "exec": "$HOME/.config/waybar/resources/./player.sh 2> /dev/null"
     },
     "custom/screenshot": {
-        "format": " ",
+        "format": "",
         "tooltip": false,
         "min-length": 3,
         "on-click": "sleep 0.1 && grim -g \"$(slurp)\" - | swappy -f -",
