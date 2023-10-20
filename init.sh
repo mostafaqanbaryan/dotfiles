@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Scripts
+ln -s ${PWD}/scripts ~/.scripts
+mkdir ~/Pictures/wallpapers
+
 # Fish
 sudo pacman -S \
     fish
