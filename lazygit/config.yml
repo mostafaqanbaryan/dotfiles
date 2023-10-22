@@ -1,3 +1,6 @@
+# keybinding:
+  # universal:
+    # pushFiles: '<c-p>'
 customCommands:
   - key: "c"
     context: "files"
@@ -31,12 +34,12 @@ customCommands:
       - type: "input"
         title: "Task Id"
         key: "TaskId"
-        initialValue: "T"
+        initialValue: ""
       - type: "input"
         title: "Message"
         key: "Message"
         initialValue: ""
-    command: "git commit --message '{{.Form.Type}} [{{.Form.TaskId}}]: {{.Form.Message}}'"
+    command: "git commit --message \"$(test -n '{{.Form.TaskId}}' && echo '{{.Form.Type}} [{{.Form.TaskId}}] {{.Form.Message}}' || echo '{{.Form.Type}} {{.Form.Message}}')\""
     loadingText: "Commiting..."
 
   - key: "n"
@@ -64,5 +67,19 @@ customCommands:
         title: "Branch name"
         key: "Name"
         initialValue: ""
-    command: "git checkout -b {{.Form.Type}}/{{.Form.TaskId}}-{{.Form.Name}}"
+    command: "git checkout -b \"$(test -n '{{.Form.TaskId}}' && echo '{{.Form.Type}}/{{.Form.TaskId}}-{{.Form.Name}}' || echo '{{.Form.Type}}/{{.Form.Name}}')\""
     loadingText: "Checking out to the new branch..."
+
+  - key: "P"
+    context: "global"
+    description: "Push"
+    prompts:
+      - type: "input"
+        title: "Target branch name"
+        key: "Target"
+        initialValue: "develop"
+        suggestions:
+          preset: 'branches'
+
+    command: "git remote get-url origin | grep gitlab && git push -u origin HEAD -o merge_request.create -o merge_request.target='{{.Form.Target}}' -o merge_request.title='{{.SelectedLocalBranch.Name}}' || git push -u origin HEAD"
+    loadingText: "Pushing..."
