@@ -1,3 +1,5 @@
+gui:
+  windowSize: "half"
 # keybinding:
   # universal:
     # pushFiles: '<c-p>'
@@ -34,11 +36,13 @@ customCommands:
       - type: "input"
         title: "Task Id"
         key: "TaskId"
-        initialValue: ""
+        suggestions:
+          command: "echo {{.SelectedLocalBranch.Name}} | sed 's/^\\(bugFix\\|hotFix\\|feature\\)\\/T\\([0-9]*\\)\\-.*$/\\2/'"
       - type: "input"
         title: "Message"
         key: "Message"
         initialValue: ""
+
     command: "git commit --message \"$(test -n '{{.Form.TaskId}}' && echo '{{.Form.Type}} [{{.Form.TaskId}}] {{.Form.Message}}' || echo '{{.Form.Type}} {{.Form.Message}}')\""
     loadingText: "Commiting..."
 
@@ -62,12 +66,14 @@ customCommands:
       - type: "input"
         title: "Task Id"
         key: "TaskId"
-        initialValue: "T"
+        initialValue: ""
       - type: "input"
         title: "Branch name"
         key: "Name"
         initialValue: ""
-    command: "git checkout -b \"$(test -n '{{.Form.TaskId}}' && echo '{{.Form.Type}}/{{.Form.TaskId}}-{{.Form.Name}}' || echo '{{.Form.Type}}/{{.Form.Name}}')\""
+        suggestions:
+          preset: "branches"
+    command: "git checkout -b \"$(test -n '{{.Form.TaskId}}' && echo '{{.Form.Type}}/T{{.Form.TaskId}}-{{.Form.Name}}' || echo '{{.Form.Type}}/{{.Form.Name}}')\""
     loadingText: "Checking out to the new branch..."
 
   - key: "P"
