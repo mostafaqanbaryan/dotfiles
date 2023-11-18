@@ -243,7 +243,7 @@ function DuplicateAddToArgs()
 endfunction
 
 " Go to last buffer and delete the current one
-nnoremap <silent> <Leader>bd :bnext<CR>:bd#<CR>
+nnoremap <silent> <Leader>c :bnext<CR>:bd#<CR>
 
 " Ranger
 " Make Ranger replace Netrw and be the file explorer
@@ -284,8 +284,9 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
 " Git Fugitive
 let g:fugitive_gitlab_domains = ['https://my.gitlab.com']
-nnoremap <Leader>g :Git<CR>
-" Conflict
+nnoremap <Leader>g :silent exec "!zellij action new-pane --name Lazygit -c -f -- lazygit"<CR>
+
+" Git Fugitive - Conflict
 nnoremap g[ :diffget //2<CR>
 vnoremap g[ :diffget //2<CR>
 nnoremap g] :diffget //3<CR>
@@ -303,10 +304,10 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
 " Symbol renaming.
-nmap <leader>cu <Plug>(coc-rename)
+nmap <F2> <Plug>(coc-rename)
 " Formatting selected code.
-xmap <leader>cf  <Plug>(coc-format-selected)
-nmap <leader>cf  <Plug>(coc-format-selected)
+xmap <F12>  <Plug>(coc-format-selected)
+nmap <F12>  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
@@ -376,10 +377,9 @@ inoremap <c-x><c-l> <plug>(fzf-complete-line)
 command! -bang PFiles call fzf#vim#files('~/Projects', <bang>0)
 nnoremap <Leader>f :GFiles<CR>
 nnoremap <Leader>z :PFiles<CR>
-nnoremap <Leader>bf :Buffers<CR>
-nnoremap <leader>p :exec ":PRg " . escape(input("Search in files: "), "()[]{}$")<CR>
-vnoremap <leader>p "cy :exec ":PRg " . escape(getreg("c"), "()[]{}$")<CR>
-nnoremap <leader>/ :call fzf#vim#grep("grep function -r " . expand("%"), 0)<LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT>
+nnoremap <Leader>b :Buffers<CR>
+nnoremap <leader>/ :exec ":PRg " . escape(input("Search in files: "), "()[]{}$")<CR>
+vnoremap <leader>/ "cy :exec ":PRg " . escape(getreg("c"), "()[]{}$")<CR>
 imap <c-x><c-f> <plug>(fzf-complete-path)
 
 " Markdown
