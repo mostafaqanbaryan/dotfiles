@@ -134,6 +134,7 @@ return {
     keys = {
         {key="j", mods="META", action=act.SendKey{ key = 'DownArrow' }},
         {key="k", mods="META", action=act.SendKey{ key = 'UpArrow' }},
+        {key="Enter", mods="META", action=act.Nop},
         {key="p", mods="CTRL | SHIFT", action=act.DisableDefaultAssignment},
         {key="F11", mods="", action="ToggleFullScreen"},
     },
