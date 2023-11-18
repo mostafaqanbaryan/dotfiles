@@ -9,7 +9,7 @@ keybinds clear-defaults=true {
 
     shared_except "locked" {
         bind "Alt t" { NewTab; }
-        bind "Alt d" { CloseTab; }
+        bind "F9" { CloseTab; }
         bind "Alt h" { GoToPreviousTab; }
         bind "Alt l" { GoToNextTab; }
         bind "Alt z" { SwitchToMode "RenameTab"; }
