@@ -1,4 +1,12 @@
 keybinds clear-defaults=true {
+    shared_except "normal" {
+        bind "Esc" { SwitchToMode "normal"; }
+    }
+
+    shared_except "normal" "entersearch" {
+        bind "Enter" { SwitchToMode "normal"; }
+    }
+
     shared_except "locked" {
         bind "Alt t" { NewTab; }
         bind "Alt d" { CloseTab; }
@@ -23,7 +31,6 @@ keybinds clear-defaults=true {
     }
 
     resize {
-        bind "Enter" "Esc" "Space" { SwitchToMode "normal"; }
         bind "h" "Left" { Resize "Left"; }
         bind "j" "Down" { Resize "Down"; }
         bind "k" "Up" { Resize "Up"; }
@@ -31,7 +38,6 @@ keybinds clear-defaults=true {
     }
 
     scroll {
-        bind "Enter" "Esc" { SwitchToMode "normal"; }
         bind "e" { EditScrollback; SwitchToMode "normal"; }
         bind "g" { ScrollToTop; }
         bind "G" { ScrollToBottom; }
@@ -44,7 +50,6 @@ keybinds clear-defaults=true {
     }
 
     search {
-        bind "Enter" "Esc" { SwitchToMode "normal"; }
         bind "n" { Search "Down"; }
         bind "N" { Search "Up"; }
         bind "c" { SearchToggleOption "CaseSensitivity"; }
@@ -54,7 +59,6 @@ keybinds clear-defaults=true {
 
     entersearch {
         bind "Enter" { SwitchToMode "search"; }
-        bind "Esc" { SwitchToMode "normal"; }
     }
 }
 
