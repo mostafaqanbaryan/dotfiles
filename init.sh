@@ -62,6 +62,7 @@ yay -Sy \
     swaylock-effects-git \
     google-chrome \
     swww \
+    qalculate-gtk \
     waypaper
 
 rm -rf ~/.config/hypr 2&>1 /dev/null
