@@ -1,0 +1,9 @@
+- name: "Update repository"
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Run the equivalent of pacman -Sy
+      become: true
+      community.general.pacman:
+        update_cache: true
+

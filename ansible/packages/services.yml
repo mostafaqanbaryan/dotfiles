@@ -1,0 +1,38 @@
+- name: "Services"
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: "Install gnome-keyring"
+      become: true
+      community.general.pacman: 
+        name: "gnome-keyring"
+        state: "present"
+    
+    - name: "Link services"
+      ansible.builtin.file:
+        src: "$PWD/../../services/{{ item }}"
+        dest: "~/.config/systemd/user/{{ item }}"
+        state: "link"
+        force: true
+      loop:
+        - gnome-keyring-daemon.service
+        - default.target.wants
+        - sockets.target.wants
+    
+    - name: "Reload service"
+      ansible.builtin.systemd_service:
+        scope: "user"
+        daemon_reload: true
+    
+    - name: "Enable gnome-keyring service"
+      ansible.builtin.service:
+        name: "gnome-keyring-daemon"
+        scope: "user"
+        enabled: true
+    
+    - name: "Start gnome-keyring service"
+      ansible.builtin.service:
+        name: "gnome-keyring-daemon"
+        scope: "user"
+        state: "started"
+    

@@ -1,5 +1,6 @@
 function fish_greeting
     starship init fish | source
+    fastfetch
 end
 
 function cd -w='cd'
@@ -66,6 +67,8 @@ alias download 'aria2c -c -x 10 -s 10'
 alias kodi 'kodi --standalone --windowing=x11'
 alias nnn 'nnn -deoH'
 alias g 'lazygit'
+alias cp 'xcp'
+alias du 'dust'
 
 ## SSH
 set -Ux GNOME_KEYRING_CONTROL /run/user/1000/keyring
