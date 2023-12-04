@@ -1,5 +1,6 @@
 layout {
     cwd "$HOME/Projects"
+
     default_tab_template {
         children
         pane size=1 borderless=false {
@@ -35,11 +36,11 @@ layout {
 
     swap_floating_layout{
         floating_panes{
-            pane x="12%" y="10%" width="75%" height="75%"
+            pane x="5%" y="5%" width="90%" height="90%"
         }
     }
 
-    tab name="Roboeq" cwd="roboeq" 
+    tab name="Roboeq" cwd="roboeq"
     tab name="Backend" cwd="roboeq-panel" 
     tab name="Frontend" cwd="roboeq-panel-front" 
 }
