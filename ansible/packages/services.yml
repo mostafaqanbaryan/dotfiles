@@ -7,6 +7,12 @@
       community.general.pacman: 
         name: "gnome-keyring"
         state: "present"
+
+    - name: "Install archlinux-keyring"
+      become: true
+      community.general.pacman: 
+        name: "archlinux-keyring"
+        state: "present"
     
     - name: "Link services"
       ansible.builtin.file:

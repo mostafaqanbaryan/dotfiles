@@ -1,5 +1,4 @@
 - import_playbook: packages/grant.yml
-- import_playbook: packages/update.yml
 - import_playbook: packages/tui.yml
 - import_playbook: packages/editor.yml
 - import_playbook: packages/wm.yml
