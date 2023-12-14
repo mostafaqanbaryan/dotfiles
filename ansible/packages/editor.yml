@@ -32,3 +32,9 @@
         name: "neovim"
         state: "present"
     
+    - name: "Install NodeJS for COC"
+      become: true
+      community.general.pacman: 
+        name: "nodejs"
+        state: "present"
+    
