@@ -10,10 +10,9 @@
       ansible.builtin.command:
         cmd: "echo https://www.nerdfonts.com/font-downloads > Symbols Nerd Font | Symbols Only"
 
-          # - name: "Link fonts"
-          #   ansible.builtin.file:
-          #     src: "$PWD/../../fonts"
-          #     dest: "~/.local/share/fonts"
-          #     state: "link"
-          #     force: true
-    
+    - name: "Copy fonts"
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "~/.local/share/fonts"
+      with_fileglob:
+        src: "$PWD/../../fonts/*"

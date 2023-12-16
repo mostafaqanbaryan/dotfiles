@@ -3,6 +3,12 @@
   hosts: localhost
   connection: local
   tasks:
+    - name: "Remove hyprland's old config"
+      ignore_errors: true
+      ansible.builtin.file:
+        path: "~/.config/hypr"
+        state: "absent"
+
     - name: "Link hyprland's config"
       ansible.builtin.file:
         src: "$PWD/../../hypr"
@@ -10,12 +16,24 @@
         state: "link"
         force: true
     
+    - name: "Remove waybar's old config"
+      ignore_errors: true
+      ansible.builtin.file:
+        path: "~/.config/waybar"
+        state: "absent"
+
     - name: "Link waybar's config"
       ansible.builtin.file:
         src: "$PWD/../../waybar"
         dest: "~/.config/waybar"
         state: "link"
         force: true
+
+    - name: "Remove neovim's old config"
+      ignore_errors: true
+      ansible.builtin.file:
+        path: "~/.config/nvim"
+        state: "absent"
 
     - name: "Link neovim's config"
       ansible.builtin.file:
@@ -24,6 +42,78 @@
         state: "link"
         force: true
     
+    - name: "Remove fish's old config"
+      ignore_errors: true
+      ansible.builtin.file:
+        path: "~/.config/fish"
+        state: "absent"
+
+    - name: "Remove starship's old config"
+      ignore_errors: true
+      ansible.builtin.file:
+        path: "~/.config/starship.toml"
+        state: "absent"
+
+    - name: "Link starship's config"
+      ansible.builtin.file:
+        src: "$PWD/../../starship.toml"
+        dest: "~/.config/starship.toml"
+        state: "link"
+        force: true
+    
+    - name: "Remove wezterm's old config"
+      ignore_errors: true
+      ansible.builtin.file:
+        path: "~/.wezterm.lua"
+        state: "absent"
+
+    - name: "Link wezterm's config"
+      ansible.builtin.file:
+        src: "$PWD/../../wezterm.lua"
+        dest: "~/.wezterm.lua"
+        state: "link"
+        force: true
+    
+    - name: "Remove ranger's old config"
+      ignore_errors: true
+      ansible.builtin.file:
+        path: "~/.config/ranger/ranger.conf"
+        state: "absent"
+
+    - name: "Link ranger's config"
+      ansible.builtin.file:
+        src: "$PWD/../../ranger.conf"
+        dest: "~/.config/ranger/ranger.conf"
+        state: "link"
+        force: true
+
+    - name: "Remove zellij's old config"
+      ignore_errors: true
+      ansible.builtin.file:
+        path: "~/.config/zellij"
+        state: "absent"
+
+    - name: "Link zellij's config"
+      ansible.builtin.file:
+        src: "$PWD/../../zellij"
+        dest: "~/.config/zellij"
+        state: "link"
+        force: true
+    
+    - name: "Remove lazygit's old config"
+      ignore_errors: true
+      ansible.builtin.file:
+        path: "~/.config/lazygit"
+        state: "absent"
+
+    - name: "Link lazygit's config"
+      ignore_errors: true
+      ansible.builtin.file:
+        src: "$PWD/../../lazygit"
+        dest: "~/.config/lazygit"
+        state: "link"
+        force: true
+
     - name: "Link fish's config"
       ansible.builtin.file:
         src: "$PWD/../../fish/{{ item }}"
@@ -34,32 +124,4 @@
         - "completions"
         - "functions"
         - "config.fish"
-    
-    - name: "Link starship's config"
-      ansible.builtin.file:
-        src: "$PWD/../../starship.toml"
-        dest: "~/.config/starship.toml"
-        state: "link"
-        force: true
-    
-    - name: "Link wezterm's config"
-      ansible.builtin.file:
-        src: "$PWD/../../wezterm.lua"
-        dest: "~/.wezterm.lua"
-        state: "link"
-        force: true
-    
-    - name: "Link ranger's config"
-      ansible.builtin.file:
-        src: "$PWD/../../ranger.conf"
-        dest: "~/.config/ranger/ranger.conf"
-        state: "link"
-        force: true
-
-    - name: "Link zellij's config"
-      ansible.builtin.file:
-        src: "$PWD/../../zellij"
-        dest: "~/.config/zellij"
-        state: "link"
-        force: true
     

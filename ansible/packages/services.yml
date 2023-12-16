@@ -2,6 +2,34 @@
   hosts: localhost
   connection: local
   tasks:
+    - name: "Install gdm"
+      become: true
+      ignore_errors: true
+      community.general.pacman: 
+        name: "gdm"
+        state: "present"
+    
+    - name: "Start gdm system-wide"
+      become: true
+      ignore_errors: true
+      ansible.builtin.service:
+        name: "gdm"
+        state: "started"
+        enabled: true
+
+    - name: "Install cronie"
+      become: true
+      community.general.pacman: 
+        name: "cronie"
+        state: "present"
+    
+    - name: "Start cronie system-wide"
+      become: true
+      ansible.builtin.service:
+        name: "cronie"
+        state: "started"
+        enabled: true
+
     - name: "Install gnome-keyring"
       become: true
       community.general.pacman: 
@@ -30,15 +58,9 @@
         scope: "user"
         daemon_reload: true
     
-    - name: "Enable gnome-keyring service"
-      ansible.builtin.service:
-        name: "gnome-keyring-daemon"
-        scope: "user"
-        enabled: true
-    
     - name: "Start gnome-keyring service"
       ansible.builtin.service:
         name: "gnome-keyring-daemon"
         scope: "user"
         state: "started"
-    
+        enabled: true

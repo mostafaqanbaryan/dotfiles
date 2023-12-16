@@ -3,6 +3,7 @@
   connection: local
   tasks:
     - name: "Install hyprland"
+      ignore_errors: true
       community.general.pacman: 
         executable: "yay"
         name: "hyprland"
@@ -69,18 +70,21 @@
         state: "present"
     
     - name: "Install waypaper"
+      ignore_errors: true
       community.general.pacman: 
         executable: "yay"
         name: "waypaper-git"
         state: "present"
     
     - name: "Install swaylock-effects"
+      ignore_errors: true
       community.general.pacman: 
         executable: "yay"
         name: "swaylock-effects-git"
         state: "present"
     
     - name: "Install swww"
+      ignore_errors: true
       community.general.pacman: 
         executable: "yay"
         name: "swww"
@@ -93,12 +97,14 @@
         state: "present"
     
     - name: "Install xcp - cp alternative"
+      ignore_errors: true
       community.general.pacman: 
         executable: "yay"
         name: "xcp"
         state: "present"
     
     - name: "Install dust - du alternative"
+      ignore_errors: true
       community.general.pacman: 
         executable: "yay"
         name: "dust"
