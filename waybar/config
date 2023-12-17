@@ -1,7 +1,7 @@
 {
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
     "modules-center": ["clock", "idle_inhibitor", "custom/shamsi"],
-    "modules-right": ["hyprland/submap", "tray", "custom/scratchpad-indicator", "custom/media", "hyprland/language", "network", "custom/notification", "custom/updates", "pulseaudio", "custom/screenshot", "custom/power"],
+    "modules-right": ["hyprland/submap", "tray", "custom/scratchpad-indicator", "custom/media", "hyprland/language", "network", "custom/notification", "custom/updates", "group/group-audio", "custom/screenshot", "custom/power"],
 
     "hyprland/workspaces": {
         "format": "{icon}",
@@ -83,6 +83,21 @@
             "on-scroll-down": "shift_down"
         },
         "interval": 1,
+    },
+    "group/group-audio": {
+        "orientation": "inherit",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "",
+            "transition-left-to-right": false,
+        },
+        "modules": [
+            "pulseaudio",
+            "pulseaudio/slider",
+        ]
+    },
+    "pulseaudio/slider": {
+        "orientation": "horizontal"
     },
     "pulseaudio": {
         "format": "{volume}% {icon} ",

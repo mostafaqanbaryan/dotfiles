@@ -527,3 +527,36 @@ window#waybar > .horizontal {
 #custom-media.media-percentage-100 {
   background: linear-gradient(toright, rgba(255, 255, 255, 0.1) 100%, transparent 100%);
 }
+
+#pulseaudio-slider, #pulseaudio-slider *, #group-audio,
+#backlight-slider, #backlight-slider *, #group-backlight {
+    margin: 0;
+    padding: 0;
+}
+
+#pulseaudio-slider, 
+#backlight-slider{
+    padding-left: 10px;
+}
+
+slider {
+    min-height: 0px;
+    min-width: 0px;
+    opacity: 0;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+}
+
+trough {
+    min-height: 10px;
+    min-width: 80px;
+    border-radius: 5px;
+	background-color: rgba(255, 255, 255, 0.3);
+}
+
+highlight {
+    min-height: 10px;
+    border-radius: 5px;
+    background-color: #ffffff;
+}
