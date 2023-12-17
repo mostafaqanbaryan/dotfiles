@@ -18,11 +18,11 @@ nvim/.netrwhist
 zellij/plugins
 
 # Fish
-fish
+fish/*
 !fish/completions
 !fish/functions
 !fish/config.fish
 
 # Lazygit
-lazygit
+lazygit/*
 !lazygit/config.yml

@@ -42,8 +42,18 @@ customCommands:
         title: "Message"
         key: "Message"
         initialValue: ""
+      - type: "menu"
+        key: "Flag"
+        title: "Flag of commit"
+        options:
+          - name: "no flag"
+            value: ""
+            description: "Commit with no extra flags"
+          - name: "--no-verify"
+            value: "--no-verify"
+            description: "Commit with --no-verify flag"
 
-    command: "git commit --message \"$(test -n '{{.Form.TaskId}}' && echo '{{.Form.Type}} [{{.Form.TaskId}}] {{.Form.Message}}' || echo '{{.Form.Type}} {{.Form.Message}}')\""
+    command: "git commit {{.Form.Flag}} --message  \"$(test -n {{.Form.TaskId}} && echo {{.Form.Type}} [{{.Form.TaskId}}] {{.Form.Message}} || echo {{.Form.Type}} {{.Form.Message}})\""
     loadingText: "Commiting..."
 
   - key: "n"
@@ -73,13 +83,16 @@ customCommands:
         initialValue: ""
         suggestions:
           preset: "branches"
-    command: "git checkout -b \"$(test -n '{{.Form.TaskId}}' && echo '{{.Form.Type}}/T{{.Form.TaskId}}-{{.Form.Name}}' || echo '{{.Form.Type}}/{{.Form.Name}}')\""
+    command: "git checkout -b \"$(test -n {{.Form.TaskId}} && echo {{.Form.Type}}/T{{.Form.TaskId}}-{{.Form.Name}} || echo {{.Form.Type}}/{{.Form.Name}})\""
     loadingText: "Checking out to the new branch..."
 
-  - key: "P"
+  - key: "<c-p>"
     context: "global"
     description: "Push"
     prompts:
+      - type: "confirm"
+        title: "Merge request"
+        body: "Create a merge request in Gitlab?"
       - type: "input"
         title: "Target branch name"
         key: "Target"
@@ -87,5 +100,5 @@ customCommands:
         suggestions:
           preset: 'branches'
 
-    command: "git remote get-url origin | grep gitlab && git push -u origin HEAD -o merge_request.create -o merge_request.target='{{.Form.Target}}' -o merge_request.title='{{.SelectedLocalBranch.Name}}' || git push -u origin HEAD"
+    command: "git remote get-url origin | grep gitlab && git push -u origin HEAD -o merge_request.create -o merge_request.target={{.Form.Target}} -o merge_request.title='{{.SelectedLocalBranch.Name}}' || git push -u origin HEAD"
     loadingText: "Pushing..."
