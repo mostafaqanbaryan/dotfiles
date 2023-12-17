@@ -1,16 +1,28 @@
+*.swp
 .ssh
-vim/view
-vim/bundle
-vim/undodir
-vim/.netrwhist
+
+# Services
+services/default.target.wants
+services/sockets.target.wants
+services/eos-update-notifier.service
+services/eos-update-notifier.timer
+services/timers.target.wants
+
+# NeoVim
 nvim/view
 nvim/bundle
 nvim/undodir
 nvim/.netrwhist
-; !rhythmbox/*
-; !rhythmbox/ADDRESS
-; !rhythmbox/Packages
-*.swp
-services/default.target.wants
-services/sockets.target.wants
+
+# Zellij
 zellij/plugins
+
+# Fish
+fish
+!fish/completions
+!fish/functions
+!fish/config.fish
+
+# Lazygit
+lazygit
+!lazygit/config.yml
