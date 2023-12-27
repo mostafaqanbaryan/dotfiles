@@ -33,6 +33,9 @@ customCommands:
           - name: "🔥"
             value: "🔥"
             description: "Removed"
+          - name: "🎉"
+            value: "🎉"
+            description: "New project"
       - type: "input"
         title: "Task Id"
         key: "TaskId"
@@ -53,7 +56,7 @@ customCommands:
             value: "--no-verify"
             description: "Commit with --no-verify flag"
 
-    command: "git commit {{.Form.Flag}} --message  \"$(test -n {{.Form.TaskId}} && echo {{.Form.Type}} [{{.Form.TaskId}}] {{.Form.Message}} || echo {{.Form.Type}} {{.Form.Message}})\""
+    command: "sh ~/dotfiles/lazygit/commit.sh {{.Form.Type | quote}} {{.Form.TaskId | quote}} {{.Form.Message | quote}} {{.Form.Flag}}"
     loadingText: "Commiting..."
 
   - key: "n"

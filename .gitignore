@@ -24,5 +24,4 @@ fish/*
 !fish/config.fish
 
 # Lazygit
-lazygit/*
-!lazygit/config.yml
+lazygit/state.yml
