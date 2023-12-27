@@ -9,6 +9,9 @@ Plug 'lewis6991/impatient.nvim', {'branch': 'main'}
 " Theme
 Plug 'folke/tokyonight.nvim', {'branch': 'main'}
 
+" Highlight word under cursor
+Plug 'yamatsum/nvim-cursorline', {'branch': 'main'}
+
 " Terminal
 Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
 
@@ -301,8 +304,6 @@ inoremap <F12> <ESC>:syntax sync fromstart<CR>a
 inoremap <silent><expr> <c-space> coc#refresh()
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
 " Symbol renaming.
 nmap <F2> <Plug>(coc-rename)
 " Formatting selected code.
