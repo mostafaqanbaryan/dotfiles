@@ -8,6 +8,12 @@ keybinds clear-defaults=true {
     }
 
     shared_except "locked" {
+        bind "Alt g" {
+            Run "lazygit"  {
+                close_on_exit true
+            };
+            TogglePaneEmbedOrFloating;
+        }
         bind "Alt t" { NewTab; }
         bind "F9" { CloseTab; }
         bind "Alt h" { GoToPreviousTab; }
