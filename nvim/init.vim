@@ -9,6 +9,9 @@ Plug 'lewis6991/impatient.nvim', {'branch': 'main'}
 " Theme
 Plug 'folke/tokyonight.nvim', {'branch': 'main'}
 
+" Highlight word under cursor
+Plug 'yamatsum/nvim-cursorline', {'branch': 'main'}
+
 " Terminal
 Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
 
@@ -60,8 +63,10 @@ Plug 'kyazdani42/nvim-web-devicons', {'branch': 'master'}
 " Comment
 Plug 'tomtom/tcomment_vim', {'branch': 'master'}
 
+Plug 'L3MON4D3/LuaSnip', {'tag': 'v2.*', 'do': 'make install_jsregexp'} " Replace <CurrentMajor> by the latest released major (first number of latest release)
+Plug 'honza/vim-snippets'
+
 Plug 'godlygeek/tabular', {'branch': 'master'}
-Plug 'SirVer/ultisnips', {'branch': 'master'}
 Plug 'alvan/vim-closetag', {'branch': 'master', 'for': 'html'}
 Plug 'terryma/vim-multiple-cursors', {'branch': 'master'}
 Plug 'mostafaqanbaryan/vim-snippets', {'branch': 'master'}
@@ -138,26 +143,6 @@ let g:startify_session_dir = '~/sessions'
 " Wordpress
 :command Sass :silent exe '!sass ' . expand('%:p') . ' ' . expand('%:p:r') . '.css'
 :command Minify :silent exe '!echo "nothing exists yet '
-
-" Save session on close
-autocmd VimLeavePre * call SaveSessionOnLeave()
-function SaveSessionOnLeave()
-    if v:this_session != "" && v:this_session != expand('~/sessions/latest.vim')
-        execute "mksession! " . v:this_session
-    else
-        let branchName = trim(substitute(system("git rev-parse --abbrev-ref HEAD"), "^[^/]*/", "", ""))
-        if branchName != ""
-            execute "mksession! ~/sessions/" . branchName . ".vim"
-        else 
-            let SNX = input("Input a name for session? ")
-            if SNX != ""
-                execute "mksession! ~/sessions/" . SNX . ".vim"
-            else
-                execute "mksession! ~/sessions/latest.vim"
-            endif
-        endif
-    endif
-endfunction
 
 " Clear and Redraw screen when an error happens
 nnoremap <Leader>l :redraw!<cr>
@@ -261,7 +246,7 @@ function DuplicateAddToArgs()
 endfunction
 
 " Go to last buffer and delete the current one
-nnoremap <silent> <Leader>bd :bnext<CR>:bd#<CR>
+nnoremap <silent> <Leader>c :bnext<CR>:bd#<CR>
 
 " Ranger
 " Make Ranger replace Netrw and be the file explorer
@@ -302,8 +287,9 @@ let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
 " Git Fugitive
 let g:fugitive_gitlab_domains = ['https://my.gitlab.com']
-nnoremap <Leader>g :Git<CR>
-" Conflict
+nnoremap <Leader>g :silent exec "!zellij action new-pane --name Lazygit -c -f -- lazygit"<CR>
+
+" Git Fugitive - Conflict
 nnoremap g[ :diffget //2<CR>
 vnoremap g[ :diffget //2<CR>
 nnoremap g] :diffget //3<CR>
@@ -318,13 +304,11 @@ inoremap <F12> <ESC>:syntax sync fromstart<CR>a
 inoremap <silent><expr> <c-space> coc#refresh()
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
 " Symbol renaming.
-nmap <leader>cu <Plug>(coc-rename)
+nmap <F2> <Plug>(coc-rename)
 " Formatting selected code.
-xmap <leader>cf  <Plug>(coc-format-selected)
-nmap <leader>cf  <Plug>(coc-format-selected)
+xmap <F12>  <Plug>(coc-format-selected)
+nmap <F12>  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
@@ -347,6 +331,14 @@ command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
+
+" Scoll popup
+nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
@@ -378,11 +370,6 @@ nnoremap \` :term<CR>
 " Words with - should be treated as 2 words
 set iskeyword-=-
 
-" Snippets Trigger configuration
-let g:UltiSnipsExpandTrigger="<Tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-
 augroup quickfix
     autocmd!
     autocmd QuickFixCmdPost [^l]* cwindow
@@ -399,10 +386,9 @@ inoremap <c-x><c-l> <plug>(fzf-complete-line)
 command! -bang PFiles call fzf#vim#files('~/Projects', <bang>0)
 nnoremap <Leader>f :GFiles<CR>
 nnoremap <Leader>z :PFiles<CR>
-nnoremap <Leader>bf :Buffers<CR>
-nnoremap <leader>p :exec ":PRg " . escape(input("Search in files: "), "()[]{}$")<CR>
-vnoremap <leader>p "cy :exec ":PRg " . escape(getreg("c"), "()[]{}$")<CR>
-nnoremap <leader>/ :call fzf#vim#grep("grep function -r " . expand("%"), 0)<LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT><LEFT>
+nnoremap <Leader>b :Buffers<CR>
+nnoremap <leader>/ :exec ":PRg " . escape(input("Search in files: "), "()[]{}$")<CR>
+vnoremap <leader>/ "cy :exec ":PRg " . escape(getreg("c"), "()[]{}$")<CR>
 imap <c-x><c-f> <plug>(fzf-complete-path)
 
 " Markdown

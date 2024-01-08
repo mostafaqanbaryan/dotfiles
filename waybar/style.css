@@ -1,6 +1,6 @@
 * {
     border: none;
-    font-family: "Monego Ligatures", "3270 Nerd Font", Roboto, Arial, sans-serif;
+    font-family: "Monego Ligatures", "Symbols Nerd Font Mono", Roboto, Arial, sans-serif;
     font-size: 13px;
     color: #ffffff;
 }
@@ -36,8 +36,14 @@ window#waybar > .horizontal {
 	background-color: rgba(0,153,153,1);
 }
 
-#workspaces button.focused {
+#workspaces button.active {
 	background-color: rgba(255, 255, 255, 0.1);
+}
+
+#window{
+    margin-left: 5px;
+    padding-left: 8px;
+    border-left: 1px solid rgba(255,255,255,0.1);
 }
 
 #clock,
@@ -50,11 +56,15 @@ window#waybar > .horizontal {
 #custom-media,
 #tray,
 #mode,
+#language,
 #custom-power,
 #custom-menu,
+#custom-notification,
+#custom-updates,
 #idle_inhibitor {
     padding: 0 10px;
 }
+
 #mode {
     color: #cc3436;
     font-weight: bold;
@@ -87,24 +97,22 @@ window#waybar > .horizontal {
 
 #custom-updates{
     border-right: 1px solid rgba(255,255,255,0.1);
-    padding-left: 8px;
-    padding-right: 8px;
+}
+
+#custom-notification {
+    border-right: 1px solid rgba(255,255,255,0.1);
 }
 
 #network{
     border-right: 1px solid rgba(255,255,255,0.1);
-    padding-right: 16px;
 }
 
 #language{
     border-right: 1px solid rgba(255,255,255,0.1);
-    padding-right: 10px;
 }
 
 #custom-media{
     font-size: 10px;
-    padding-left: 8px;
-    margin-left: 4px;
     border-radius: 5px;
 }
 
@@ -518,4 +526,37 @@ window#waybar > .horizontal {
 
 #custom-media.media-percentage-100 {
   background: linear-gradient(toright, rgba(255, 255, 255, 0.1) 100%, transparent 100%);
+}
+
+#pulseaudio-slider, #pulseaudio-slider *, #group-audio,
+#backlight-slider, #backlight-slider *, #group-backlight {
+    margin: 0;
+    padding: 0;
+}
+
+#pulseaudio-slider, 
+#backlight-slider{
+    padding-left: 10px;
+}
+
+slider {
+    min-height: 0px;
+    min-width: 0px;
+    opacity: 0;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+}
+
+trough {
+    min-height: 10px;
+    min-width: 80px;
+    border-radius: 5px;
+	background-color: rgba(255, 255, 255, 0.3);
+}
+
+highlight {
+    min-height: 10px;
+    border-radius: 5px;
+    background-color: #ffffff;
 }

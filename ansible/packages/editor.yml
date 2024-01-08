@@ -1,0 +1,40 @@
+- name: "Editor"
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: "Install fzf"
+      become: true
+      community.general.pacman: 
+        name: "fzf"
+        state: "present"
+    
+    - name: "Install bat for fzf"
+      become: true
+      community.general.pacman: 
+        name: "bat"
+        state: "present"
+    
+    - name: "Install ripgrep for searching in files"
+      become: true
+      community.general.pacman: 
+        name: "ripgrep"
+        state: "present"
+    
+    - name: "Install noto-fonts-emoji"
+      become: true
+      community.general.pacman: 
+        name: "noto-fonts-emoji"
+        state: "present"
+    
+    - name: "Install Neovim"
+      become: true
+      community.general.pacman: 
+        name: "neovim"
+        state: "present"
+    
+    - name: "Install NodeJS for COC"
+      become: true
+      community.general.pacman: 
+        name: "nodejs"
+        state: "present"
+    

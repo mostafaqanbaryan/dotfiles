@@ -1,0 +1,12 @@
+- import_playbook: packages/grant.yml
+- import_playbook: packages/tui.yml
+- import_playbook: packages/editor.yml
+- import_playbook: packages/wm.yml
+- import_playbook: packages/bar.yml
+- import_playbook: packages/rofi.yml
+- import_playbook: packages/services.yml
+- import_playbook: packages/utilities.yml
+- import_playbook: packages/scripts.yml
+- import_playbook: packages/fonts.yml
+- import_playbook: packages/config.yml
+- import_playbook: packages/revoke.yml

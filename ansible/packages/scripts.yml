@@ -1,0 +1,23 @@
+- name: "Scripts"
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: "Link scripts"
+      ansible.builtin.file:
+        src: "$PWD/../../scripts"
+        dest: "~/.scripts"
+        state: "link"
+        force: true
+    
+    - name: "Create wallpaper directory"
+      ansible.builtin.file:
+        path: "~/Pictures/wallpapers"
+        state: "directory"
+        mode: "0755"
+        recurse: true
+
+    - name: "Enable lockscreen cron"
+      ansible.builtin.cron:
+        name: "bing-lockscreen"
+        job: "$HOME/.scripts/bing-wallpaper.sh"
+        minute: "0"

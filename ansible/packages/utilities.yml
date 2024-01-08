@@ -1,0 +1,16 @@
+- name: "Utilities"
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: "Install qalculate"
+      community.general.pacman: 
+        executable: "yay"
+        name: "qalculate-gtk"
+        state: "present"
+    
+    - name: "Install google-chrome"
+      community.general.pacman: 
+        executable: "yay"
+        name: "google-chrome"
+        state: "present"
+    

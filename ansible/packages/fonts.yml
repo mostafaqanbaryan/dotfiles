@@ -1,0 +1,18 @@
+- name: "Fonts"
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: "Install vazir font"
+      ansible.builtin.command:
+        cmd: "echo https://github.com/rastikerdar/vazir-code-font/releases"
+    
+    - name: "Install nerd fonts"
+      ansible.builtin.command:
+        cmd: "echo https://www.nerdfonts.com/font-downloads > Symbols Nerd Font | Symbols Only"
+
+    - name: "Copy fonts"
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "~/.local/share/fonts"
+      with_fileglob:
+        src: "$PWD/../../fonts/*"

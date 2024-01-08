@@ -20,7 +20,6 @@ set $rofi_style 'style-2'
 
 set $menu rofi -show drun -theme $rofi_theme/$rofi_style.rasi | xargs swaymsg exec --
 
-set $lockscreen "~/lockscreen.jpg"
 set $wallpaper "~/wallpaper.jpg"
 
 # Set names for workspaces
@@ -61,6 +60,8 @@ exec wl-paste --watch cliphist store
 
 ### Share screen
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec /usr/lib/xdg-desktop-portal -r
+exec /usr/lib/xdg-desktop-portal-wlr
 
 ### Tray
 exec blueman-applet

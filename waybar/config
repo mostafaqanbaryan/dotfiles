@@ -1,8 +1,24 @@
 {
-    "modules-left": ["sway/workspaces", "custom/media"],
+    "modules-left": ["hyprland/workspaces", "hyprland/window"],
     "modules-center": ["clock", "idle_inhibitor", "custom/shamsi"],
-    "modules-right": ["sway/mode", "tray", "custom/scratchpad-indicator", "sway/language", "custom/updates", "network", "pulseaudio", "custom/screenshot", "custom/power"],
+    "modules-right": ["hyprland/submap", "tray", "custom/scratchpad-indicator", "custom/media", "hyprland/language", "network", "custom/notification", "custom/updates", "group/group-audio", "custom/screenshot", "custom/power"],
 
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "5": "",
+            "10": "",
+            "default": ""
+        }
+    },
+    "hyprland/window": {
+        "format": "<small>{}</small>",
+        "separate-outputs": true
+    },
     "mpd": {
         "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
         "format-disconnected": "Disconnected ",
@@ -29,17 +45,17 @@
         "tooltip-format": "MPD (connected)",
         "tooltip-format-disconnected": "MPD (disconnected)"
     },
-    "sway/mode": {
-        "max-length": 50,
+    "hyprland/submap": {
         "format": "<span style=\"italic\">{}</span>"
     },
     "network": {
         "tooltip-format": "{essid} ({signalStrength}%) ",
         "format-wifi": "{essid} ({signalStrength}%) ",
         "format-ethernet": "{ifname} ",
-        "format-disconnected": "", 
+        "format-disconnected": "⚠", 
         "max-length": 50,
-        "on-click": "networkmanager_dmenu"
+        "tooltip-format": "{essid}\r{ipaddr}",
+        "on-click": "sleep 0.1 && networkmanager_dmenu"
     },
     "idle_inhibitor": {
         "format": "{icon}",
@@ -57,7 +73,31 @@
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}",
         "format": "{:%H:%M:%OS}",
+        "calendar": {
+            "mode": "month",
+            "on-scroll": 1
+        },
+        "actions":  {
+            "on-click-right": "mode",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        },
         "interval": 1,
+    },
+    "group/group-audio": {
+        "orientation": "inherit",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "",
+            "transition-left-to-right": false,
+        },
+        "modules": [
+            "pulseaudio",
+            "pulseaudio/slider",
+        ]
+    },
+    "pulseaudio/slider": {
+        "orientation": "horizontal"
     },
     "pulseaudio": {
         "format": "{volume}% {icon} ",
@@ -75,11 +115,11 @@
             "car": "",
             "default": ["", "", ""]
         },
-        "on-click": "pavucontrol"
+        "on-click": "sleep 0.1 && pavucontrol"
     },
 	"custom/power": {
 		"format": " ",
-		"on-click": "swaymsg mode '$shutdown-menu'"
+		"on-click": "sleep 0.1 && $HOME/.config/rofi/scripts/powermenu_t6"
 	},
     "custom/scratchpad-indicator": {
         "format-text": "{}",
@@ -87,30 +127,34 @@
         "interval": 3,
         "exec": "~/.local/bin/scratchpad-indicator 2> /dev/null",
         "exec-if": "exit 0",
-        "on-click": "swaymsg 'scratchpad show'",
-        "on-click-right": "swaymsg 'move scratchpad'"
+        "on-click": "sleep 0.1 && swaymsg 'scratchpad show'",
+        "on-click-right": "sleep 0.1 && swaymsg 'move scratchpad'"
     },
     "custom/notification": {
-        "tooltip": true,
-        "format": "{icon}",
+        "tooltip": false,
+        "format": "{} {icon}",
         "format-icons": {
-            "notification": "<span foreground='red'><sup></sup></span>",
+            "notification": " <span foreground='red'><sup></sup></span>",
             "none": "",
-            "dnd-notification": "<span foreground='red'><sup></sup></span>",
-            "dnd-none": ""
+            "dnd-notification": " <span foreground='red'><sup></sup></span>",
+            "dnd-none": "",
+            "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "inhibited-none": "",
+            "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-inhibited-none": ""
         },
         "return-type": "json",
         "exec-if": "which swaync-client",
         "exec": "swaync-client -swb",
-        "on-click": "swaync-client -t -sw",
-        "on-click-right": "swaync-client -d -sw",
+        "on-click": "sleep 0.1 && swaync-client -t -sw",
+        "on-click-right": "sleep 0.1 && swaync-client -d -sw",
         "escape": true
     },
     "custom/media": {
         "format": "{}",
         "return-type": "json",
         "max-length": 40,
-		"on-click": "playerctl play-pause",
+		"on-click": "sleep 0.1 && playerctl play-pause",
 		"on-scroll-up": "playerctl position 5+",
 		"on-scroll-down": "playerctl position 5-",
         "format-icons": {
@@ -121,11 +165,11 @@
         "exec": "$HOME/.config/waybar/resources/./player.sh 2> /dev/null"
     },
     "custom/screenshot": {
-        "format": " ",
+        "format": "",
         "tooltip": false,
         "min-length": 3,
-        "on-click": "grim -g \"$(slurp)\" - | swappy -f -",
-        "on-click-middle": "grim -g \"$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | \"\\(.x),\\(.y) \\(.width)x\\(.height)\"' | slurp)\" - | swappy -f -"
+        "on-click": "sleep 0.1 && grim -g \"$(slurp)\" - | swappy -f -",
+        "on-click-middle": "sleep 0.1 && grim -g \"$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | \"\\(.x),\\(.y) \\(.width)x\\(.height)\"' | slurp)\" - | swappy -f -"
     },
     "custom/shamsi": {
         "format": "{}",
@@ -137,8 +181,9 @@
         "interval": 60
     },
     "custom/updates": {
-        "format": "{} Updates 󰚰",
+        "format": "{} 󰚰",
         "exec": "checkupdates | wc -l",
         "interval": 600
-    }
+    },
+    "layer": "top"
 }

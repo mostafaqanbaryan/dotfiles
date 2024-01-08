@@ -1,0 +1,36 @@
+- name: "TUI"
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: "Install fish"
+      become: true
+      community.general.pacman: 
+        name: "fish"
+        state: "present"
+    
+    - name: "Install starship"
+      become: true
+      community.general.pacman: 
+        name: "starship"
+        state: "present"
+    
+    - name: "Install wezterm"
+      become: true
+      community.general.pacman: 
+        name: "wezterm"
+        state: "present"
+    
+    - name: "Install ranger"
+      community.general.pacman: 
+        executable: "yay"
+        name: 
+          - "ranger"
+          - "python-pynvim"
+        state: "present"
+    
+    - name: "Install zellij"
+      become: true
+      community.general.pacman: 
+        name: "zellij"
+        state: "present"
+    

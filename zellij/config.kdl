@@ -1,21 +1,29 @@
 keybinds clear-defaults=true {
+    shared_except "normal" {
+        bind "Esc" { SwitchToMode "normal"; }
+    }
+
+    shared_except "normal" "entersearch" {
+        bind "Enter" { SwitchToMode "normal"; }
+    }
+
     shared_except "locked" {
+        bind "Alt g" {
+            Run "lazygit"  {
+                close_on_exit true
+            };
+            TogglePaneEmbedOrFloating;
+        }
         bind "Alt t" { NewTab; }
-        bind "Alt d" { CloseTab; }
+        bind "F9" { CloseTab; }
         bind "Alt h" { GoToPreviousTab; }
         bind "Alt l" { GoToNextTab; }
         bind "Alt z" { SwitchToMode "RenameTab"; }
         bind "Alt ;" { ToggleFloatingPanes; }
         bind "Alt a" { TogglePaneEmbedOrFloating; }
         bind "Alt f" { SwitchToMode "entersearch"; SearchInput 0; }
-        bind "Alt x" { SwitchToMode "scroll"; }
+        bind "Alt s" { SwitchToMode "scroll"; }
         bind "Alt r" { SwitchToMode "Resize"; }
-        bind "Alt s" { 
-            LaunchOrFocusPlugin "zellij:session-manager" {
-                floating true
-                move_to_focused_tab true
-            };
-        }
         bind "Alt q" { Detach; }
         bind "Alt 1" { GoToTab 1; }
         bind "Alt 2" { GoToTab 2; }
@@ -29,7 +37,6 @@ keybinds clear-defaults=true {
     }
 
     resize {
-        bind "Enter" "Esc" "Space" { SwitchToMode "normal"; }
         bind "h" "Left" { Resize "Left"; }
         bind "j" "Down" { Resize "Down"; }
         bind "k" "Up" { Resize "Up"; }
@@ -37,7 +44,6 @@ keybinds clear-defaults=true {
     }
 
     scroll {
-        bind "Enter" "Esc" { SwitchToMode "normal"; }
         bind "e" { EditScrollback; SwitchToMode "normal"; }
         bind "g" { ScrollToTop; }
         bind "G" { ScrollToBottom; }
@@ -50,7 +56,6 @@ keybinds clear-defaults=true {
     }
 
     search {
-        bind "Enter" "Esc" { SwitchToMode "normal"; }
         bind "n" { Search "Down"; }
         bind "N" { Search "Up"; }
         bind "c" { SearchToggleOption "CaseSensitivity"; }
@@ -60,7 +65,6 @@ keybinds clear-defaults=true {
 
     entersearch {
         bind "Enter" { SwitchToMode "search"; }
-        bind "Esc" { SwitchToMode "normal"; }
     }
 }
 
