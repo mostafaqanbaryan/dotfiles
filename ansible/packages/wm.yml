@@ -8,105 +8,105 @@
         executable: "yay"
         name: "hyprland"
         state: "present"
-    
+
     - name: "Install wl-clipboard"
       become: true
       community.general.pacman: 
         name: "wl-clipboard"
         state: "present"
-    
+
     - name: "Install cliphist"
       become: true
       community.general.pacman: 
         name: "cliphist"
         state: "present"
-    
+
     - name: "Install highlight"
       become: true
       community.general.pacman: 
         name: "highlight"
         state: "present"
-    
+
     - name: "Install swayidle"
       become: true
       community.general.pacman: 
         name: "swayidle"
         state: "present"
-    
+
     - name: "Install xdg-desktop-portal-wlr"
       become: true
       community.general.pacman: 
         name: "xdg-desktop-portal-wlr"
         state: "present"
-    
+
     - name: "Install xdg-desktop-portal-hyprland"
       become: true
       community.general.pacman: 
         name: "xdg-desktop-portal-hyprland"
         state: "present"
-    
+
     - name: "Install xdg-desktop-portal-gtk"
       become: true
       community.general.pacman: 
         name: "xdg-desktop-portal-gtk"
         state: "present"
-    
+
     - name: "Install piprwire"
       become: true
       community.general.pacman: 
         name: "pipewire"
         state: "present"
-    
+
     - name: "Install piprwire-pulse"
       become: true
       community.general.pacman: 
         name: "pipewire-pulse"
         state: "present"
-    
+
     - name: "Install wireplumber"
       become: true
       community.general.pacman: 
         name: "wireplumber"
         state: "present"
-    
+
     - name: "Install waypaper"
       ignore_errors: true
       community.general.pacman: 
         executable: "yay"
         name: "waypaper-git"
         state: "present"
-    
+
     - name: "Install swaylock-effects"
       ignore_errors: true
       community.general.pacman: 
         executable: "yay"
         name: "swaylock-effects-git"
         state: "present"
-    
+
     - name: "Install swww"
       ignore_errors: true
       community.general.pacman: 
         executable: "yay"
         name: "swww"
         state: "present"
-    
+
     - name: "Install fastfetch"
       become: true
       community.general.pacman: 
         name: "fastfetch"
         state: "present"
-    
+
     - name: "Install xcp - cp alternative"
       ignore_errors: true
       community.general.pacman: 
         executable: "yay"
         name: "xcp"
         state: "present"
-    
+
     - name: "Install dust - du alternative"
       ignore_errors: true
       community.general.pacman: 
         executable: "yay"
         name: "dust"
         state: "present"
-    
+

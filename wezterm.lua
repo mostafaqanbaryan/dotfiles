@@ -3,6 +3,7 @@ local act = wezterm.action
 
 return {
     automatically_reload_config = true,
+    enable_kitty_keyboard = true,
     color_scheme = "Catppuccin Macchiato",
     font = wezterm.font_with_fallback {
         "Monego Ligatures",

@@ -1,0 +1,10 @@
+[manager]
+sort_by = "natural"
+sort_reverse = false
+linemode = "size"
+show_hidden = true
+
+[opener]
+edit = [
+	{ exec = '[ -n "$HELIX" ] && ~/.scripts/helix.sh edit $@ || $EDITOR $@', block = true,  for = "unix" },
+]

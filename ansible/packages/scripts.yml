@@ -8,7 +8,7 @@
         dest: "~/.scripts"
         state: "link"
         force: true
-    
+
     - name: "Create wallpaper directory"
       ansible.builtin.file:
         path: "~/Pictures/wallpapers"

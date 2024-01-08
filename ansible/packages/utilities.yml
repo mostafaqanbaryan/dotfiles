@@ -7,10 +7,10 @@
         executable: "yay"
         name: "qalculate-gtk"
         state: "present"
-    
+
     - name: "Install google-chrome"
       community.general.pacman: 
         executable: "yay"
         name: "google-chrome"
         state: "present"
-    
+

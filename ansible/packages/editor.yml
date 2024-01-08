@@ -2,39 +2,71 @@
   hosts: localhost
   connection: local
   tasks:
+    - name: "Install Helix"
+      become: true
+      community.general.pacman: 
+        name: "helix"
+        state: "present"
+
+    - name: "Clone SCLS"
+      ansible.builtin.git:
+        repo: "https://github.com/estin/simple-completion-language-server.git"
+        dest: "/tmp/scls"
+        depth: 1
+        single_branch: true
+        recursive: true
+        version: main
+
+    - name: "Install SCLS"
+      ansible.builtin.command:
+        chdir: "/tmp/scls"
+        cmd: "cargo install --path ."
+
+    - name: "Install Yazi"
+      become: true
+      community.general.pacman: 
+        name: "yazi"
+        state: "present"
+
+    - name: "Install Tig"
+      become: true
+      community.general.pacman: 
+        name: "tig"
+        state: "present"
+
     - name: "Install fzf"
       become: true
       community.general.pacman: 
         name: "fzf"
         state: "present"
-    
+
     - name: "Install bat for fzf"
       become: true
       community.general.pacman: 
         name: "bat"
         state: "present"
-    
+
     - name: "Install ripgrep for searching in files"
       become: true
       community.general.pacman: 
         name: "ripgrep"
         state: "present"
-    
+
     - name: "Install noto-fonts-emoji"
       become: true
       community.general.pacman: 
         name: "noto-fonts-emoji"
         state: "present"
-    
+
     - name: "Install Neovim"
       become: true
       community.general.pacman: 
         name: "neovim"
         state: "present"
-    
+
     - name: "Install NodeJS for COC"
       become: true
       community.general.pacman: 
         name: "nodejs"
         state: "present"
-    
+
