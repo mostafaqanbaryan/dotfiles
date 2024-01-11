@@ -4,6 +4,8 @@ local act = wezterm.action
 return {
     automatically_reload_config = true,
     enable_kitty_keyboard = true,
+    enable_wayland = false,
+    window_background_opacity = 0.9,
     color_scheme = "Catppuccin Macchiato",
     font = wezterm.font_with_fallback {
         "Monego Ligatures",

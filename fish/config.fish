@@ -20,8 +20,8 @@ end
 source ~/env.fish
 
 # Editor
-abbr v "nvim"
-abbr hx "helix"
+alias v "nvim"
+alias hx "helix"
 
 # Dockers
 abbr dcu "docker-compose -f docker-compose.yml up -d"
@@ -82,5 +82,5 @@ set fish_cursor_visual underscore
 set -Ua fish_user_paths $HOME/.cargo/bin
 
 ## Default applications
-set -Ux BROWSER google-chrome-stable
-set -Ux EDITOR helix
+set -gx BROWSER google-chrome-stable
+set -gx EDITOR helix
