@@ -13,7 +13,7 @@ oldIFS="$IFS"
 IFS="
 "
 tmp=/tmp/lockscreen.jpg
-lockscreen=${LOCK_SCREEN_WALLPAPER_PATH:-"$HOME/Pictures/wallpapers"}
+directory=${LOCK_SCREEN_WALLPAPER_PATH:-"$HOME/Pictures/wallpapers"}
 output=${WALLPAPER_OUTPUT:-"*"}
 baseurl="https://www.bing.com/"
 result=$(curl $baseurl"HPImageArchive.aspx?format=js&idx=0&n=20&mkt=en-US" -s)
@@ -22,10 +22,10 @@ urls=( $(echo $images | jq -r '.url') )
 dates=( $(echo $images | jq -r '.startdate') )
 counter=0
 for url in "${urls[@]}"; do
-    filename=$lockscreen/${dates[$counter]}.jpg
+    filename=${dates[$counter]}.jpg
     counter=$[$counter+1]
-    if [ ! -e $filename ]; then
-        wget "$baseurl$url" -q -O $filename
+    if [ ! -e $directory/$filename ]; then
+       aria2c "$baseurl$url" -q -d $directory -o $filename
     fi
 done
 IFS=$oldIFS
