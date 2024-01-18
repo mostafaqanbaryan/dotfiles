@@ -107,6 +107,19 @@
         state: "link"
         force: true
 
+    - name: "Remove alacritty's old config"
+      ignore_errors: true
+      ansible.builtin.file:
+        path: "~/.config/alacritty"
+        state: "absent"
+
+    - name: "Link alacritty's config"
+      ansible.builtin.file:
+        src: "$PWD/../../alacritty"
+        dest: "~/.config/alacritty"
+        state: "link"
+        force: true
+
     - name: "Remove ranger's old config"
       ignore_errors: true
       ansible.builtin.file:

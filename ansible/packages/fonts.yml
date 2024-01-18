@@ -16,3 +16,10 @@
         dest: "~/.local/share/fonts"
       with_fileglob:
         src: "$PWD/../../fonts/*"
+
+    - name: "Add alias fonts for alacritty"
+      ansible.builtin.file:
+        src: "$PWD/../../fontconfig"
+        dest: "~/.config/fontconfig"
+        state: "link"
+        force: true
