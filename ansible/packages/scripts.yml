@@ -21,3 +21,11 @@
         name: "bing-lockscreen"
         job: "$HOME/.scripts/bing-wallpaper.sh"
         minute: "0"
+
+    - name: "Enable mirrorlist cron"
+      become: true
+      ansible.builtin.cron:
+        name: "update-mirrorlist"
+        job: "reflector --latest 5 --sort score --save /etc/pacman.d/mirrorlist"
+        minute: "0"
+        hour: "*/6"
