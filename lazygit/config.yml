@@ -59,7 +59,7 @@ customCommands:
     command: "sh ~/dotfiles/lazygit/commit.sh {{.Form.Type | quote}} {{.Form.TaskId | quote}} {{.Form.Message | quote}} {{.Form.Flag}}"
     loadingText: "Commiting..."
 
-  - key: "n"
+  - key: "N"
     context: "localBranches"
     description: "Create new branch"
     prompts:
@@ -93,11 +93,8 @@ customCommands:
     context: "global"
     description: "Push"
     prompts:
-      - type: "confirm"
-        title: "Merge request"
-        body: "Create a merge request in Gitlab?"
       - type: "input"
-        title: "Target branch name"
+        title: "Create merge request on what branch?"
         key: "Target"
         initialValue: "develop"
         suggestions:
