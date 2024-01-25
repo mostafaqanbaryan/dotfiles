@@ -1,8 +1,3 @@
-[[language]]
-name = "typescript"
-auto-format = true
-formatter = { command = "prettier", args = ["--parser", "typescript"] }
-
 # introduce new language server
 [language-server.scls]
 command = "simple-completion-language-server"
@@ -20,9 +15,37 @@ feature_unicode_input = true  # enable "unicode input"
 RUST_LOG = "info,simple-completion-langauge-server=info"
 LOG_FILE = "/tmp/completion.log"
 
-# append langage server to existed languages
+[[language]]
+name = "jsx"
+language-servers = [ "scls", "typescript-language-server" ]
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+indent = { tab-width = 4, unit = "    " }
+
+[[language]]
+name = "javascript"
+language-servers = [ "scls", "typescript-language-server" ]
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+indent = { tab-width = 4, unit = "    " }
+
+[[language]]
+name = "typescript"
+language-servers = [ "scls", "typescript-language-server" ]
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+indent = { tab-width = 4, unit = "    " }
+
+[[language]]
+name = "tsx"
+language-servers = [ "scls", "typescript-language-server" ]
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+indent = { tab-width = 4, unit = "    " }
+
 [[language]]
 name = "rust"
+auto-format = true
 language-servers = [ "scls", "rust-analyzer" ]
 
 [[language]]
@@ -31,23 +54,9 @@ language-servers = [ "scls" ]
 
 [[language]]
 name = "php"
+auto-format = true
 language-servers = [ "scls", "intelephense" ]
-
-[[language]]
-name = "javascript"
-language-servers = [ "scls", "typescript-language-server" ]
-
-[[language]]
-name = "typescript"
-language-servers = [ "scls", "typescript-language-server" ]
-
-[[language]]
-name = "jsx"
-language-servers = [ "scls", "typescript-language-server" ]
-
-[[language]]
-name = "tsx"
-language-servers = [ "scls", "typescript-language-server" ]
+formatter = { command = "npx", args = ["prettier", "--parser", "php"] }
 
 # introduce a new language to enable completion on any doc by forcing set language with :set-language stub
 [[language]]

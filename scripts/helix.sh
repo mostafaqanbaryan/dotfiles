@@ -1,8 +1,9 @@
 #!/bin/sh
 command="$1"
 param="$2"
-filename=$(echo "$param" | sed "s#~#$HOME#" | sed "s#\(^[^/]\)#$PWD/\\1#")
-basedir=$(dirname "$filename")
+fullpath=$(echo "$param" | sed "s#~#$HOME#" | sed "s#\(^[^/]\)#$PWD/\\1#")
+filename=$(basename $fullpath)
+basedir=$(dirname "$fullpath")
 line="$3"
 col="$4"
 
@@ -17,7 +18,7 @@ case "$command" in
         echo $param | cliphist store
         ;;
     "blame")
-        zellij run -f -c --name Blame -- tig blame +$line -- $filename
+        zellij run -f -c --name Blame -- tig -C $basedir blame +$line -- $filename
         ;;
     "git")
         zellij run -f -c --name LazyGit -- lazygit
