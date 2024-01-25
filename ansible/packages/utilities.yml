@@ -13,3 +13,9 @@
         executable: "yay"
         name: "brave-bin"
         state: "present"
+
+    - name: "Install heynote"
+      community.general.pacman: 
+        executable: "yay"
+        name: "heynote"
+        state: "present"
