@@ -15,7 +15,7 @@ keybinds clear-defaults=true {
             TogglePaneEmbedOrFloating;
         }
         bind "Alt t" { NewTab; }
-        bind "F9" { CloseTab; }
+        bind "F10" { CloseTab; }
         bind "Alt h" { GoToPreviousTab; }
         bind "Alt l" { GoToNextTab; }
         bind "Alt z" { SwitchToMode "RenameTab"; }

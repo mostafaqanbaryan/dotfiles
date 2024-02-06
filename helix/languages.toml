@@ -1,0 +1,69 @@
+# introduce new language server
+[language-server.scls]
+command = "simple-completion-language-server"
+
+[language-server.scls.config]
+max_completion_items = 20     # set max completion results len for each group: words, snippets, unicode-input
+snippets_first = true         # completions will return before snippets by default
+feature_words = true          # enable completion by word
+feature_snippets = true       # enable snippets
+feature_unicode_input = true  # enable "unicode input"
+
+
+# write logs to /tmp/completion.log
+[language-server.scls.environment]
+RUST_LOG = "info,simple-completion-langauge-server=info"
+LOG_FILE = "/tmp/completion.log"
+
+[[language]]
+name = "jsx"
+language-servers = [ "scls", "typescript-language-server" ]
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+indent = { tab-width = 4, unit = "    " }
+
+[[language]]
+name = "javascript"
+language-servers = [ "scls", "typescript-language-server" ]
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+indent = { tab-width = 4, unit = "    " }
+
+[[language]]
+name = "typescript"
+language-servers = [ "scls", "typescript-language-server" ]
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+indent = { tab-width = 4, unit = "    " }
+
+[[language]]
+name = "tsx"
+language-servers = [ "scls", "typescript-language-server" ]
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
+indent = { tab-width = 4, unit = "    " }
+
+[[language]]
+name = "rust"
+auto-format = true
+language-servers = [ "scls", "rust-analyzer" ]
+
+[[language]]
+name = "git-commit"
+language-servers = [ "scls" ]
+
+[[language]]
+name = "php"
+auto-format = true
+language-servers = [ "scls", "intelephense" ]
+formatter = { command = "npx", args = ["prettier", "--parser", "php"] }
+
+# introduce a new language to enable completion on any doc by forcing set language with :set-language stub
+[[language]]
+name = "stub"
+scope = "text.stub"
+file-types = []
+shebangs = []
+roots = []
+auto-format = false
+language-servers = [ "scls" ]

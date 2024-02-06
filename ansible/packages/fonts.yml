@@ -5,7 +5,7 @@
     - name: "Install vazir font"
       ansible.builtin.command:
         cmd: "echo https://github.com/rastikerdar/vazir-code-font/releases"
-    
+
     - name: "Install nerd fonts"
       ansible.builtin.command:
         cmd: "echo https://www.nerdfonts.com/font-downloads > Symbols Nerd Font | Symbols Only"

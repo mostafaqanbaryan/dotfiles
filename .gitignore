@@ -25,3 +25,6 @@ fish/*
 
 # Lazygit
 lazygit/state.yml
+
+# Helix
+helix/external-snippets

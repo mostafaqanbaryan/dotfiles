@@ -191,6 +191,20 @@ ins_left {
   color = { fg = colors.violet, gui = 'bold' },
 }
 
+-- local function filepath()
+--     local s = vim.fn.expand('%:~:h:t')
+--     local s2 = vim.fn.expand('%:~:h:h:t')
+--     if s2 ~= '.' then
+--         s = s2 .. '/' .. s
+--     end
+--     local s3 = vim.fn.expand('%:~:h:h:h:t')
+--     if s3 ~= '.' then
+--         s = s3 .. '/' .. s
+--     end
+--     s = s .. '/' .. vim.fn.expand('%:~:t')
+--     return s
+-- end
+
 -- Insert mid section. You can make any number of sections in neovim :)
 -- for lualine it's any number greater then 2
 ins_left {
@@ -201,13 +215,20 @@ ins_left {
 
 ins_left {
   'filename',
+  path = 1,
   cond = conditions.buffer_not_empty,
   color = { fg = colors.magenta, gui = 'bold' },
+  symbols = {
+      modified = "",
+      readonly = "󰌾"
+  }
 }
 
 ins_left {
   'diagnostics',
-  sources = { 'coc' },
+  sources = {'nvim_diagnostic', 'coc'},
+  always_visible = false,
+  update_in_insert = false,
   symbols = { error = ' ', warn = ' ', info = ' ' },
   diagnostics_color = {
     color_error = { fg = colors.red },

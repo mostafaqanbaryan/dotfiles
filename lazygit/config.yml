@@ -59,7 +59,7 @@ customCommands:
     command: "sh ~/dotfiles/lazygit/commit.sh {{.Form.Type | quote}} {{.Form.TaskId | quote}} {{.Form.Message | quote}} {{.Form.Flag}}"
     loadingText: "Commiting..."
 
-  - key: "n"
+  - key: "N"
     context: "localBranches"
     description: "Create new branch"
     prompts:
@@ -86,18 +86,15 @@ customCommands:
         initialValue: ""
         suggestions:
           preset: "branches"
-    command: "git checkout -b \"$(test -n {{.Form.TaskId}} && echo {{.Form.Type}}/T{{.Form.TaskId}}-{{.Form.Name}} || echo {{.Form.Type}}/{{.Form.Name}})\""
+    command: "sh ~/dotfiles/lazygit/branch.sh {{.Form.Type | quote}} {{.Form.TaskId | quote}} {{.Form.Name | quote}}"
     loadingText: "Checking out to the new branch..."
 
   - key: "<c-p>"
     context: "global"
     description: "Push"
     prompts:
-      - type: "confirm"
-        title: "Merge request"
-        body: "Create a merge request in Gitlab?"
       - type: "input"
-        title: "Target branch name"
+        title: "Create merge request on what branch?"
         key: "Target"
         initialValue: "develop"
         suggestions:

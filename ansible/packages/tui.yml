@@ -7,19 +7,19 @@
       community.general.pacman: 
         name: "fish"
         state: "present"
-    
+
     - name: "Install starship"
       become: true
       community.general.pacman: 
         name: "starship"
         state: "present"
-    
+
     - name: "Install wezterm"
       become: true
       community.general.pacman: 
         name: "wezterm"
         state: "present"
-    
+
     - name: "Install ranger"
       community.general.pacman: 
         executable: "yay"
@@ -27,10 +27,16 @@
           - "ranger"
           - "python-pynvim"
         state: "present"
-    
+
+    - name: "Install Yazi"
+      become: true
+      community.general.pacman: 
+        name: "yazi"
+        state: "present"
+
     - name: "Install zellij"
       become: true
       community.general.pacman: 
         name: "zellij"
         state: "present"
-    
+

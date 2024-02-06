@@ -66,3 +66,10 @@ require 'treesitter-context'.setup{
     zindex = 20, -- The Z-index of the context window
     mode = 'cursor',  -- Line used to calculate context. Choices: 'cursor', 'topline'
 }
+
+require("treesitter_indent_object").setup()
+
+vim.keymap.set({"x", "o"}, "ai", "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_outer()<CR>")
+vim.keymap.set({"x", "o"}, "aI", "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_outer(true)<CR>")
+vim.keymap.set({"x", "o"}, "ii", "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_inner()<CR>")
+vim.keymap.set({"x", "o"}, "iI", "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_inner(true)<CR>")

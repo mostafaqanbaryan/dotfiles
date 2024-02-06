@@ -1,0 +1,16 @@
+[[sources]] # list of sources to load
+name = "friendly-snippets"  # optional name shown on snippet description
+git = "https://github.com/rafamadriz/friendly-snippets.git" # git repo with snippets collections
+
+[[sources.paths]] # list of paths to load on current source
+scope = ["php"]  # optional scopes for current snippets
+path = "snippets/php/php.json"  # where snippet file or dir located in repo
+
+[[sources.paths]] # list of paths to load on current source
+scope = ["javascript", "jsx"]  # optional scopes for current snippets
+path = "snippets/javascript/javascript.json"  # where snippet file or dir located in repo
+
+[[sources.paths]] # list of paths to load on current source
+scope = ["typescript", "tsx"]  # optional scopes for current snippets
+path = "snippets/javascript/javascript.json"  # where snippet file or dir located in repo
+

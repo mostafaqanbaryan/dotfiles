@@ -20,10 +20,8 @@ end
 source ~/env.fish
 
 # Editor
-set -x EDITOR "nvim"
-abbr v "nvim"
-abbr hx "helix"
-abbr h "helix"
+alias v "nvim"
+alias hx "helix"
 
 # Dockers
 abbr dcu "docker-compose -f docker-compose.yml up -d"
@@ -65,7 +63,6 @@ bind -M insert \ca forward-bigword
 alias coffee 'termdown "3m" && sh -c "speaker-test -t sine -f 1000 -l 1 & sleep .5 && kill -9 \$!" 2>&1 > /dev/null'
 alias download 'aria2c -c -x 10 -s 10'
 alias kodi 'kodi --standalone --windowing=x11'
-alias nnn 'nnn -deoH'
 alias g 'lazygit'
 alias cp 'xcp'
 alias du 'dust'
@@ -85,5 +82,5 @@ set fish_cursor_visual underscore
 set -Ua fish_user_paths $HOME/.cargo/bin
 
 ## Default applications
-set -Ux BROWSER google-chrome-stable
-set -Ux EDITOR nvim
+set -gx BROWSER google-chrome-stable
+set -gx EDITOR nvim

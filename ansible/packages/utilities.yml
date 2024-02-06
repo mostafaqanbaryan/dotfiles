@@ -7,10 +7,15 @@
         executable: "yay"
         name: "qalculate-gtk"
         state: "present"
-    
-    - name: "Install google-chrome"
+
+    - name: "Install brave"
       community.general.pacman: 
         executable: "yay"
-        name: "google-chrome"
+        name: "brave-bin"
         state: "present"
-    
+
+    - name: "Install heynote"
+      community.general.pacman: 
+        executable: "yay"
+        name: "heynote"
+        state: "present"

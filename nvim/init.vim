@@ -9,15 +9,14 @@ Plug 'lewis6991/impatient.nvim', {'branch': 'main'}
 " Theme
 Plug 'folke/tokyonight.nvim', {'branch': 'main'}
 
+" Better notifications
+Plug 'folke/noice.nvim', {'branch': 'main'}
+Plug 'MunifTanjim/nui.nvim'
+Plug 'rcarriga/nvim-notify'
+
 " Highlight word under cursor
 Plug 'yamatsum/nvim-cursorline', {'branch': 'main'}
 
-" Terminal
-Plug 'akinsho/toggleterm.nvim', {'tag' : '*'}
-
-" Chdir to root of project
-Plug 'airblade/vim-rooter', {'branch' : 'master'}
- 
 " Fuzzy
 Plug 'junegunn/fzf', {'branch': 'master'}
 Plug 'junegunn/fzf.vim', {'branch': 'master'}
@@ -31,18 +30,16 @@ Plug 'iamcco/markdown-preview.nvim', {'do': 'cd app && yarn install', 'for': 'ma
 " Ranger
 Plug 'kevinhwang91/rnvimr'
 
-" Wezterm
-Plug 'numToStr/Navigator.nvim'
-
 " Autopairs
 Plug 'windwp/nvim-autopairs'
+Plug 'alvan/vim-closetag', {'branch': 'master', 'for': 'html'}
+Plug 'tpope/vim-surround', {'branch': 'master'}
  
 " LSP
 Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocUpdate'}
 Plug 'pangloss/vim-javascript', {'branch': 'master', 'for': 'javascript'}
 Plug 'cakebaker/scss-syntax.vim', {'branch': 'master', 'for': 'sass'}
 Plug 'HiPhish/rainbow-delimiters.nvim', {'branch': 'master'}
-Plug 'lukas-reineke/indent-blankline.nvim', {'branch': 'master'}
 
 " Fix class/function name at top
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -51,8 +48,7 @@ Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'kiyoon/treesitter-indent-object.nvim'
 
 " Git
-Plug 'tpope/vim-fugitive', {'branch': 'master'}
-Plug 'shumphrey/fugitive-gitlab.vim', {'branch': 'master', 'on': 'Gbrowse'}
+" Plug 'tpope/vim-fugitive', {'branch': 'master'}
 Plug 'lewis6991/gitsigns.nvim', {'branch': 'main'}
 Plug 'sindrets/diffview.nvim', {'branch': 'main'}
 
@@ -65,19 +61,12 @@ Plug 'tomtom/tcomment_vim', {'branch': 'master'}
 
 Plug 'L3MON4D3/LuaSnip', {'tag': 'v2.*', 'do': 'make install_jsregexp'} " Replace <CurrentMajor> by the latest released major (first number of latest release)
 Plug 'honza/vim-snippets'
+Plug 'mostafaqanbaryan/vim-snippets', {'branch': 'master'}
 
 Plug 'godlygeek/tabular', {'branch': 'master'}
-Plug 'alvan/vim-closetag', {'branch': 'master', 'for': 'html'}
 Plug 'terryma/vim-multiple-cursors', {'branch': 'master'}
-Plug 'mostafaqanbaryan/vim-snippets', {'branch': 'master'}
-Plug 'tpope/vim-surround', {'branch': 'master'}
 Plug 'tpope/vim-unimpaired', {'branch': 'master'}
 Plug 'norcalli/nvim-colorizer.lua', {'branch': 'master'}
-
-" Hardtime
-Plug 'm4xshen/hardtime.nvim'
-Plug 'MunifTanjim/nui.nvim'
-Plug 'nvim-lua/plenary.nvim'
 
 " Welcome
 Plug 'mhinz/vim-startify', {'branch': 'master'}
@@ -113,6 +102,17 @@ set expandtab
 set preserveindent
 set scrolloff=7
 set ruler
+set wh=10
+set wmh=10
+set splitbelow
+set splitright
+
+" Words with - should be treated as 2 words
+set iskeyword-=-
+
+" Show indentation
+set list
+set listchars=multispace:┊\ \ \ 
 
  " Maintain undo history between sessions
 set undolevels=100
@@ -134,8 +134,11 @@ set signcolumn=yes
 set ignorecase
 set smartcase
 
+" Add indent for p/li in html
+let g:html_indent_tags = 'li\│p'
+
 filetype plugin indent on
-let g:startify_session_dir = '~/sessions'
+let g:startify_session_dir = '~/.config/nvim/sessions'
 
 :command! -nargs=0 Config :exe 'edit ' . stdpath('config') . '/init.vim'
 :command! -nargs=0 Reload :exe 'source ' . stdpath('config') . '/init.vim'
@@ -147,23 +150,25 @@ let g:startify_session_dir = '~/sessions'
 " Clear and Redraw screen when an error happens
 nnoremap <Leader>l :redraw!<cr>
 
+" ReRender syntax highlights
+nnoremap <F12> :syntax sync fromstart<CR>
+inoremap <F12> <ESC>:syntax sync fromstart<CR>a
+
 " clear search
 nnoremap <silent> <leader>\ :let @/=''<CR>:nohlsearch<CR>
 
-" Copy/Paste outside vim
-nnoremap <C-c><C-c> "+yiw
-vnoremap <C-c><C-c> "+y
-nnoremap <C-p><C-p> "+p
-vnoremap <C-p><C-p> <Esc>o<Esc>"+p
+" Remap paste
+vnoremap p P
+vnoremap P p
 
-" Add brace to current line
-nnoremap <Leader>[ kA{<Esc>jo}<Esc>
+" Copy/Paste outside vim
+nnoremap <Leader>y "+yiw
+vnoremap <Leader>y "+y
+nnoremap <Leader>p "+p
+vnoremap <Leader>p <Esc>o<Esc>"+p
 
 " Copy full address
-nnoremap <Leader>y :let @+=expand('%')<CR>
-
-" Add indent for p/li in html
-let g:html_indent_tags = 'li\│p'
+nnoremap <Leader>x :let @+=expand('%')<CR>
 
 " Toggle between 2 last files
 nnoremap <Leader><Leader> <C-^>
@@ -178,9 +183,6 @@ nnoremap <C-l> <C-W>l<C-W>_zz
 nnoremap <C-h> <C-W>h<C-W>_zz
 nnoremap <C-<> <C-W>> " Increase split size
 nnoremap <C->> <C-W>< " Decrease split size
-set wmh=0
-set splitbelow
-set splitright
 
 " remap movement to move by column layout
 nnoremap j gj
@@ -193,57 +195,16 @@ nnoremap k gk
 :command PHP :set ft=php
 :command SQL :set ft=sql
 
-" Theme
-syntax on
-set t_Co=256
-if exists('+termguicolors')
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-    set termguicolors
-endif
-
 " Title as filename
 autocmd BufEnter * let &titlestring = expand("%:t") . " (" . expand("%:~:h") . ") - Vim"
 set title
 
-" Open a file in the same directory as the current one
-cnoreabbrev f find %:h
-
-" Stop Rooter echoing the project directory
-let g:rooter_silent_chdir = 1
-let g:rooter_resolve_links = 1
-let g:rooter_change_directory_for_non_project_files = 'current'
-let g:rooter_patterns = ['.git', '_darcs', '.hg', '.bzr', '.svn', 'Makefile', 'package.json', '>Projects']
-let g:rooter_buftypes = ['']
-
 " Search in VisualMode
-vnoremap // y/<C-R>"<CR>
-vnoremap // y/<C-R>"<CR>
+vnoremap / y/<C-R>"<CR>
+vnoremap / y/<C-R>"<CR>
 
 " Replace word under cursor
 nnoremap cu :%s/<C-R><C-W>//cg<Left><Left><Left>
-
-" Close sentence with ;
-nnoremap <Leader>; mqA;<Esc>`q
-
-" Args mapping
-nnoremap <Leader>ad :argdelete %<CR>
-nnoremap <Leader>ac :argdo argdelete %<CR>
-nnoremap <Leader>aa :call DuplicateAddToArgs()<CR>
-function DuplicateAddToArgs()
-    let already_added = 0
-    for ar in argv() 
-        if expand('%') == ar
-            let already_added = 1
-        endif
-    endfor
-    if already_added == 0
-        :argadd %
-        :echo expand('%')
-    else
-        :echo 'Already added to args'
-    endif
-endfunction
 
 " Go to last buffer and delete the current one
 nnoremap <silent> <Leader>c :bnext<CR>:bd#<CR>
@@ -259,7 +220,7 @@ let g:rnvimr_hide_gitignore = 0
 let g:rnvimr_enable_bw = 1
 " Add a shadow window, value is equal to 100 will disable shadow
 let g:rnvimr_shadow_winblend = 70
-nnoremap <Leader>r :RnvimrToggle<CR>
+nnoremap <silent> <Leader>e :RnvimrToggle<CR>
 
 " Fold/Unfold saving
 augroup AutoSaveFolds
@@ -285,19 +246,15 @@ let g:syntastic_javascript_jsxhint_exec = 'jsx-jshint-wrapper'
 " EditorConfig
 let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
-" Git Fugitive
-let g:fugitive_gitlab_domains = ['https://my.gitlab.com']
-nnoremap <Leader>g :silent exec "!zellij action new-pane --name Lazygit -c -f -- lazygit"<CR>
+" Git
+nnoremap <silent> <Leader>g :silent exec "!zellij action new-pane --name Lazygit -c -f -- lazygit"<CR>
+nnoremap <silent> <Leader>B :Git blame<CR>
 
 " Git Fugitive - Conflict
 nnoremap g[ :diffget //2<CR>
 vnoremap g[ :diffget //2<CR>
 nnoremap g] :diffget //3<CR>
 vnoremap g] :diffget //3<CR>
-
-" ReRender syntax highlights
-nnoremap <F12> :syntax sync fromstart<CR>
-inoremap <F12> <ESC>:syntax sync fromstart<CR>a
 
 " COC mapping
 " Use <c-space> to trigger completion.
@@ -307,8 +264,14 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 " Symbol renaming.
 nmap <F2> <Plug>(coc-rename)
 " Formatting selected code.
-xmap <F12>  <Plug>(coc-format-selected)
-nmap <F12>  <Plug>(coc-format-selected)
+" xmap <F12> <Plug>(coc-format-selected)
+" nmap <F12> <Plug>(coc-format-selected)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
 
 augroup mygroup
   autocmd!
@@ -326,23 +289,8 @@ inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float
 vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
 vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 
-" Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
-
-" Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocAction('format')
-
-" Scoll popup
-nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-" nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> [d <Plug>(coc-diagnostic-prev)
+nmap <silent> ]d <Plug>(coc-diagnostic-next)
 nmap <silent> gd :call CocAction('jumpDefinition')<CR>
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
@@ -360,35 +308,29 @@ endfunction
 " Prettier on save
 command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
 autocmd BufWritePre *.php execute "Prettier"
-
-" Select suggestion using Enter
-inoremap <silent><expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
-
-" Terminal mapping
-nnoremap \` :term<CR>
-
-" Words with - should be treated as 2 words
-set iskeyword-=-
-
 augroup quickfix
     autocmd!
-    autocmd QuickFixCmdPost [^l]* cwindow
+        autocmd QuickFixCmdPost [^l]* cwindow
     autocmd QuickFixCmdPost l* lwindow
 augroup END
 
 " Fuzzy
-let g:fzf_preview_window = ['up,50%', 'ctrl-/']
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.95 } }
-command! -bang -nargs=* PRg
-  \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>, 1), 1, fzf#vim#with_preview({'dir': system('git rev-parse --show-toplevel 2> /dev/null')[:-2]}), <bang>0)
+let g:fzf_vim = {}
+let g:fzf_vim.layout = { 'window': { 'width': 0.9, 'height': 0.95 } }
+let g:fzf_vim.preview_window = ['up,50%', 'ctrl-/']
+let g:fzf_vim.preview_window_options = '--scroll-off=5 --scrollbar "▌▐" --bind "ctrl-l:first" --bind "ctrl-h:last" --bind "ctrl-a:select-all" --bind "ctrl-c:deselect-all" --bind "ctrl-d:preview-half-page-down" --bind "ctrl-u:preview-half-page-up" --bind "ctrl-/:change-preview-window(right,70%|down,40%,border-top|hidden|)"'
+
+command! -bang -nargs=* PRg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>, 1), 1, fzf#vim#with_preview({'dir': system('git rev-parse --show-toplevel 2> /dev/null')[:-2], 'options': g:fzf_vim.preview_window_options . ' --prompt "Search in files> "' }), <bang>0)
+command! -bang -nargs=* -complete=dir CurrentDirFiles call fzf#vim#files(<q-args>, fzf#vim#with_preview({ 'dir': expand('%:p:h') , 'options': g:fzf_vim.preview_window_options }), <bang>0)
+command! -bang -nargs=? CGFiles call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(<q-args> == "?" ? { "placeholder": "" , 'options': g:fzf_vim.preview_window_options } : {'options': g:fzf_vim.preview_window_options }, ), <bang>0)
+command! -bar -bang -nargs=? -complete=buffer CBuffers call fzf#vim#buffers(<q-args>, fzf#vim#with_preview({ "placeholder": "{1}", 'options': g:fzf_vim.preview_window_options }), <bang>0)
 
 inoremap <c-x><c-l> <plug>(fzf-complete-line)
-command! -bang PFiles call fzf#vim#files('~/Projects', <bang>0)
-nnoremap <Leader>f :GFiles<CR>
-nnoremap <Leader>z :PFiles<CR>
-nnoremap <Leader>b :Buffers<CR>
-nnoremap <leader>/ :exec ":PRg " . escape(input("Search in files: "), "()[]{}$")<CR>
-vnoremap <leader>/ "cy :exec ":PRg " . escape(getreg("c"), "()[]{}$")<CR>
+nnoremap <silent> <Leader>f :CGFiles --exclude-standard --cached --others<CR>
+nnoremap <silent> <Leader>b :CBuffers<CR>
+nnoremap <silent> <Leader>o :CurrentDirFiles<CR>
+nnoremap <silent> <leader>/ :exec ":PRg " . escape(input("Search in files: "), "()[]{}$")<CR>
+vnoremap <silent> <leader>/ "cy :exec ":PRg " . escape(getreg("c"), "()[]{}$")<CR>
 imap <c-x><c-f> <plug>(fzf-complete-path)
 
 " Markdown

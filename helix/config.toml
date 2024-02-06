@@ -1,0 +1,101 @@
+theme = "tokyonight_storm"
+
+[editor]
+line-number = "relative"
+cursorline = true
+rulers = []
+color-modes = true
+true-color = true
+undercurl = true
+idle-timeout = 0
+completion-trigger-len = 1
+
+[editor.lsp]
+display-inlay-hints = true
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.file-picker]
+hidden = false
+
+[editor.statusline]
+left = ["mode", "version-control", "spinner", "read-only-indicator"]
+center = ["file-name", "file-modification-indicator"]
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+[editor.whitespace]
+space = "none"
+tab = "all"
+newline = "none"
+
+[editor.whitespace.characters]
+nbsp = "⍽"
+tab = "→"
+newline = "⏎"
+
+[editor.indent-guides]
+render = true
+character = "┊"
+
+[editor.soft-wrap]
+enable = true
+
+[keys.normal]
+"*" = ["search_selection", "search"]
+j = "move_line_down"
+k = "move_line_up"
+
+[keys.normal."]"]
+b = "goto_next_buffer"
+e = ["extend_to_line_bounds", "delete_selection", "paste_after"]
+
+[keys.normal."["]
+b = "goto_previous_buffer"
+e = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
+
+[keys.normal."space"]
+"/" = ["search_selection", "global_search"]
+c = ":bc"
+o = "file_picker_in_current_buffer_directory"
+g = ":sh ~/.scripts/helix.sh git $(~/.scripts/helix.sh getfileinfo)"
+e = ":sh ~/.scripts/helix.sh explorer $(~/.scripts/helix.sh getfileinfo)"
+B = ":sh ~/.scripts/helix.sh blame $(~/.scripts/helix.sh getfileinfo)"
+r = ":pipe ~/.scripts/helix.sh getfileinfo"
+x = ":sh ~/.scripts/helix.sh copy $(~/.scripts/helix.sh getfileinfo | awk \"{ print \\$1 }\")"
+
+[keys.normal."'"]
+"." = "repeat_last_motion"
+"`" = "switch_to_uppercase"
+d = "delete_selection_noyank"
+c = "change_selection_noyank"
+C = "copy_selection_on_prev_line"
+s = "split_selection_on_newline"
+minus = "merge_selections"
+_ = "merge_consecutive_selections"
+";" = "flip_selections"
+o = "expand_selection"
+i = "shrink_selection"
+p = "select_prev_sibling"
+n = "select_next_sibling"
+e = "move_parent_node_end"
+b = "move_parent_node_start"
+x = "shrink_to_line_bounds"
+u = "earlier"
+U = "later"
+J = "join_selections_space"
+K = "remove_selections"
+"," = "remove_primary_selection"
+"(" = "rotate_selection_contents_backward"
+")" = "rotate_selection_contents_forward"
+":" = "ensure_selections_forward"
+"|" = "shell_pipe_to"
+"!" = "shell_append_output"
+
+# select mode
+# "A-e" => "extend_parent_node_end",
+# "A-b" => "extend_parent_node_start",

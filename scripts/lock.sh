@@ -1,5 +1,5 @@
 #!/bin/bash
-lock=$(find "$HOME/Pictures/wallpapers" -type f -name "*.jpg" | sort -k2M | tail -n 1)
+lock=$(find "$HOME/Pictures/wallpapers" -type f -name "*.jpg"  -printf "\n%AD %AT %p" -type f -name "*.jpg" | sort -k1.8n -k1.8nr -k1 | tail -n 1 | awk '{ print $3 }')
 if [ -z "$lock" ]; then
     lock="/$HOME/dotfiles/wallpaper.jpg"
 fi
