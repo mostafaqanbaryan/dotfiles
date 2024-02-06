@@ -1,7 +1,7 @@
 # Dotfiles
 My current setup and tools I use:
-- [Pop!_OS](https://pop.system76.com/)
-- [Sway](https://github.com/swaywm/sway) as window manager
+- [EndeavourOS](https://endeavouros.com/)
+- [Hyprland](https://hyprland.org/) as window manager
 - [Waybar](https://github.com/Alexays/Waybar) as status bar
 - [Wezterm](https://github.com/wez/wezterm) as my terminal
 - [Monaco](https://github.com/cseelus/monego) fonts
@@ -20,11 +20,7 @@ My current setup and tools I use:
 - Highlight in ranger
 
 ## Setup
-- Clone this repository to you SSD (For better performance of `VIM`)
-- Run `init.sh`
-- Run `touch ~/env.fish`
-    - You can add your config inside this file
+- Clone this repository to your SSD (For better performance of `VIM`)
+- Run `ansible-playbook -K ansible/playbook.yml`
+- You can add your `fish` config inside `~/env.fish`
 - Enjoy!
-
-## Todo
-- Split vim/nvim config and make it cleaner

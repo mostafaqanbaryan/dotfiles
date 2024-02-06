@@ -16,6 +16,11 @@
         state: "link"
         force: true
 
+    - name: "Create fish local config"
+      ansible.builtin.file:
+        path: "~/env.fish"
+        state: "file"
+
     - name: "Remove hyprland's old config"
       ignore_errors: true
       ansible.builtin.file:
