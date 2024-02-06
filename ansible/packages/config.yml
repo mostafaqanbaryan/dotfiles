@@ -55,32 +55,6 @@
         state: "link"
         force: true
 
-    - name: "Remove helix's old config"
-      ignore_errors: true
-      ansible.builtin.file:
-        path: "~/.config/helix"
-        state: "absent"
-
-    - name: "Link helix's config"
-      ansible.builtin.file:
-        src: "$PWD/../../helix"
-        dest: "~/.config/helix"
-        state: "link"
-        force: true
-
-    - name: "Remove yazi's old config"
-      ignore_errors: true
-      ansible.builtin.file:
-        path: "~/.config/yazi"
-        state: "absent"
-
-    - name: "Link yazi's config"
-      ansible.builtin.file:
-        src: "$PWD/../../yazi"
-        dest: "~/.config/yazi"
-        state: "link"
-        force: true
-
     - name: "Remove starship's old config"
       ignore_errors: true
       ansible.builtin.file:
@@ -117,6 +91,19 @@
       ansible.builtin.file:
         src: "$PWD/../../ranger.conf"
         dest: "~/.config/ranger/ranger.conf"
+        state: "link"
+        force: true
+
+    - name: "Remove yazi's old config"
+      ignore_errors: true
+      ansible.builtin.file:
+        path: "~/.config/yazi"
+        state: "absent"
+
+    - name: "Link yazi's config"
+      ansible.builtin.file:
+        src: "$PWD/../../yazi"
+        dest: "~/.config/yazi"
         state: "link"
         force: true
 

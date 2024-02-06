@@ -83,4 +83,4 @@ set -Ua fish_user_paths $HOME/.cargo/bin
 
 ## Default applications
 set -gx BROWSER google-chrome-stable
-set -gx EDITOR helix
+set -gx EDITOR nvim

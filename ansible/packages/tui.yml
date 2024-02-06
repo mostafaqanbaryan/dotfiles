@@ -28,6 +28,12 @@
           - "python-pynvim"
         state: "present"
 
+    - name: "Install Yazi"
+      become: true
+      community.general.pacman: 
+        name: "yazi"
+        state: "present"
+
     - name: "Install zellij"
       become: true
       community.general.pacman: 
