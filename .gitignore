@@ -13,6 +13,7 @@ nvim/view
 nvim/bundle
 nvim/undodir
 nvim/.netrwhist
+nvim/lazy-lock.json
 
 # Zellij
 zellij/plugins
