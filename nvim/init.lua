@@ -29,31 +29,220 @@ require("lazy").setup({
     { 'rcarriga/nvim-notify', branch = 'master' },
 
     -- Highlight word under cursor
-    { 'yamatsum/nvim-cursorline', branch = 'main' },
+    {
+        'yamatsum/nvim-cursorline',
+        branch = 'main',
+        config = function()
+            require('nvim-cursorline').setup {
+                cursorline = {
+                    enable = true,
+                    timeout = 1000,
+                    number = false,
+                },
+                cursorword = {
+                    enable = true,
+                    min_length = 3,
+                    hl = { underline = true },
+                }
+            }
+        end
+    },
 
     -- Fuzzy
-    { 'junegunn/fzf', branch = 'master' },
-    { 'junegunn/fzf.vim', branch = 'master' },
+    {
+        'junegunn/fzf.vim',
+        branch = 'master',
+        dependencies = {
+            { 'junegunn/fzf', branch = 'master' },
+        },
+        config = function()
+            vim.g.fzf_vim = {
+                layout = { window = { width = 0.9, height = 0.95 } },
+                preview_window = { 'up,50%', 'ctrl-/' }
+            }
+            local preview_window_options = '--scroll-off=5 --scrollbar "▌▐" --bind "ctrl-l:first" --bind "ctrl-h:last" --bind "ctrl-a:select-all" --bind "ctrl-c:deselect-all" --bind "ctrl-d:preview-half-page-down" --bind "ctrl-u:preview-half-page-up" --bind "ctrl-/:change-preview-window(right,70%|down,40%,border-top|hidden|)"'
+
+            vim.api.nvim_create_user_command('PRg', 'call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case " . shellescape(<q-args>, 1), 1, fzf#vim#with_preview({"dir": system("git rev-parse --show-toplevel 2> /dev/null")[:-2], "options": \'' .. preview_window_options .. ' --prompt \"Search in files> \"\' }), <bang>0)', { bang = true, nargs = '*' })
+
+            vim.api.nvim_create_user_command('CurrentDirFiles', "call fzf#vim#files(<q-args>, fzf#vim#with_preview({ 'dir': expand('%:p:h') , 'options': '" .. preview_window_options .. "' }), <bang>0)", { bang = true, nargs = '*' })
+
+            vim.api.nvim_create_user_command('CGFiles', ':call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(<q-args> == "?" ? { "placeholder": "" , "options": \'' .. preview_window_options .. '\' } : {"options": \'' .. preview_window_options .. '\' }, ), <bang>0)', { bang = true, nargs = '?' })
+
+            vim.api.nvim_create_user_command('CBuffers', ':call fzf#vim#buffers(<q-args>, fzf#vim#with_preview({ "placeholder": "{1}", "options": \'' .. preview_window_options .. '\' }), <bang>0)', { bang = true, nargs = '?', bar = true, complete = 'buffer' })
+
+            vim.keymap.set('i', '<c-x><c-l>', '<plug>(fzf-complete-line)')
+            vim.keymap.set('n', '<Leader>f', ':CGFiles --exclude-standard --cached --others<CR>', { silent = true })
+            vim.keymap.set('n', '<Leader>b', ':CBuffers<CR>', { silent = true })
+            vim.keymap.set('n', '<Leader>o', ':CurrentDirFiles<CR>', { silent = true })
+            vim.keymap.set('n', '<leader>/', ':exec ":PRg " . escape(input("Search in files: "), "()[]{}$")<CR>', { silent = true })
+            vim.keymap.set('v', '<leader>/', '"cy :exec ":PRg " . escape(getreg("c"), "()[]{}$")<CR>', { silent = true })
+            vim.keymap.set('i', '<c-x><c-f>', '<plug>(fzf-complete-path)')
+        end
+    },
 
     -- EditorConfig
-    { 'editorconfig/editorconfig-vim', branch = 'master' },
+    {
+        'editorconfig/editorconfig-vim',
+        branch = 'master',
+        config = function()
+            vim.go.EditorConfig_exclude_patterns = 'fugitive://.*,scp://.*'
+        end
+    },
 
     -- Markdown
-    { 'iamcco/markdown-preview.nvim', branch = 'master', build = 'cd app && yarn install', ft = 'markdown', lazy = true },
+    {
+        'iamcco/markdown-preview.nvim',
+        branch = 'master',
+        build = 'cd app && yarn install',
+        ft = 'markdown',
+        lazy = true,
+        config = function()
+            vim.g.mkdp_auto_start = 0
+            vim.g.mkdp_auto_close = 0
+            vim.g.mkdp_refresh_slow = 0
+            vim.g.mkdp_port = 9981
+        end
+    },
 
     -- Ranger
-    { 'kevinhwang91/rnvimr', branch = 'main', keys = '<leader>e', lazy = true },
+    {
+        'kevinhwang91/rnvimr',
+        branch = 'main',
+        keys = '<leader>e',
+        cmd = 'RnvimrToggle',
+        lazy = true,
+        config = function()
+            -- Make Ranger replace Netrw and be the file explorer
+            vim.go.rnvimr_enable_ex = 1
+            -- Make Ranger to be hidden after picking a file
+            vim.go.rnvimr_enable_picker = 1
+            -- Hide the files included in gitignore
+            vim.go.rnvimr_hide_gitignore = 0
+            -- Make Neovim wipe the buffers corresponding to the files deleted by Ranger
+            vim.go.rnvimr_enable_bw = 1
+            -- Add a shadow window, value is equal to 100 will disable shadow
+            vim.go.rnvimr_shadow_winblend = 70
+            vim.keymap.set('n', '<Leader>e', ':RnvimrToggle<CR>', { silent = true })
+        end
+    },
 
     -- Autopairs
-    { 'windwp/nvim-autopairs', branch = 'master' },
+    {
+        'windwp/nvim-autopairs',
+        branch = 'master',
+        config = function()
+            require 'nvim-autopairs'.setup({
+                check_ts = true,
+                ts_config = {
+                    lua = {'string'},-- it will not add a pair on that treesitter node
+                    javascript = {'template_string'},
+                    java = false,-- don't check treesitter on java
+                }
+            })
+        end
+    },
     { 'alvan/vim-closetag', branch = 'master', ft = 'html', lazy = true },
     { 'tpope/vim-surround', branch = 'master' },
+    { 'HiPhish/rainbow-delimiters.nvim', branch = 'master' },
 
     -- LSP
-    { 'neoclide/coc.nvim', branch = 'master', build = ':CocUpdate', lazy = true },
-    { 'pangloss/vim-javascript', branch = 'master', ft = 'javascript', lazy = true },
-    { 'cakebaker/scss-syntax.vim', branch = 'master', ft = 'sass', lazy = true },
-    { 'HiPhish/rainbow-delimiters.nvim', branch = 'master' },
+    {
+        'VonHeikemen/lsp-zero.nvim',
+        branch = 'v3.x',
+        lazy = true,
+        config = false,
+        init = function()
+            -- Disable automatic setup, we are doing it manually
+            vim.g.lsp_zero_extend_cmp = 0
+            vim.g.lsp_zero_extend_lspconfig = 0
+        end,
+    },
+    {
+        'williamboman/mason.nvim',
+        lazy = false,
+        config = true,
+    },
+    {
+        'neovim/nvim-lspconfig',
+        cmd = {'LspInfo', 'LspInstall', 'LspStart'},
+        event = {'BufReadPre', 'BufNewFile'},
+        dependencies = {
+            {'hrsh7th/cmp-nvim-lsp'},
+            {'williamboman/mason-lspconfig.nvim'},
+        },
+        config = function()
+            -- This is where all the LSP shenanigans will live
+            local lsp_zero = require('lsp-zero')
+            lsp_zero.extend_lspconfig()
+
+            --- if you want to know more about lsp-zero and mason.nvim
+            --- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guides/integrate-with-mason-nvim.md
+            lsp_zero.on_attach(function(client, bufnr)
+                -- see :help lsp-zero-keybindings
+                -- to learn the available actions
+                lsp_zero.default_keymaps({ buffer = bufnr })
+            end)
+
+            require('mason-lspconfig').setup({
+                ensure_installed = { "intelephense", "tsserver", "lua_ls" },
+                handlers = {
+                    lsp_zero.default_setup,
+                    lua_ls = function()
+                        -- (Optional) Configure lua language server for neovim
+                        local lua_opts = lsp_zero.nvim_lua_ls()
+                        require('lspconfig').lua_ls.setup(lua_opts)
+                    end,
+                }
+            })
+        end
+    },
+
+    -- Autocompletion
+    {
+        'hrsh7th/nvim-cmp',
+        event = 'InsertEnter',
+        dependencies = {
+            {
+                'L3MON4D3/LuaSnip',
+                version = "v2.*",
+                build = "make install_jsregexp",
+                lazy = false ,
+                dependencies = {
+                    { 'saadparwaiz1/cmp_luasnip', branch = 'main' },
+                    { 'rafamadriz/friendly-snippets', branch = 'main' },
+                },
+            }
+        },
+        config = function()
+            require("luasnip.loaders.from_vscode").lazy_load()
+
+            -- Here is where you configure the autocompletion settings.
+            local lsp_zero = require('lsp-zero')
+            lsp_zero.extend_cmp()
+
+            -- And you can configure cmp even more, if you want to.
+            local cmp = require('cmp')
+            local cmp_action = lsp_zero.cmp_action()
+
+            cmp.setup({
+                sources = {
+                    {name = 'path'},
+                    {name = 'nvim_lsp'},
+                    {name = 'nvim_lua'},
+                    {name = 'luasnip'},
+                    {name = 'buffer', keyword_length = 2},
+                },
+                formatting = lsp_zero.cmp_format(),
+                mapping = cmp.mapping.preset.insert({
+                    ['<C-Space>'] = cmp.mapping.complete(),
+                    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+                    ['<C-d>'] = cmp.mapping.scroll_docs(4),
+                    ['<C-f>'] = cmp_action.luasnip_jump_forward(),
+                    ['<C-b>'] = cmp_action.luasnip_jump_backward(),
+                })
+            })
+        end
+    },
 
     -- Fix class/function name at top
     { 'nvim-treesitter/nvim-treesitter', branch = 'master', build = ':TSUpdate' },
@@ -63,31 +252,73 @@ require("lazy").setup({
 
     -- Git
     { 'lewis6991/gitsigns.nvim', branch = 'main' },
-    { 'tpope/vim-fugitive', branch = 'master', lazy = true },
+    {
+        'tpope/vim-fugitive',
+        branch = 'master',
+        lazy = true,
+        config = function()
+            vim.keymap.set('n', 'g[', ':diffget //2<CR>')
+            vim.keymap.set('v', 'g[', ':diffget //2<CR>')
+            vim.keymap.set('n', 'g]', ':diffget //3<CR>')
+            vim.keymap.set('v', 'g]', ':diffget //3<CR>')
+            vim.keymap.set('n', '<Leader>B', ':Git blame<CR>', { silent = true })
+        end
+    },
     { 'sindrets/diffview.nvim', branch = 'main', cmd = 'DiffviewOpen', lazy = true },
 
     -- Statusbar
-    { 'nvim-lualine/lualine.nvim', branch = 'master' },
-    { 'kyazdani42/nvim-web-devicons', branch = 'master' },
+    {
+        'nvim-lualine/lualine.nvim',
+        branch = 'master',
+        dependencies = {
+            { 'kyazdani42/nvim-web-devicons', branch = 'master' },
+        },
+        config = function()
+            require './statusbar'
+        end
+    },
 
     -- Comment
-    { 'tomtom/tcomment_vim', branch = 'master', keys = 'gcc', lazy = true },
+    { 'tomtom/tcomment_vim', branch = 'master' },
 
-    { 'L3MON4D3/LuaSnip', branch = 'master', build = 'make install_jsregexp', lazy = true },
-    { 'honza/vim-snippets', branch = 'master', lazy = true },
-    { 'mostafaqanbaryan/vim-snippets', branch = 'master', lazy = true },
-
-    { 'godlygeek/tabular', branch = 'master', cmd = 'Tabular', lazy = true },
     { 'terryma/vim-multiple-cursors', branch = 'master', lazy = true },
     { 'tpope/vim-unimpaired', branch = 'master', lazy = true },
-    { 'norcalli/nvim-colorizer.lua', branch = 'master', lazy = true },
+    {
+        'godlygeek/tabular',
+        branch = 'master',
+        cmd = 'Tabular',
+        lazy = true,
+        config = function()
+            vim.keymap.set('n', '<Leader>=', ':Tab /=<CR> :%retab!<CR>')
+            vim.keymap.set('n', '<Leader>:', ':Tab /:<CR> :%retab!<CR>')
+            vim.keymap.set('n', '<Leader>,', ':Tab /,<CR> :%retab!<CR>')
+        end
+    },
+    {
+        'norcalli/nvim-colorizer.lua',
+         branch = 'master',
+         lazy = true,
+         config = function()
+            require 'colorizer'.setup()
+        end
+    },
 
     -- Welcome
-    { 'mhinz/vim-startify', branch = 'master' }
+    {
+        'mhinz/vim-startify',
+        branch = 'master',
+        config = function()
+            vim.g.startify_session_dir = '~/.config/nvim/sessions'
+        end
+    }
 });
 
 -- Cache plugins
-require('impatient')
+require 'impatient'
+require './theme'
+require './git'
+require './treesitter'
+require './delimiters'
 
 -- RTL
 vim.opt.termbidi = true
@@ -119,7 +350,7 @@ vim.opt.splitright = true
 
 -- Show indentation
 vim.opt.list = true
-vim.o.listchars = 'multispace: ┊   '
+vim.o.listchars = 'multispace:┊   '
 
 -- Maintain undo history between sessions
 vim.opt.undolevels = 500
@@ -143,9 +374,6 @@ vim.opt.smartcase = true
 
 -- Add indent for p/li in html
 vim.g.html_indent_tags = 'li│p'
-
--- filetype plugin indent on
-vim.g.startify_session_dir = '~/.config/nvim/sessions'
 
 vim.api.nvim_create_user_command('Config', ":exe 'edit ' . stdpath('config') . '/init.lua'", { bang = true, nargs = 0 })
 vim.api.nvim_create_user_command('Reload', ":exe 'source ' . stdpath('config') . '/init.lua'", { bang = true, nargs = 0 })
@@ -215,19 +443,6 @@ vim.keymap.set('n', 'cu', ':%s/<C-R><C-W>//cg<Left><Left><Left>')
 -- Go to last buffer and delete the current one
 vim.keymap.set('n', '<Leader>c', ':bnext<CR>:bd#<CR>', { silent = true })
 
--- Ranger
--- Make Ranger replace Netrw and be the file explorer
-vim.go.rnvimr_enable_ex = 1
--- Make Ranger to be hidden after picking a file
-vim.go.rnvimr_enable_picker = 1
--- Hide the files included in gitignore
-vim.go.rnvimr_hide_gitignore = 0
--- Make Neovim wipe the buffers corresponding to the files deleted by Ranger
-vim.go.rnvimr_enable_bw = 1
--- Add a shadow window, value is equal to 100 will disable shadow
-vim.go.rnvimr_shadow_winblend = 70
-vim.keymap.set('n', '<Leader>e', ':RnvimrToggle<CR>', { silent = true })
-
 -- Fold/Unfold saving
 local auAutoSaveFolds = vim.api.nvim_create_augroup('AutoSaveFolds', { clear = true });
 vim.api.nvim_create_autocmd({ 'BufWinLeave' }, {
@@ -246,88 +461,21 @@ vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-f>', '<C-f>zz')
 vim.keymap.set('n', '<C-b>', '<C-b>zz')
 
--- Tabular
-vim.keymap.set('n', '<Leader>=', ':Tab /=<CR> :%retab!<CR>')
-vim.keymap.set('n', '<Leader>:', ':Tab /:<CR> :%retab!<CR>')
-vim.keymap.set('n', '<Leader>,', ':Tab /,<CR> :%retab!<CR>')
-
 -- JSX Syntax to JS
 vim.go.syntastic_javascript_checkers = 'eslint'
 vim.go.syntastic_javascript_jsxhint_exec = 'jsx-jshint-wrapper'
 
--- EditorConfig
-vim.go.EditorConfig_exclude_patterns = 'fugitive://.*,scp://.*'
-
--- Git
+-- Lazygit
 vim.keymap.set('n', '<Leader>g', ':silent exec "!zellij action new-pane --name Lazygit -c -f -- lazygit"<CR>', { silent = true })
-vim.keymap.set('n', '<Leader>B', ':Git blame<CR>', { silent = true })
-
--- Git Fugitive - Conflict
-vim.keymap.set('n', 'g[', ':diffget //2<CR>')
-vim.keymap.set('v', 'g[', ':diffget //2<CR>')
-vim.keymap.set('n', 'g]', ':diffget //3<CR>')
-vim.keymap.set('v', 'g]', ':diffget //3<CR>')
-
--- COC mapping
--- Use <c-space> to trigger completion.
-vim.keymap.set('i', '<c-space>', 'coc#refresh()', { silent = true, expr = true })
--- Use K to show documentation in preview window.
-vim.keymap.set('n', 'K', ':call show_documentation()<CR>', { silent = true })
--- Symbol renaming.
-vim.keymap.set('n', '<F2>', '<Plug>(coc-rename)', { silent = true })
--- Formatting selected code.
--- xmap <F12> <Plug>(coc-format-selected)
--- nmap <F12> <Plug>(coc-format-selected)
-
--- Add `:OR` command for organize imports of the current buffer.
-vim.api.nvim_create_user_command('OR', ":call CocAction('runCommand', 'editor.action.organizeImport')", { bang = true, nargs = 0 })
-
--- Add `:Format` command to format current buffer.
-vim.api.nvim_create_user_command('Format', ":call CocAction('format')", { bang = true, nargs = 0 })
-
-local auMygroup = vim.api.nvim_create_augroup('mygroup', { clear = true });
-vim.api.nvim_create_autocmd({ 'FileType' }, {
-    group = auMygroup,
-    pattern = { 'typescript', 'json' },
-    command = 'setl formatexpr=CocAction("formatSelected")',
-})
-vim.api.nvim_create_autocmd({ 'User' }, {
-    group = auMygroup,
-    pattern = 'CocJumpPlaceholder',
-    command = 'call CocActionAsync("showSignatureHelp")',
-})
-
--- Remap <C-f> and <C-b> for scroll float windows/popups.
-vim.keymap.set('n', '<C-f>','coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', { silent = true, expr = true, nowait = true })
-vim.keymap.set('n', '<C-b>', 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', { silent = true, expr = true, nowait = true })
-vim.keymap.set('i', '<C-f>', 'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(1)<cr>" : "<Right>"', { silent = true, expr = true, nowait = true })
-vim.keymap.set('i', '<C-b>', 'coc#float#has_scroll() ? "<c-r>=coc#float#scroll(0)<cr>" : "<Left>"', { silent = true, expr = true, nowait = true })
-vim.keymap.set('v', '<C-f>', 'coc#float#has_scroll() ? coc#float#scroll(1) : "<C-f>"', { silent = true, expr = true, nowait = true })
-vim.keymap.set('v', '<C-b>', 'coc#float#has_scroll() ? coc#float#scroll(0) : "<C-b>"', { silent = true, expr = true, nowait = true })
-
-vim.keymap.set('n', '[d', '<Plug>(coc-diagnostic-prev)', { silent = true })
-vim.keymap.set('n', ']d', '<Plug>(coc-diagnostic-next)', { silent = true })
-vim.keymap.set('n', 'gd', ':call CocAction("jumpDefinition")<CR>', { silent = true })
-vim.keymap.set('n', 'gi', '<Plug>(coc-implementation)', { silent = true })
-vim.keymap.set('n', 'gr', '<Plug>(coc-references)', { silent = true })
-vim.g.coc_global_extensions = { 'coc-json', 'coc-tsserver', 'coc-phpls', 'coc-html', 'coc-prettier', 'coc-css', 'coc-eslint', 'coc-svg', 'coc-sql', 'coc-snippets', '@yaegassy/coc-tailwindcss3' }
--- function! s:show_documentation()
---   if (index(['vim','help'], &filetype) >= 0)
---     execute 'h '.expand('<cword>')
---   elseif (coc#rpc#ready())
---     call CocActionAsync('doHover')
---   else
---     execute '!' . &keywordprg . " " . expand('<cword>')
---   endif
--- endfunction
 
 -- Prettier on save
-vim.api.nvim_create_user_command('Prettier', ":call CocAction('runCommand', 'prettier.formatFile')", { bang = true, nargs = 0 })
-vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
-    group = auQuickfix,
-    pattern = '*.php',
-    command = 'execute "Prettier"',
-})
+-- vim.api.nvim_create_user_command('Prettier', ":call CocAction('runCommand', 'prettier.formatFile')", { bang = true, nargs = 0 })
+-- vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
+--     group = auQuickfix,
+--     pattern = '*.php',
+--     command = 'execute "Prettier"',
+-- })
+
 local auQuickfix = vim.api.nvim_create_augroup('quickfix', { clear = true });
 vim.api.nvim_create_autocmd({ 'QuickFixCmdPost' }, {
     group = auQuickfix,
@@ -339,62 +487,3 @@ vim.api.nvim_create_autocmd({ 'QuickFixCmdPost' }, {
     pattern = 'l*',
     command = 'lwindow',
 })
-
--- Fuzzy
-vim.g.fzf_vim = {
-    layout = { window = { width = 0.9, height = 0.95 } },
-    preview_window = { 'up,50%', 'ctrl-/' }
-}
-local preview_window_options = '--scroll-off=5 --scrollbar "▌▐" --bind "ctrl-l:first" --bind "ctrl-h:last" --bind "ctrl-a:select-all" --bind "ctrl-c:deselect-all" --bind "ctrl-d:preview-half-page-down" --bind "ctrl-u:preview-half-page-up" --bind "ctrl-/:change-preview-window(right,70%|down,40%,border-top|hidden|)"'
-
-vim.api.nvim_create_user_command('PRg', 'call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case " . shellescape(<q-args>, 1), 1, fzf#vim#with_preview({"dir": system("git rev-parse --show-toplevel 2> /dev/null")[:-2], "options": \'' .. preview_window_options .. ' --prompt \"Search in files> \"\' }), <bang>0)', { bang = true, nargs = '*' })
-
-vim.api.nvim_create_user_command('CurrentDirFiles', "call fzf#vim#files(<q-args>, fzf#vim#with_preview({ 'dir': expand('%:p:h') , 'options': '" .. preview_window_options .. "' }), <bang>0)", { bang = true, nargs = '*' })
-
-vim.api.nvim_create_user_command('CGFiles', ':call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(<q-args> == "?" ? { "placeholder": "" , "options": \'' .. preview_window_options .. '\' } : {"options": \'' .. preview_window_options .. '\' }, ), <bang>0)', { bang = true, nargs = '?' })
-
-vim.api.nvim_create_user_command('CBuffers', ':call fzf#vim#buffers(<q-args>, fzf#vim#with_preview({ "placeholder": "{1}", "options": \'' .. preview_window_options .. '\' }), <bang>0)', { bang = true, nargs = '?', bar = true, complete = 'buffer' })
-
-vim.keymap.set('i', '<c-x><c-l>', '<plug>(fzf-complete-line)')
-vim.keymap.set('n', '<Leader>f', ':CGFiles --exclude-standard --cached --others<CR>', { silent = true })
-vim.keymap.set('n', '<Leader>b', ':CBuffers<CR>', { silent = true })
-vim.keymap.set('n', '<Leader>o', ':CurrentDirFiles<CR>', { silent = true })
-vim.keymap.set('n', '<leader>/', ':exec ":PRg " . escape(input("Search in files: "), "()[]{}$")<CR>', { silent = true })
-vim.keymap.set('v', '<leader>/', '"cy :exec ":PRg " . escape(getreg("c"), "()[]{}$")<CR>', { silent = true })
-vim.keymap.set('i', '<c-x><c-f>', '<plug>(fzf-complete-path)')
-
--- Markdown
-vim.g.mkdp_auto_start = 0
-vim.g.mkdp_auto_close = 0
-vim.g.mkdp_refresh_slow = 0
-vim.g.mkdp_port = 9981
-
-require './theme'
-require './git'
-require './treesitter'
-require './statusbar'
-require './delimiters'
-require 'colorizer'.setup()
-require 'nvim-autopairs'.setup({
-    check_ts = true,
-    ts_config = {
-        lua = {'string'},-- it will not add a pair on that treesitter node
-        javascript = {'template_string'},
-        java = false,-- don't check treesitter on java
-    }
-})
-
-require('nvim-cursorline').setup {
-    cursorline = {
-        enable = true,
-        timeout = 1000,
-        number = false,
-    },
-    cursorword = {
-        enable = true,
-        min_length = 3,
-        hl = { underline = true },
-    }
-}
-
-require("luasnip.loaders.from_snipmate").lazy_load()
