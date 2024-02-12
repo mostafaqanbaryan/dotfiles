@@ -1,4 +1,5 @@
 vim.api.shell = '/bin/bash'
+vim.loader.enable()
 
 -- <Leader> as <space>
 vim.g.mapleader = ' '
@@ -18,15 +19,77 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Faster startup
 require("lazy").setup({
-    { 'lewis6991/impatient.nvim', branch = 'main' },
-
     -- Theme
-    { 'folke/tokyonight.nvim', branch = 'main' },
+    {
+        'folke/tokyonight.nvim',
+        branch = 'main',
+        config = function()
+            require("tokyonight").setup({
+                -- your configuration comes here
+                -- or leave it empty to use the default settings
+                style = "moon", -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
+                light_style = "day", -- The theme is used when the background is set to light
+                transparent = false, -- Enable this to disable setting the background color
+                terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
+                styles = {
+                    -- Style to be applied to different syntax groups
+                    -- Value is any valid attr-list value for `:help nvim_set_hl`
+                    comments = { italic = true },
+                    keywords = { italic = true },
+                    functions = {},
+                    variables = {},
+                    -- Background styles. Can be "dark", "transparent" or "normal"
+                    sidebars = "dark", -- style for sidebars, see below
+                    floats = "dark", -- style for floating windows
+                },
+                sidebars = { "qf", "help" }, -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
+                -- day_brightness = 0.3, -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
+                hide_inactive_statusline = false, -- Enabling this option, will hide inactive statuslines and replace them with a thin border instead. Should work with the standard **StatusLine** and **LuaLine**.
+                dim_inactive = false, -- dims inactive windows
+                lualine_bold = false, -- When `true`, section headers in the lualine theme will be bold
+
+                on_colors = function(colors) end,
+                on_highlights = function(highlights, colors) end,
+            })
+            vim.cmd[[colorscheme tokyonight]]
+            vim.cmd[[hi TreesitterContext guibg=#232433]]
+            vim.cmd[[hi TreesitterContextLineNumber guifg=#98C379]]
+            vim.cmd[[hi Folded guibg=NONE]]
+            vim.cmd[[hi Folded guifg=#737aa2]]
+            vim.cmd[[hi Folded ctermbg=NONE]]
+            vim.cmd[[hi Search guifg=#ff6000]]
+        end
+    },
 
     -- Better notifications
-    { 'folke/noice.nvim', branch = 'main' },
-    { 'MunifTanjim/nui.nvim', branch = 'main' },
-    { 'rcarriga/nvim-notify', branch = 'master' },
+    {
+        'folke/noice.nvim',
+        branch = 'main',
+        dependencies = {
+            { 'MunifTanjim/nui.nvim', branch = 'main' },
+            { 'rcarriga/nvim-notify', branch = 'master' },
+        },
+        config = function()
+            vim.notify = require("notify")
+            require("noice").setup({
+                lsp = {
+                    -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+                    override = {
+                        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                        ["vim.lsp.util.stylize_markdown"] = true,
+                    },
+                },
+                -- you can enable a preset for easier configuration
+                presets = {
+                    bottom_search = true, -- use a classic bottom cmdline for search
+                    command_palette = true, -- position the cmdline and popupmenu together
+                    long_message_to_split = true, -- long messages will be sent to a split
+                    inc_rename = false, -- enables an input dialog for inc-rename.nvim
+                    lsp_doc_border = false, -- add a border to hover docs and signature help
+                },
+            })
+        end
+    },
 
     -- Highlight word under cursor
     {
@@ -143,7 +206,29 @@ require("lazy").setup({
     },
     { 'alvan/vim-closetag', branch = 'master', ft = 'html', lazy = true },
     { 'tpope/vim-surround', branch = 'master' },
-    { 'HiPhish/rainbow-delimiters.nvim', branch = 'master' },
+    {
+        'HiPhish/rainbow-delimiters.nvim',
+        branch = 'master',
+        config = function()
+            local rainbow_delimiters = require 'rainbow-delimiters'
+
+            vim.g.rainbow_delimiters = {
+                strategy = {
+                    [''] = rainbow_delimiters.strategy['global'],
+                    vim = rainbow_delimiters.strategy['local'],
+                },
+                highlight = {
+                    'RainbowDelimiterRed',
+                    'RainbowDelimiterYellow',
+                    'RainbowDelimiterBlue',
+                    'RainbowDelimiterOrange',
+                    'RainbowDelimiterGreen',
+                    'RainbowDelimiterViolet',
+                    'RainbowDelimiterCyan',
+                },
+            }
+        end
+    },
 
     -- LSP
     {
@@ -225,6 +310,9 @@ require("lazy").setup({
             local cmp_action = lsp_zero.cmp_action()
 
             cmp.setup({
+                completion = {
+                    completeopt = 'menu,menuone,noinsert'
+                },
                 sources = {
                     {name = 'path'},
                     {name = 'nvim_lsp'},
@@ -245,13 +333,69 @@ require("lazy").setup({
     },
 
     -- Fix class/function name at top
-    { 'nvim-treesitter/nvim-treesitter', branch = 'master', build = ':TSUpdate' },
-    { 'nvim-treesitter/nvim-treesitter-textobjects', branch = 'master' },
-    { 'nvim-treesitter/nvim-treesitter-context', branch = 'master' },
-    { 'kiyoon/treesitter-indent-object.nvim', branch = 'master' },
+    {
+        'nvim-treesitter/nvim-treesitter',
+        branch = 'master',
+        build = ':TSUpdate',
+        dependencies = {
+            { 'nvim-treesitter/nvim-treesitter-textobjects', branch = 'master' },
+            { 'nvim-treesitter/nvim-treesitter-context', branch = 'master' },
+            { 'kiyoon/treesitter-indent-object.nvim', branch = 'master' },
+        },
+        config = function()
+            require './treesitter'
+        end
+    },
 
     -- Git
-    { 'lewis6991/gitsigns.nvim', branch = 'main' },
+    {
+        'lewis6991/gitsigns.nvim',
+        branch = 'main',
+        config = function()
+            require('gitsigns').setup {
+                signs = {
+                    add          = { hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'    },
+                    change       = { hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn' },
+                    delete       = { hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn' },
+                    topdelete    = { hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn' },
+                    changedelete = { hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn' },
+                    untracked    = { hl = 'GitSignsAdd'   , text = '┆', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'    },
+                },
+                signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
+                numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
+                linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
+                word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
+                watch_gitdir = {
+                    interval = 1000,
+                    follow_files = true
+                },
+                attach_to_untracked = true,
+                current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
+                current_line_blame_opts = {
+                    virt_text = true,
+                    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+                    delay = 1000,
+                    ignore_whitespace = false,
+                },
+                current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
+                sign_priority = 6,
+                update_debounce = 100,
+                status_formatter = nil, -- Use default
+                max_file_length = 40000, -- Disable if file is longer than this (in lines)
+                preview_config = {
+                    -- Options passed to nvim_open_win
+                    border = 'single',
+                    style = 'minimal',
+                    relative = 'cursor',
+                    row = 0,
+                    col = 1
+                },
+                yadm = {
+                    enable = false
+                },
+            }
+        end
+    },
     {
         'tpope/vim-fugitive',
         branch = 'master',
@@ -281,8 +425,8 @@ require("lazy").setup({
     -- Comment
     { 'tomtom/tcomment_vim', branch = 'master' },
 
-    { 'terryma/vim-multiple-cursors', branch = 'master', lazy = true },
-    { 'tpope/vim-unimpaired', branch = 'master', lazy = true },
+    { 'terryma/vim-multiple-cursors', branch = 'master' },
+    { 'tpope/vim-unimpaired', branch = 'master' },
     {
         'godlygeek/tabular',
         branch = 'master',
@@ -313,12 +457,6 @@ require("lazy").setup({
     }
 });
 
--- Cache plugins
-require 'impatient'
-require './theme'
-require './git'
-require './treesitter'
-require './delimiters'
 
 -- RTL
 vim.opt.termbidi = true
