@@ -187,6 +187,12 @@ ins_left {
 }
 
 ins_left {
+    require("lazy.status").updates,
+    cond = require("lazy.status").has_updates,
+    color = { fg = "#ff9e64" }, -- Sets highlighting of component
+}
+
+ins_left {
     'branch',
     icon = '',
     color = { fg = colors.violet, gui = 'bold' },
