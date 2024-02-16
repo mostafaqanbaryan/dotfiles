@@ -22,14 +22,16 @@ require("lazy").setup({
     -- Theme
     {
         'folke/tokyonight.nvim',
+        lazy = false,
+        priority = 1000,
         branch = 'main',
         config = function()
             require("tokyonight").setup({
                 -- your configuration comes here
                 -- or leave it empty to use the default settings
-                style = "moon", -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
-                light_style = "day", -- The theme is used when the background is set to light
-                transparent = false, -- Enable this to disable setting the background color
+                style = "moon",         -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
+                light_style = "day",    -- The theme is used when the background is set to light
+                transparent = false,    -- Enable this to disable setting the background color
                 terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
                 styles = {
                     -- Style to be applied to different syntax groups
@@ -39,31 +41,41 @@ require("lazy").setup({
                     functions = {},
                     variables = {},
                     -- Background styles. Can be "dark", "transparent" or "normal"
-                    sidebars = "dark", -- style for sidebars, see below
-                    floats = "dark", -- style for floating windows
+                    sidebars = "dark",            -- style for sidebars, see below
+                    floats = "dark",              -- style for floating windows
                 },
-                sidebars = { "qf", "help" }, -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
+                sidebars = { "qf", "help" },      -- Set a darker background on sidebar-like windows. For example: `["qf", "vista_kind", "terminal", "packer"]`
                 -- day_brightness = 0.3, -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
                 hide_inactive_statusline = false, -- Enabling this option, will hide inactive statuslines and replace them with a thin border instead. Should work with the standard **StatusLine** and **LuaLine**.
-                dim_inactive = false, -- dims inactive windows
-                lualine_bold = false, -- When `true`, section headers in the lualine theme will be bold
+                dim_inactive = false,             -- dims inactive windows
+                lualine_bold = false,             -- When `true`, section headers in the lualine theme will be bold
 
                 on_colors = function(colors) end,
                 on_highlights = function(highlights, colors) end,
             })
-            vim.cmd[[colorscheme tokyonight]]
-            vim.cmd[[hi TreesitterContext guibg=#232433]]
-            vim.cmd[[hi TreesitterContextLineNumber guifg=#98C379]]
-            vim.cmd[[hi Folded guibg=NONE]]
-            vim.cmd[[hi Folded guifg=#737aa2]]
-            vim.cmd[[hi Folded ctermbg=NONE]]
-            vim.cmd[[hi Search guifg=#ff6000]]
+            vim.cmd [[colorscheme tokyonight]]
+            vim.cmd [[hi TreesitterContext guibg=#232433]]
+            vim.cmd [[hi TreesitterContextLineNumber guifg=#98C379]]
+            vim.cmd [[hi Folded guibg=NONE]]
+            vim.cmd [[hi Folded guifg=#737aa2]]
+            vim.cmd [[hi Folded ctermbg=NONE]]
+            vim.cmd [[hi Search guifg=#ff6000]]
         end
+    },
+
+    -- Untotree
+    {
+        'mbbill/undotree',
+        cmd = 'UndotreeToggle',
+        keys = {
+            { '<Leader>u', vim.cmd.UndotreeToggle }
+        }
     },
 
     -- Better notifications
     {
         'folke/noice.nvim',
+        lazy = false,
         branch = 'main',
         dependencies = {
             { 'MunifTanjim/nui.nvim', branch = 'main' },
@@ -81,11 +93,11 @@ require("lazy").setup({
                 },
                 -- you can enable a preset for easier configuration
                 presets = {
-                    bottom_search = true, -- use a classic bottom cmdline for search
-                    command_palette = true, -- position the cmdline and popupmenu together
+                    bottom_search = true,         -- use a classic bottom cmdline for search
+                    command_palette = true,       -- position the cmdline and popupmenu together
                     long_message_to_split = true, -- long messages will be sent to a split
-                    inc_rename = false, -- enables an input dialog for inc-rename.nvim
-                    lsp_doc_border = false, -- add a border to hover docs and signature help
+                    inc_rename = false,           -- enables an input dialog for inc-rename.nvim
+                    lsp_doc_border = false,       -- add a border to hover docs and signature help
                 },
             })
         end
@@ -94,6 +106,7 @@ require("lazy").setup({
     -- Highlight word under cursor
     {
         'yamatsum/nvim-cursorline',
+        lazy = false,
         branch = 'main',
         config = function()
             require('nvim-cursorline').setup {
@@ -113,42 +126,54 @@ require("lazy").setup({
 
     -- Fuzzy
     {
-        'junegunn/fzf.vim',
-        branch = 'master',
+        'ibhagwan/fzf-lua',
+        branch = 'main',
+        cmd = { 'CGFiles', 'CBuffers', 'CurrentDirFiles' },
+        keys = {
+            { '<Leader>f', '<cmd>lua require("fzf-lua").git_files()<CR>',                                                           { silent = true } },
+            { '<Leader>b', '<cmd>lua require("fzf-lua").buffers()<CR>',                                                             { silent = true } },
+            { '<Leader>o', '<cmd>lua require("fzf-lua").files({ cwd = vim.lua.expand("%:p:h")})<CR>',                               { silent = true } },
+            { '<Leader>/', '<cmd>lua require("fzf-lua").grep()<CR>',                                                                { silent = true } },
+            { '<F4>',      '<cmd>lua require("fzf-lua").lsp_code_actions({ winopts = { preview = { layout = "horizontal" }}})<CR>', { silent = true } },
+        },
         dependencies = {
-            { 'junegunn/fzf', branch = 'master' },
+            { 'nvim-tree/nvim-web-devicons' },
+            { 'junegunn/fzf',               branch = 'master', build = "./install --bin" },
         },
         config = function()
-            vim.g.fzf_vim = {
-                layout = { window = { width = 0.9, height = 0.95 } },
-                preview_window = { 'up,50%', 'ctrl-/' }
-            }
-            local preview_window_options = '--scroll-off=5 --scrollbar "▌▐" --bind "ctrl-l:first" --bind "ctrl-h:last" --bind "ctrl-a:select-all" --bind "ctrl-c:deselect-all" --bind "ctrl-d:preview-half-page-down" --bind "ctrl-u:preview-half-page-up" --bind "ctrl-/:change-preview-window(right,70%|down,40%,border-top|hidden|)"'
-
-            vim.api.nvim_create_user_command('PRg', 'call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case " . shellescape(<q-args>, 1), 1, fzf#vim#with_preview({"dir": system("git rev-parse --show-toplevel 2> /dev/null")[:-2], "options": \'' .. preview_window_options .. ' --prompt \"Search in files> \"\' }), <bang>0)', { bang = true, nargs = '*' })
-
-            vim.api.nvim_create_user_command('CurrentDirFiles', "call fzf#vim#files(<q-args>, fzf#vim#with_preview({ 'dir': expand('%:p:h') , 'options': '" .. preview_window_options .. "' }), <bang>0)", { bang = true, nargs = '*' })
-
-            vim.api.nvim_create_user_command('CGFiles', ':call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview(<q-args> == "?" ? { "placeholder": "" , "options": \'' .. preview_window_options .. '\' } : {"options": \'' .. preview_window_options .. '\' }, ), <bang>0)', { bang = true, nargs = '?' })
-
-            vim.api.nvim_create_user_command('CBuffers', ':call fzf#vim#buffers(<q-args>, fzf#vim#with_preview({ "placeholder": "{1}", "options": \'' .. preview_window_options .. '\' }), <bang>0)', { bang = true, nargs = '?', bar = true, complete = 'buffer' })
-
-            vim.keymap.set('i', '<c-x><c-l>', '<plug>(fzf-complete-line)')
-            vim.keymap.set('n', '<Leader>f', ':CGFiles --exclude-standard --cached --others<CR>', { silent = true })
-            vim.keymap.set('n', '<Leader>b', ':CBuffers<CR>', { silent = true })
-            vim.keymap.set('n', '<Leader>o', ':CurrentDirFiles<CR>', { silent = true })
-            vim.keymap.set('n', '<leader>/', ':exec ":PRg " . escape(input("Search in files: "), "()[]{}$")<CR>', { silent = true })
-            vim.keymap.set('v', '<leader>/', '"cy :exec ":PRg " . escape(getreg("c"), "()[]{}$")<CR>', { silent = true })
-            vim.keymap.set('i', '<c-x><c-f>', '<plug>(fzf-complete-path)')
-        end
-    },
-
-    -- EditorConfig
-    {
-        'editorconfig/editorconfig-vim',
-        branch = 'master',
-        config = function()
-            vim.go.EditorConfig_exclude_patterns = 'fugitive://.*,scp://.*'
+            -- calling `setup` is optional for customization
+            require("fzf-lua").setup({
+                winopts = {
+                    width = 0.9,
+                    height = 0.95,
+                    preview = {
+                        scrolloff = 5,
+                        scrollbar = "▌▐",
+                        preview   = "wrap",
+                        layout    = "vertical",
+                        vertical  = 'up:50%',
+                    },
+                    on_create = function()
+                        vim.keymap.set("t", "<C-k>", "<Up>", { silent = true, buffer = true })
+                        vim.keymap.set("t", "<C-j>", "<Down>", { silent = true, buffer = true })
+                    end
+                },
+                keymap = {
+                    fzf = {
+                        ["ctrl-l"] = "first",
+                        ["ctrl-h"] = "last",
+                        ["ctrl-a"] = "select-all",
+                        ["ctrl-c"] = "deselect-all",
+                        -- ["ctrl-k"] = "preview-page-up",
+                        -- ["ctrl-j"] = "preview-page-down",
+                    }
+                },
+                git = {
+                    files = {
+                        cmd = 'git ls-files --exclude-standard --cached --others'
+                    }
+                }
+            })
         end
     },
 
@@ -158,7 +183,6 @@ require("lazy").setup({
         branch = 'master',
         build = 'cd app && yarn install',
         ft = 'markdown',
-        lazy = true,
         config = function()
             vim.g.mkdp_auto_start = 0
             vim.g.mkdp_auto_close = 0
@@ -167,47 +191,72 @@ require("lazy").setup({
         end
     },
 
-    -- Ranger
+    -- Explorer
     {
-        'kevinhwang91/rnvimr',
-        branch = 'main',
-        keys = '<leader>e',
-        cmd = 'RnvimrToggle',
-        lazy = true,
+        "rolv-apneseth/tfm.nvim",
+        lazy = false,
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
+        opts = {
+            -- TFM to use
+            -- Possible choices: "ranger" | "nnn" | "lf" | "vifm" | "yazi" (default)
+            file_manager = "yazi",
+            -- Replace netrw entirely
+            -- Default: false
+            replace_netrw = true,
+            -- Enable creation of commands
+            -- Default: false
+            -- Commands:
+            --   Tfm: selected file(s) will be opened in the current window
+            --   TfmSplit: selected file(s) will be opened in a horizontal split
+            --   TfmVsplit: selected file(s) will be opened in a vertical split
+            --   TfmTabedit: selected file(s) will be opened in a new tab page
+            enable_cmds = false,
+            -- Custom keybindings only applied within the TFM buffer
+            -- Default: {}
+            keybindings = {
+                ["<ESC>"] = "q"
+            },
+            -- Customise UI. The below options are the default
+            ui = {
+                border = "rounded",
+                height = 0.15,
+                width = 0.15,
+                x = 0.5,
+                y = 0.5,
+            },
+        },
         config = function()
-            -- Make Ranger replace Netrw and be the file explorer
-            vim.go.rnvimr_enable_ex = 1
-            -- Make Ranger to be hidden after picking a file
-            vim.go.rnvimr_enable_picker = 1
-            -- Hide the files included in gitignore
-            vim.go.rnvimr_hide_gitignore = 0
-            -- Make Neovim wipe the buffers corresponding to the files deleted by Ranger
-            vim.go.rnvimr_enable_bw = 1
-            -- Add a shadow window, value is equal to 100 will disable shadow
-            vim.go.rnvimr_shadow_winblend = 70
-            vim.keymap.set('n', '<Leader>e', ':RnvimrToggle<CR>', { silent = true })
-        end
+            -- Set keymap so you can open the default terminal file manager (yazi)
+            vim.api.nvim_set_keymap("n", "<leader>e", "", {
+                noremap = true,
+                callback = require("tfm").open,
+            })
+        end,
     },
 
     -- Autopairs
     {
         'windwp/nvim-autopairs',
+        lazy = false,
         branch = 'master',
         config = function()
             require 'nvim-autopairs'.setup({
                 check_ts = true,
                 ts_config = {
-                    lua = {'string'},-- it will not add a pair on that treesitter node
-                    javascript = {'template_string'},
-                    java = false,-- don't check treesitter on java
+                    lua = { 'string' }, -- it will not add a pair on that treesitter node
+                    javascript = { 'template_string' },
+                    java = false,       -- don't check treesitter on java
                 }
             })
         end
     },
-    { 'alvan/vim-closetag', branch = 'master', ft = 'html', lazy = true },
-    { 'tpope/vim-surround', branch = 'master' },
+    { 'alvan/vim-closetag', branch = 'master', ft = 'html' },
+    { 'tpope/vim-surround', branch = 'master', lazy = false },
     {
         'HiPhish/rainbow-delimiters.nvim',
+        lazy = false,
         branch = 'master',
         config = function()
             local rainbow_delimiters = require 'rainbow-delimiters'
@@ -234,7 +283,6 @@ require("lazy").setup({
     {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v3.x',
-        lazy = true,
         config = false,
         init = function()
             -- Disable automatic setup, we are doing it manually
@@ -249,13 +297,53 @@ require("lazy").setup({
     },
     {
         'neovim/nvim-lspconfig',
-        cmd = {'LspInfo', 'LspInstall', 'LspStart'},
-        event = {'BufReadPre', 'BufNewFile'},
+        lazy = false,
+        cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
+        event = { 'BufReadPre', 'BufNewFile' },
         dependencies = {
-            {'hrsh7th/cmp-nvim-lsp'},
-            {'williamboman/mason-lspconfig.nvim'},
+            { 'hrsh7th/cmp-nvim-lsp' },
+            { 'williamboman/mason-lspconfig.nvim' },
+            {
+                "folke/trouble.nvim",
+                dependencies = { "nvim-tree/nvim-web-devicons" },
+                cmd = 'TroubleToggle',
+                keys = {
+                    { '<leader>d', '<cmd>TroubleToggle<CR>' }
+                },
+                opts = {
+                    -- your configuration comes here
+                    -- or leave it empty to use the default settings
+                    -- refer to the configuration section below
+                    mode = 'document_diagnostics',
+                    use_diagnostic_signs = true,
+                    padding = false,
+                    auto_open = false,
+                    auto_close = true,
+                    auto_fold = true,
+                    win_config = {
+                        border = 'rounded'
+                    }
+                },
+            }
         },
         config = function()
+            local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
+            for type, icon in pairs(signs) do
+                local hl = "DiagnosticSign" .. type
+                vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+            end
+
+            -- Show source in diagnostics
+            vim.diagnostic.config({
+                virtual_text = {
+                    source = "always", -- Or "if_many"
+                    prefix = '●',
+                },
+                float = {
+                    source = "always", -- Or "if_many"
+                },
+            })
+
             -- This is where all the LSP shenanigans will live
             local lsp_zero = require('lsp-zero')
             lsp_zero.extend_lspconfig()
@@ -269,6 +357,7 @@ require("lazy").setup({
             end)
 
             require('mason-lspconfig').setup({
+                lazy = false,
                 ensure_installed = { "intelephense", "tsserver", "lua_ls" },
                 handlers = {
                     lsp_zero.default_setup,
@@ -282,6 +371,46 @@ require("lazy").setup({
         end
     },
 
+    -- Formatter
+    {
+        "stevearc/conform.nvim",
+        event = { "BufWritePre" },
+        cmd = { "ConformInfo" },
+        keys = {
+            {
+                -- Customize or remove this keymap to your liking
+                "<F3>",
+                function()
+                    require("conform").format({ async = true, lsp_fallback = true })
+                end,
+                mode = "",
+                desc = "Format buffer",
+            },
+        },
+        -- Everything in opts will be passed to setup()
+        opts = {
+            -- Define your formatters
+            formatters_by_ft = {
+                lua = { "stylua" },
+                python = { "isort", "black" },
+                javascript = { { "prettierd", "prettier" } },
+                php = { { "prettierd", "prettier" } },
+            },
+            -- Set up format-on-save
+            format_on_save = { timeout_ms = 500, lsp_fallback = true },
+            -- Customize formatters
+            formatters = {
+                shfmt = {
+                    prepend_args = { "-i", "2" },
+                },
+            },
+        },
+        init = function()
+            -- If you want the formatexpr, here is the place to set it
+            vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+        end,
+    },
+
     -- Autocompletion
     {
         'hrsh7th/nvim-cmp',
@@ -291,9 +420,9 @@ require("lazy").setup({
                 'L3MON4D3/LuaSnip',
                 version = "v2.*",
                 build = "make install_jsregexp",
-                lazy = false ,
+                lazy = false,
                 dependencies = {
-                    { 'saadparwaiz1/cmp_luasnip', branch = 'main' },
+                    { 'saadparwaiz1/cmp_luasnip',     branch = 'master' },
                     { 'rafamadriz/friendly-snippets', branch = 'main' },
                 },
             }
@@ -309,16 +438,17 @@ require("lazy").setup({
             local cmp = require('cmp')
             local cmp_action = lsp_zero.cmp_action()
 
+            ---@diagnostic disable-next-line: redundant-parameter
             cmp.setup({
                 completion = {
                     completeopt = 'menu,menuone,noinsert'
                 },
                 sources = {
-                    {name = 'path'},
-                    {name = 'nvim_lsp'},
-                    {name = 'nvim_lua'},
-                    {name = 'luasnip'},
-                    {name = 'buffer', keyword_length = 2},
+                    { name = 'path' },
+                    { name = 'nvim_lsp' },
+                    { name = 'nvim_lua' },
+                    { name = 'luasnip' },
+                    { name = 'buffer',  keyword_length = 2 },
                 },
                 formatting = lsp_zero.cmp_format(),
                 mapping = cmp.mapping.preset.insert({
@@ -335,12 +465,13 @@ require("lazy").setup({
     -- Fix class/function name at top
     {
         'nvim-treesitter/nvim-treesitter',
+        lazy = false,
         branch = 'master',
         build = ':TSUpdate',
         dependencies = {
             { 'nvim-treesitter/nvim-treesitter-textobjects', branch = 'master' },
-            { 'nvim-treesitter/nvim-treesitter-context', branch = 'master' },
-            { 'kiyoon/treesitter-indent-object.nvim', branch = 'master' },
+            { 'nvim-treesitter/nvim-treesitter-context',     branch = 'master' },
+            { 'kiyoon/treesitter-indent-object.nvim',        branch = 'master' },
         },
         config = function()
             require './treesitter'
@@ -350,47 +481,65 @@ require("lazy").setup({
     -- Git
     {
         'lewis6991/gitsigns.nvim',
+        lazy = false,
         branch = 'main',
         config = function()
             require('gitsigns').setup {
-                signs = {
-                    add          = { hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'    },
-                    change       = { hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn' },
-                    delete       = { hl = 'GitSignsDelete', text = '_', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn' },
-                    topdelete    = { hl = 'GitSignsDelete', text = '‾', numhl='GitSignsDeleteNr', linehl='GitSignsDeleteLn' },
-                    changedelete = { hl = 'GitSignsChange', text = '~', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn' },
-                    untracked    = { hl = 'GitSignsAdd'   , text = '┆', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'    },
+                on_attach                    = function(bufnr)
+                    local gs = package.loaded.gitsigns
+                    vim.keymap.set('n', ']g', function()
+                        if vim.wo.diff then return ']g' end
+                        vim.schedule(function() gs.next_hunk() end)
+                        return '<Ignore>'
+                    end, { buffer = bufnr, expr = true })
+
+                    vim.keymap.set('n', '[g', function()
+                        if vim.wo.diff then return '[g' end
+                        vim.schedule(function() gs.prev_hunk() end)
+                        return '<Ignore>'
+                    end, { buffer = bufnr, expr = true })
+                    -- vim.api.nvim_create_autocmd({ 'CursorHold' }, { command = 'Gitsigns preview_hunk' })
+                end,
+                signs                        = {
+                    add          = { hl = 'GitSignsAdd', text = '┃', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
+                    change       = { hl = 'GitSignsChange', text = '┃', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
+                    delete       = { hl = 'GitSignsDelete', text = '_', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
+                    topdelete    = { hl = 'GitSignsDelete', text = '‾', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
+                    changedelete = { hl = 'GitSignsChange', text = '~', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
+                    untracked    = { hl = 'GitSignsAdd', text = '┆', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
                 },
-                signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
-                numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
-                linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
-                word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
-                watch_gitdir = {
+                signcolumn                   = true,  -- Toggle with `:Gitsigns toggle_signs`
+                numhl                        = false, -- Toggle with `:Gitsigns toggle_numhl`
+                linehl                       = true,  -- Toggle with `:Gitsigns toggle_linehl`
+                word_diff                    = false, -- Toggle with `:Gitsigns toggle_word_diff`
+                watch_gitdir                 = {
                     interval = 1000,
                     follow_files = true
                 },
-                attach_to_untracked = true,
-                current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
-                current_line_blame_opts = {
+                attach_to_untracked          = true,
+                current_line_blame           = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
+                current_line_blame_opts      = {
                     virt_text = true,
                     virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
-                    delay = 1000,
+                    delay = 100,
                     ignore_whitespace = false,
                 },
                 current_line_blame_formatter = '<author>, <author_time:%Y-%m-%d> - <summary>',
-                sign_priority = 6,
-                update_debounce = 100,
-                status_formatter = nil, -- Use default
-                max_file_length = 40000, -- Disable if file is longer than this (in lines)
-                preview_config = {
+                sign_priority                = 6,
+                update_debounce              = 100,
+                status_formatter             = nil,   -- Use default
+                max_file_length              = 40000, -- Disable if file is longer than this (in lines)
+                preview_config               = {
                     -- Options passed to nvim_open_win
-                    border = 'single',
+                    border = 'rounded',
                     style = 'minimal',
                     relative = 'cursor',
+                    focusable = false,
+                    noautocmd = true,
                     row = 0,
                     col = 1
                 },
-                yadm = {
+                yadm                         = {
                     enable = false
                 },
             }
@@ -399,20 +548,20 @@ require("lazy").setup({
     {
         'tpope/vim-fugitive',
         branch = 'master',
-        lazy = true,
-        config = function()
-            vim.keymap.set('n', 'g[', ':diffget //2<CR>')
-            vim.keymap.set('v', 'g[', ':diffget //2<CR>')
-            vim.keymap.set('n', 'g]', ':diffget //3<CR>')
-            vim.keymap.set('v', 'g]', ':diffget //3<CR>')
-            vim.keymap.set('n', '<Leader>B', ':Git blame<CR>', { silent = true })
-        end
+        keys = {
+            { 'g[',        ':diffget //2<CR>' },
+            { 'g[',        ':diffget //2<CR>', { mode = 'v' } },
+            { 'g]',        ':diffget //3<CR>' },
+            { 'g]',        ':diffget //3<CR>', { mode = 'v' } },
+            { '<Leader>B', ':Git blame<CR>',   { silent = true } },
+        },
     },
-    { 'sindrets/diffview.nvim', branch = 'main', cmd = 'DiffviewOpen', lazy = true },
+    { 'sindrets/diffview.nvim', branch = 'main',   cmd = 'DiffviewOpen' },
 
     -- Statusbar
     {
         'nvim-lualine/lualine.nvim',
+        lazy = false,
         branch = 'master',
         dependencies = {
             { 'kyazdani42/nvim-web-devicons', branch = 'master' },
@@ -423,26 +572,25 @@ require("lazy").setup({
     },
 
     -- Comment
-    { 'tomtom/tcomment_vim', branch = 'master' },
+    { 'tomtom/tcomment_vim',    branch = 'master', lazy = false },
 
-    { 'terryma/vim-multiple-cursors', branch = 'master' },
-    { 'tpope/vim-unimpaired', branch = 'master' },
+    -- { 'terryma/vim-multiple-cursors', branch = 'master', lazy = false },
+    { 'tpope/vim-unimpaired',   branch = 'master', lazy = false },
     {
         'godlygeek/tabular',
         branch = 'master',
         cmd = 'Tabular',
-        lazy = true,
-        config = function()
-            vim.keymap.set('n', '<Leader>=', ':Tab /=<CR> :%retab!<CR>')
-            vim.keymap.set('n', '<Leader>:', ':Tab /:<CR> :%retab!<CR>')
-            vim.keymap.set('n', '<Leader>,', ':Tab /,<CR> :%retab!<CR>')
-        end
+        keys = {
+            { '<Leader>=', ':Tab /=<CR> :%retab!<CR>' },
+            { '<Leader>:', ':Tab /:<CR> :%retab!<CR>' },
+            { '<Leader>,', ':Tab /,<CR> :%retab!<CR>' },
+        }
     },
     {
         'norcalli/nvim-colorizer.lua',
-         branch = 'master',
-         lazy = true,
-         config = function()
+        branch = 'master',
+        lazy = false,
+        config = function()
             require 'colorizer'.setup()
         end
     },
@@ -450,21 +598,29 @@ require("lazy").setup({
     -- Welcome
     {
         'mhinz/vim-startify',
+        lazy = false,
         branch = 'master',
         config = function()
             vim.g.startify_session_dir = '~/.config/nvim/sessions'
         end
     }
+}, {
+    defaults = {
+        lazy = true
+    },
+    checker = {
+        enabled = true,
+        notify = false
+    }
 });
-
 
 -- RTL
 vim.opt.termbidi = true
-vim.opt.mouse=a
+vim.opt.mouse = a
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.encoding = 'utf-8'
-vim.opt.shiftwidth=4
+vim.opt.shiftwidth = 4
 vim.opt.showmatch = true
 vim.opt.showmode = true
 vim.opt.showcmd = true
@@ -479,10 +635,10 @@ vim.opt.tabstop = 4
 vim.opt.laststatus = 3
 vim.opt.expandtab = true
 vim.opt.preserveindent = true
-vim.opt.scrolloff=7
+vim.opt.scrolloff = 7
 vim.opt.ruler = true
-vim.opt.wh = 10
-vim.opt.wmh = 10
+-- vim.opt.wh = 10
+-- vim.opt.wmh = 10
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
@@ -546,13 +702,17 @@ vim.keymap.set('n', '<Leader>x', ':let @+=expand("%")<CR>')
 vim.keymap.set('n', '<Leader><Leader>', '<C-^>')
 
 -- Max height when opening files
-vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead', 'BufEnter' }, { pattern = '*', command = 'resize' })
+-- vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead', 'BufEnter' }, { pattern = '*', command = 'resize' })
 
 -- Working with split
-vim.keymap.set('n', '<C-j>', '<C-W>j<C-W>_zz')
-vim.keymap.set('n', '<C-k>', '<C-W>k<C-W>_zz')
-vim.keymap.set('n', '<C-l>', '<C-W>l<C-W>_zz')
-vim.keymap.set('n', '<C-h>', '<C-W>h<C-W>_zz')
+-- vim.keymap.set('n', '<C-j>', '<C-W>j<C-W>_zz')
+-- vim.keymap.set('n', '<C-k>', '<C-W>k<C-W>_zz')
+-- vim.keymap.set('n', '<C-l>', '<C-W>l<C-W>_zz')
+-- vim.keymap.set('n', '<C-h>', '<C-W>h<C-W>_zz')
+vim.keymap.set('n', '<C-j>', '<C-W>j')
+vim.keymap.set('n', '<C-k>', '<C-W>k')
+vim.keymap.set('n', '<C-l>', '<C-W>l')
+vim.keymap.set('n', '<C-h>', '<C-W>h')
 vim.keymap.set('n', '<C-<>', '<C-W>> " Increase split size')
 vim.keymap.set('n', '<C->>', '<C-W>< " Decrease split size')
 
@@ -568,7 +728,8 @@ vim.api.nvim_create_user_command('PHP', ':set ft = php', {})
 vim.api.nvim_create_user_command('SQL', ':set ft = sql', {})
 
 -- Title as filename
-vim.api.nvim_create_autocmd('BufEnter', { pattern = '*', command = 'let &titlestring = expand("%:t") . " (" . expand("%:~:h") . ") - Vim"' })
+vim.api.nvim_create_autocmd('BufEnter',
+    { pattern = '*', command = 'let &titlestring = expand("%:t") . " (" . expand("%:~:h") . ") - Vim"' })
 vim.opt.title = true
 
 -- Search in VisualMode
@@ -604,7 +765,8 @@ vim.go.syntastic_javascript_checkers = 'eslint'
 vim.go.syntastic_javascript_jsxhint_exec = 'jsx-jshint-wrapper'
 
 -- Lazygit
-vim.keymap.set('n', '<Leader>g', ':silent exec "!zellij action new-pane --name Lazygit -c -f -- lazygit"<CR>', { silent = true })
+vim.keymap.set('n', '<Leader>g', ':silent exec "!zellij action new-pane --name Lazygit -c -f -- lazygit"<CR>',
+    { silent = true })
 
 -- Prettier on save
 -- vim.api.nvim_create_user_command('Prettier', ":call CocAction('runCommand', 'prettier.formatFile')", { bang = true, nargs = 0 })
