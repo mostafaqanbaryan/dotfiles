@@ -117,7 +117,7 @@ vim.keymap.set('v', '<Leader>p', '<Esc>o<Esc>"+p')
 vim.keymap.set('n', '<Leader>x', ':let @+=expand("%")<CR>')
 
 -- Toggle between 2 last files
-vim.keymap.set('n', '<Leader><Leader>', '<C-^>')
+vim.keymap.set('n', 'ga', '<C-^>')
 
 -- Max height when opening files
 -- vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead', 'BufEnter' }, { pattern = '*', command = 'resize' })
@@ -204,4 +204,22 @@ vim.api.nvim_create_autocmd({ 'QuickFixCmdPost' }, {
     group = auQuickfix,
     pattern = 'l*',
     command = 'lwindow',
+})
+
+-- Yank to registers as well
+vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
+    pattern = '*',
+    callback = function()
+        if (vim.v.operator == 'y') then
+            vim.fn.setreg('9', vim.fn.getreg('8'))
+            vim.fn.setreg('8', vim.fn.getreg('7'))
+            vim.fn.setreg('7', vim.fn.getreg('6'))
+            vim.fn.setreg('6', vim.fn.getreg('5'))
+            vim.fn.setreg('5', vim.fn.getreg('4'))
+            vim.fn.setreg('4', vim.fn.getreg('3'))
+            vim.fn.setreg('3', vim.fn.getreg('2'))
+            vim.fn.setreg('2', vim.fn.getreg('1'))
+            vim.fn.setreg('1', vim.fn.getreg('0'))
+        end
+    end
 })
