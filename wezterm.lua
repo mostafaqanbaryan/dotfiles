@@ -8,11 +8,11 @@ return {
     window_background_opacity = 0.9,
     color_scheme = "Catppuccin Macchiato",
     font = wezterm.font_with_fallback {
-        "Monego Ligatures",
-        "Vazir Code"
+        "Cascadia Code",
+        "Vazir Code",
     },
     font_size = 12,
-    line_height = 1.4,
+    line_height = 1.6,
     enable_tab_bar = false,
     use_fancy_tab_bar = false,
     show_tabs_in_tab_bar = false,
