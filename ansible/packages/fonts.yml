@@ -3,8 +3,11 @@
   connection: local
   tasks:
     - name: "Install vazir font"
-      ansible.builtin.command:
-        cmd: "echo https://github.com/rastikerdar/vazir-code-font/releases"
+      community.general.pacman: 
+        executable: "yay"
+        name: 
+          - "vazir-code-fonts"
+        state: "present"
 
     - name: "Install nerd fonts"
       ansible.builtin.command:

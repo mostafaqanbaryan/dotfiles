@@ -93,7 +93,7 @@ case ${chosen} in
 		run_cmd --hibernate
         ;;
     $lock)
-		~/.scripts/lock.sh
+		$HOME/.local/bin/lock
         ;;
     $suspend)
 		run_cmd --suspend

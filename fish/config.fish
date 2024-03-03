@@ -81,6 +81,8 @@ set fish_cursor_visual underscore
 ## Rust
 set -Ua fish_user_paths $HOME/.cargo/bin
 
+set -x PATH "$PATH:$HOME/.local/bin"
+
 ## Default applications
 set -gx BROWSER google-chrome-stable
 set -gx EDITOR nvim
