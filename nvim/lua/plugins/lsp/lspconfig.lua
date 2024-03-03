@@ -6,28 +6,6 @@ return {
     dependencies = {
         { 'hrsh7th/cmp-nvim-lsp' },
         { 'williamboman/mason-lspconfig.nvim' },
-        {
-            "folke/trouble.nvim",
-            dependencies = { "nvim-tree/nvim-web-devicons" },
-            cmd = 'TroubleToggle',
-            keys = {
-                { '<leader>d', '<cmd>TroubleToggle<CR>' }
-            },
-            opts = {
-                -- your configuration comes here
-                -- or leave it empty to use the default settings
-                -- refer to the configuration section below
-                mode = 'document_diagnostics',
-                use_diagnostic_signs = true,
-                padding = false,
-                auto_open = false,
-                auto_close = true,
-                auto_fold = true,
-                win_config = {
-                    border = 'rounded'
-                }
-            },
-        }
     },
     config = function()
         local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
@@ -61,7 +39,7 @@ return {
 
         require('mason-lspconfig').setup({
             lazy = false,
-            ensure_installed = { "phpactor", "tsserver", "lua_ls" },
+            ensure_installed = { "intelephense", "tsserver", "lua_ls" },
             handlers = {
                 lsp_zero.default_setup,
                 lua_ls = function()
