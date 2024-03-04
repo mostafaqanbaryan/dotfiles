@@ -16,14 +16,26 @@ return {
 
         -- Show source in diagnostics
         vim.diagnostic.config({
+            update_in_insert = true,
+            severity_sort = true,
             virtual_text = {
-                source = "always", -- Or "if_many"
+                source = true, -- Or "if_many"
                 prefix = '●',
+                virt_text_pos = 'right_align',
+                severity = {
+                    min = vim.diagnostic.severity.WARN,
+                    max = vim.diagnostic.severity.ERROR,
+                },
             },
             float = {
-                source = "always", -- Or "if_many"
+                source = true
             },
         })
+
+        -- Remove background of virtual text
+        local table = vim.api.nvim_get_hl(0, { name = 'DiagnosticVirtualTextError' })
+        local newTable = vim.tbl_extend("force", table, { bg = "NONE", ctermbg = "NONE" })
+        vim.api.nvim_set_hl(0, 'DiagnosticVirtualTextError', newTable);
 
         -- This is where all the LSP shenanigans will live
         local lsp_zero = require('lsp-zero')
@@ -35,6 +47,22 @@ return {
             -- see :help lsp-zero-keybindings
             -- to learn the available actions
             lsp_zero.default_keymaps({ buffer = bufnr })
+            vim.api.nvim_create_autocmd('CursorHold', {
+                pattern = "*",
+                callback = function()
+                    vim.diagnostic.open_float(0, {
+                        scope = 'cursor',
+                        focusable = false,
+                        close_events = {
+                            'CursorMoved',
+                            'CursorMovedI',
+                            'BufHidden',
+                            'InsertCharPre',
+                            'WinLeave',
+                        }
+                    })
+                end
+            })
         end)
 
         require('mason-lspconfig').setup({
