@@ -25,17 +25,6 @@ vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
     command = 'silent! loadview 1',
 })
 
-local auQuickfix = vim.api.nvim_create_augroup('quickfix', { clear = true });
-vim.api.nvim_create_autocmd({ 'QuickFixCmdPost' }, {
-    group = auQuickfix,
-    pattern = '[^l]*',
-    command = 'cwindow',
-})
-vim.api.nvim_create_autocmd({ 'QuickFixCmdPost' }, {
-    group = auQuickfix,
-    pattern = 'l*',
-    command = 'lwindow',
-})
 
 -- Yank to registers as well
 vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
