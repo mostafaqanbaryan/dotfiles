@@ -18,15 +18,7 @@ return {
         vim.diagnostic.config({
             update_in_insert = true,
             severity_sort = true,
-            virtual_text = {
-                source = true, -- Or "if_many"
-                prefix = '●',
-                virt_text_pos = 'right_align',
-                severity = {
-                    min = vim.diagnostic.severity.WARN,
-                    max = vim.diagnostic.severity.ERROR,
-                },
-            },
+            virtual_text = false,
             float = {
                 source = true
             },
