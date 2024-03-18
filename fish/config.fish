@@ -82,6 +82,7 @@ set fish_cursor_visual underscore
 set -Ua fish_user_paths $HOME/.cargo/bin
 
 set -x PATH "$PATH:$HOME/.local/bin"
+set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gcr/ssh"
 
 ## Default applications
 set -gx BROWSER google-chrome-stable
