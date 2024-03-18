@@ -20,6 +20,9 @@ return {
             lua = { "stylua" },
             python = { "isort", "black" },
             javascript = { { "prettierd", "prettier" } },
+            typescript = { { "prettierd", "prettier" } },
+            typescriptreact = { { "prettierd", "prettier" } },
+            javascriptreact = { { "prettierd", "prettier" } },
             php = { { "prettierd", "prettier" } },
         },
         -- Set up format-on-save
