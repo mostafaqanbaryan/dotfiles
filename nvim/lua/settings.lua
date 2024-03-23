@@ -17,7 +17,7 @@ vim.opt.smarttab = true
 vim.opt.softtabstop = 4
 vim.opt.tabstop = 4
 vim.opt.laststatus = 3
-vim.opt.expandtab = true
+vim.opt.expandtab = false
 vim.opt.preserveindent = true
 vim.opt.scrolloff = 7
 vim.opt.ruler = true
@@ -28,7 +28,7 @@ vim.opt.splitright = true
 
 -- Show indentation
 vim.opt.list = true
-vim.o.listchars = 'multispace:┊   '
+vim.o.listchars = 'tab:│ ,trail:-,extends:>,precedes:<,nbsp:+,multispace:┊   '
 
 -- Maintain undo history between sessions
 vim.opt.undolevels = 500
