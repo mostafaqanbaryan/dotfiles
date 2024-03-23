@@ -1,6 +1,7 @@
-vim.api.nvim_create_user_command('Config', ":exe 'edit ' . stdpath('config') . '/lua/init.lua'",
-    { bang = true, nargs = 0 })
 vim.api.nvim_create_user_command('Reload', ":exe 'source ' . stdpath('config') . '/init.lua'", { bang = true, nargs = 0 })
+vim.api.nvim_create_user_command('Config', function()
+    require("fzf-lua").files({ cwd = vim.fn.stdpath("config") .. "/lua" })
+end, { bang = true, nargs = 0 })
 
 -- Wordpress
 vim.api.nvim_create_user_command('Sass', ":silent exe '!sass ' . expand('%:p') . ' ' . expand('%:p:r') . '.css'", {})
