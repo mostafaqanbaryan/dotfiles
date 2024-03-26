@@ -1,20 +1,5 @@
 function fish_greeting
     starship init fish | source
-    fastfetch
-end
-
-function cd -w='cd'
-  builtin cd $argv || return
-  check_directory_for_new_repository
-end
-
-function check_directory_for_new_repository
-  set current_repository (git rev-parse --show-toplevel 2> /dev/null)
-  if [ "$current_repository" ] && \
-    [ "$current_repository" != "$last_repository" ]
-    onefetch
-  end
-  set -gx last_repository $current_repository
 end
 
 source ~/env.fish
@@ -60,7 +45,6 @@ bind \ca forward-bigword
 bind -M insert \ca forward-bigword
 
 # Fun
-alias coffee 'termdown "3m" && sh -c "speaker-test -t sine -f 1000 -l 1 & sleep .5 && kill -9 \$!" 2>&1 > /dev/null'
 alias download 'aria2c -c -x 10 -s 10'
 alias kodi 'kodi --standalone --windowing=x11'
 alias g 'lazygit'
@@ -85,5 +69,6 @@ set -x PATH "$PATH:$HOME/.local/bin"
 set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gcr/ssh"
 
 ## Default applications
-set -gx BROWSER google-chrome-stable
+set -gx BROWSER brave
 set -gx EDITOR nvim
+# set -gx TERM wezterm
