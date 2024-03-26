@@ -1,6 +1,7 @@
 add_newline = true
 
 format = """
+╭─ \
 $time\
 $username\
 $hostname\
@@ -84,7 +85,7 @@ $status\
 $os\
 $container\
 $shell\
-$character"""
+╰─$character"""
 
 [character]
 success_symbol = '[ ➜](bold green) '
@@ -196,4 +197,4 @@ staged = '[++\($count\)](green)'
 
 [time]
 disabled = false
-format = '[\[$time\]]($style) 🕙 '
+format = '[$time]($style) 🕙 '
