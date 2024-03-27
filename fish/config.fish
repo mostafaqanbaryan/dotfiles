@@ -25,6 +25,7 @@ abbr gre "git rebase"
 abbr gcm 'git commit -m "'
 abbr gca "git commit --amend"
 abbr parent "git log --first-parent"
+abbr projects "zellij -l projects attach --create Local"
 
 # Ctrl+Backspace
 bind \b backward-kill-word
