@@ -5,7 +5,7 @@
     - name: "Install rofi"
       become: true
       community.general.pacman: 
-        name: "rofi"
+        name: "rofi-lbonn-wayland"
         state: "present"
 
     - name: "Clone themes"
