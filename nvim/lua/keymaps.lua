@@ -8,8 +8,6 @@ vim.keymap.set('v', 'P', 'p')
 -- Copy/Paste outside vim
 vim.keymap.set('n', '<Leader>y', '"+yiw')
 vim.keymap.set('v', '<Leader>y', '"+y')
-vim.keymap.set('n', '<Leader>p', '"+p')
-vim.keymap.set('v', '<Leader>p', '<Esc>o<Esc>"+p')
 
 -- Copy full address
 vim.keymap.set('n', '<Leader>x', ':let @+=expand("%")<CR>')

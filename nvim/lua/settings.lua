@@ -28,7 +28,7 @@ vim.opt.splitright = true
 
 -- Show indentation
 vim.opt.list = true
-vim.o.listchars = 'tab:│ ,trail:-,extends:>,precedes:<,nbsp:+,multispace:┊   '
+vim.o.listchars = 'tab:┊ ,trail:-,extends:>,precedes:<,nbsp:+'
 
 -- Maintain undo history between sessions
 vim.opt.undolevels = 500
