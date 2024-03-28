@@ -38,6 +38,7 @@ keybinds clear-defaults=true {
         bind "x" { CloseFocus; SwitchToMode "normal"; }
         bind "z" { ToggleFocusFullscreen; SwitchToMode "normal"; }
         bind "a" { TogglePaneEmbedOrFloating; SwitchToMode "normal"; }
+        bind "e" { EditScrollback; SwitchToMode "normal"; }
 
 		bind "l" { MoveFocus "Right"; SwitchToMode "normal"; }
 		bind "h" { MoveFocus "Left"; SwitchToMode "normal"; }
