@@ -44,6 +44,7 @@ return {
 				{ 'hrsh7th/cmp-nvim-lua',         branch = 'main' },
 				{ 'jcha0713/cmp-tw2css',          branch = 'main' },
 				{ 'hrsh7th/cmp-cmdline',          branch = 'main' },
+				{ 'chrisgrieser/cmp_yanky',       branch = 'main' },
 			},
 		}
 	},
@@ -90,6 +91,7 @@ return {
 						end
 					}
 				},
+				{ name = "cmp_yanky" },
 			}, {
 				{ name = 'calc' },
 			}, {
