@@ -51,6 +51,7 @@ alias kodi 'kodi --standalone --windowing=x11'
 alias g 'lazygit'
 alias cp 'xcp'
 alias du 'dust'
+alias ls 'exa --icons=always --hyperlink --git-repos --git'
 
 ## SSH
 set -Ux GNOME_KEYRING_CONTROL /run/user/1000/keyring
