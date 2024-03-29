@@ -30,6 +30,9 @@ return {
 
 		vim.g.rainbow_delimiters = { highlight = highlight }
 		require("ibl").setup {
+			exclude = {
+				filetypes = { 'startify' }
+			},
 			scope = {
 				show_start = false,
 				show_end = true,
