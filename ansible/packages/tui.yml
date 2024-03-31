@@ -34,10 +34,17 @@
         name: "zellij"
         state: "present"
 
-    - name: "Install eza in replace of ls"
+    - name: "Install eza in place of ls"
       become: true
       community.general.pacman: 
         executable: "yay"
         name: "eza"
+        state: "present"
+
+    - name: "Install zoxide in place of cd"
+      become: true
+      community.general.pacman: 
+        executable: "yay"
+        name: "zoxide"
         state: "present"
 
