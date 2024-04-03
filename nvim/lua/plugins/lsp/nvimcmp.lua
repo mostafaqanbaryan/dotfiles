@@ -68,18 +68,21 @@ return {
 
 		---@diagnostic disable-next-line: redundant-parameter
 		cmp.setup({
+			-- This disables suggestions from LSPs and selects the first based on priority
+			-- https://github.com/hrsh7th/cmp-nvim-lsp/issues/29
+			preselect = cmp.PreselectMode.None,
 			completion = {
 				completeopt = 'menu,menuone,noinsert'
 			},
 			sources = cmp.config.sources({
-				{ name = 'luasnip' },
+				{ name = 'luasnip',            priority = 10 },
 				{
 					name = 'async_path',
 					option = {
 						trailing_slash = true,
 					}
 				},
-				{ name = 'nvim_lsp' },
+				{ name = 'nvim_lsp',           priority = 6 },
 				{ name = 'nvim_lua' },
 				{ name = 'jcha0713/cmp-tw2css' },
 				{
@@ -107,22 +110,29 @@ return {
 					vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatenates the icons with the name of the item kind
 					-- Source
 					vim_item.menu = ({
-						buffer = "[Buffer]",
-						nvim_lsp = "[LSP]",
 						luasnip = "[LuaSnip]",
+						nvim_lsp = "[LSP]",
+						buffer = "[Buffer]",
 						nvim_lua = "[Lua]",
 						latex_symbols = "[LaTeX]",
 					})[entry.source.name]
 					return vim_item
 				end
 			},
+
 			mapping = cmp.mapping.preset.insert({
 				['<C-Space>'] = cmp.mapping.complete(),
 				['<C-u>'] = cmp.mapping.scroll_docs(-4),
 				['<C-d>'] = cmp.mapping.scroll_docs(4),
 				['<C-f>'] = cmp_action.luasnip_jump_forward(),
 				['<C-b>'] = cmp_action.luasnip_jump_backward(),
-			})
+			}),
+
+			view = {
+				entries = {
+					follow_cursor = true
+				}
+			}
 		})
 	end
 }
