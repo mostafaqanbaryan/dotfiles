@@ -6,11 +6,13 @@ vim.keymap.set('v', 'p', 'P')
 vim.keymap.set('v', 'P', 'p')
 
 -- Copy/Paste outside vim
-vim.keymap.set('n', '<Leader>y', '"+yiw')
-vim.keymap.set('v', '<Leader>y', '"+y')
+vim.keymap.set('n', '<Leader>yiw', '"+yiw:echo "Copied <iword> to clipboard!"<CR>', { silent = true })
+vim.keymap.set('n', '<Leader>yiW', '"+yiW:echo "Copied <IWORD> to clipboard!"<CR>', { silent = true })
+vim.keymap.set('n', '<Leader>yy', '"+yy:echo "Copied line to clipboard!"<CR>', { silent = true })
+vim.keymap.set('v', '<Leader>y', '"+y:echo "Selection yanked to clipboard!"<CR>', { silent = true })
 
 -- Copy full address
-vim.keymap.set('n', '<Leader>x', ':let @+=expand("%")<CR>')
+vim.keymap.set('n', '<Leader>yp', ':let @+=expand("%")<CR>:echo "Filepath yanked to clipboard!"<CR>', { silent = true })
 
 -- Toggle between 2 last files
 vim.keymap.set('n', 'ga', '<C-^>')
@@ -29,7 +31,7 @@ vim.keymap.set('n', 'k', 'gk')
 
 -- Title as filename
 vim.api.nvim_create_autocmd('BufEnter',
-    { pattern = '*', command = 'let &titlestring = expand("%:t") . " (" . expand("%:~:h") . ") - NeoVim"' })
+	{ pattern = '*', command = 'let &titlestring = expand("%:t") . " (" . expand("%:~:h") . ") - NeoVim"' })
 vim.opt.title = true
 
 -- Search in VisualMode
@@ -52,4 +54,4 @@ vim.keymap.set('n', '<C-b>', '<C-b>zz')
 
 -- Lazygit
 vim.keymap.set('n', '<Leader>g', ':silent exec "!zellij action new-pane --name Lazygit -c -f -- lazygit"<CR>',
-    { silent = true })
+	{ silent = true })
