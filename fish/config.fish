@@ -1,9 +1,23 @@
 function fish_greeting
     starship init fish | source
 	zoxide init fish | source
+	zellij_tab_name_update
 end
 
 source ~/env.fish
+
+function zellij_tab_name_update --on-variable PWD
+    if set -q ZELLIJ
+        set tab_name ''
+        set tab_name $PWD
+        if test "$tab_name" = "$HOME"
+            set tab_name "~"
+        else
+            set tab_name (basename "$tab_name")
+        end
+        zellij action rename-tab $tab_name >/dev/null
+    end
+end
 
 # Editor
 alias v "nvim"

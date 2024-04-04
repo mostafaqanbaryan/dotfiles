@@ -27,17 +27,15 @@ keybinds clear-defaults=true {
         bind "Esc" { SwitchToMode "normal"; }
 
         bind "t" { NewTab; SwitchToMode "normal"; }
-        bind "q" { CloseTab; SwitchToMode "normal"; }
         bind "Ctrl h" { GoToPreviousTab; SwitchToMode "normal"; }
         bind "Ctrl l" { GoToNextTab; SwitchToMode "normal"; }
         bind "," { SwitchToMode "RenameTab"; }
 
         bind "w" {
+			Run "sessions"  {
+                close_on_exit true
+			}
         	SwitchToMode "normal";
-            LaunchOrFocusPlugin "zellij:session-manager" {
-                floating true
-                move_to_focused_tab true
-            };
 		}
 
         bind "\\" { NewPane "Right"; SwitchToMode "normal"; }
