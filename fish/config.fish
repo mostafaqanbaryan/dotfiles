@@ -19,9 +19,13 @@ function zellij_tab_name_update --on-variable PWD
     end
 end
 
+function set_user_var
+   printf "\033]1337;SetUserVar=%s=%s\007" $argv[1] (echo -n $argv[2] | base64)
+end
+
 # Editor
 alias v "nvim"
-alias hx "helix"
+alias s "sessions"
 
 # Dockers
 abbr dcu "docker-compose -f docker-compose.yml up -d"

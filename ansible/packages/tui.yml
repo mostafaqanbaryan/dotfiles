@@ -34,6 +34,12 @@
         name: "zellij"
         state: "present"
 
+    - name: "Install xdotool for using sessions script"
+      become: true
+      community.general.pacman: 
+        name: "xdotool"
+        state: "present"
+
     - name: "Install eza in place of ls"
       become: true
       community.general.pacman: 
