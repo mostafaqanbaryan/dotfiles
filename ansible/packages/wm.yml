@@ -90,12 +90,6 @@
         name: "swww"
         state: "present"
 
-    - name: "Install fastfetch"
-      become: true
-      community.general.pacman: 
-        name: "fastfetch"
-        state: "present"
-
     - name: "Install xcp - cp alternative"
       ignore_errors: true
       community.general.pacman: 

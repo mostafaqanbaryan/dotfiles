@@ -1,6 +1,7 @@
 add_newline = true
 
 format = """
+$jobs\
 ╭─ \
 $time\
 $username\
@@ -84,7 +85,6 @@ $battery\
 $status\
 $os\
 $container\
-$shell\
 ╰─$character"""
 
 [character]

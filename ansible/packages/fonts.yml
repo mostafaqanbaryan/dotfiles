@@ -10,8 +10,11 @@
         state: "present"
 
     - name: "Install nerd fonts"
-      ansible.builtin.command:
-        cmd: "echo https://www.nerdfonts.com/font-downloads > Symbols Nerd Font | Symbols Only"
+      community.general.pacman: 
+        executable: "yay"
+        name: 
+          - "ttf-nerd-fonts-symbols-mono"
+        state: "present"
 
     - name: "Copy fonts"
       ansible.builtin.copy:
