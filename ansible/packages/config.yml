@@ -89,15 +89,16 @@
     - name: "Remove ranger's old config"
       ignore_errors: true
       ansible.builtin.file:
-        path: "~/.config/ranger/ranger.conf"
+        path: "~/.config/ranger"
         state: "absent"
 
     - name: "Link ranger's config"
       ansible.builtin.file:
-        src: "$PWD/../../ranger.conf"
-        dest: "~/.config/ranger/ranger.conf"
+        src: "$PWD/../../ranger"
+        dest: "~/.config/ranger"
         state: "link"
         force: true
+
 
     - name: "Remove yazi's old config"
       ignore_errors: true
