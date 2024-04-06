@@ -61,8 +61,8 @@ bind -M insert \cn history-search-forward
 # Complete command
 bind \ce end-of-line
 bind -M insert \ce end-of-line
-bind \ca forward-bigword
-bind -M insert \ca forward-bigword
+bind \ca forward-word
+bind -M insert \ca forward-word
 
 # Fun
 alias download 'aria2c -c -x 10 -s 10'
