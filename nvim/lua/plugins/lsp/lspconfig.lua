@@ -1,13 +1,17 @@
 return {
-	'neovim/nvim-lspconfig',
+	"folke/neodev.nvim",
 	lazy = false,
 	cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
 	event = { 'BufReadPre', 'BufNewFile' },
 	dependencies = {
 		{ 'hrsh7th/cmp-nvim-lsp' },
 		{ 'williamboman/mason-lspconfig.nvim' },
+		{ 'neovim/nvim-lspconfig' },
 	},
 	config = function()
+		-- neodev must be initialized before lspconfig
+		require("neodev").setup()
+
 		local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
 		for type, icon in pairs(signs) do
 			local hl = "DiagnosticSign" .. type
@@ -57,6 +61,20 @@ return {
 			})
 		end)
 
+
+		-- for neodev
+		local lspconfig = require('lspconfig')
+		lspconfig.lua_ls.setup({
+			settings = {
+				Lua = {
+					completion = {
+						callSnippet = "Replace"
+					}
+				}
+			}
+		})
+
+		-- lsp zero mason
 		require('mason-lspconfig').setup({
 			lazy = false,
 			ensure_installed = { "intelephense", "tsserver", "lua_ls", "tailwindcss", "gopls", "bashls" },
