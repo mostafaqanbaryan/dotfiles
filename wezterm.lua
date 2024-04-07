@@ -1,6 +1,13 @@
 local wezterm = require 'wezterm';
 local act = wezterm.action
 
+wezterm.on('trigger-sessions', function(window, pane)
+	window:perform_action(act.Multiple { act.SendKey { key = 'b', mods = 'CTRL' }, act.SendKey { key = 'd' } }, pane)
+	wezterm.sleep_ms(100)
+	window:perform_action(act.SendString 'sessions', pane)
+	window:perform_action(act.SendKey { key = 'Enter' }, pane)
+end)
+
 return {
 	automatically_reload_config = true,
 	enable_kitty_keyboard = true,
@@ -27,6 +34,7 @@ return {
 	},
 
 	keys = {
+		{ key = "s",     mods = "CTRL",         action = act.EmitEvent 'trigger-sessions' },
 		{ key = ";",     mods = "CTRL",         action = act.SendKey { key = 'b', mods = 'CTRL' } },
 		{ key = "j",     mods = "META",         action = act.SendKey { key = 'DownArrow' } },
 		{ key = "k",     mods = "META",         action = act.SendKey { key = 'UpArrow' } },
