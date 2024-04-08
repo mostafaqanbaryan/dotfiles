@@ -2,8 +2,10 @@ local wezterm = require 'wezterm';
 local act = wezterm.action
 
 wezterm.on('trigger-sessions', function(window, pane)
-	window:perform_action(act.Multiple { act.SendKey { key = 'b', mods = 'CTRL' }, act.SendKey { key = 'd' } }, pane)
-	wezterm.sleep_ms(100)
+	if pane:get_user_vars().ZELLIJ ~= nil then
+		window:perform_action(act.Multiple { act.SendKey { key = 'b', mods = 'CTRL' }, act.SendKey { key = 'd' } }, pane)
+		wezterm.sleep_ms(100)
+	end
 	window:perform_action(act.SendString 'sessions', pane)
 	window:perform_action(act.SendKey { key = 'Enter' }, pane)
 end)

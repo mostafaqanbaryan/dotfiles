@@ -33,6 +33,10 @@ abbr dcd "docker-compose -f docker-compose.yml down"
 abbr dcpu "docker-compose -f docker-compose.prod.yml up -d"
 abbr dcpd "docker-compose -f docker-compose.prod.yml down"
 
+function set_user_var
+   printf "\033]1337;SetUserVar=%s=%s\007" $argv[1] (echo -n $argv[2] | base64)
+end
+
 # Git
 abbr gu "git pull"
 abbr gp "git push -u origin HEAD"
@@ -45,6 +49,7 @@ abbr gcm 'git commit -m "'
 abbr gca "git commit --amend"
 abbr parent "git log --first-parent"
 abbr projects "zellij -l projects attach --create Local"
+alias zellij "set_user_var ZELLIJ 1 && /usr/bin/zellij"
 
 # Ctrl+Backspace
 bind \b backward-kill-word

@@ -40,6 +40,10 @@ transform_home_path() {
     fi
 }
 
+set_user_var() {
+   printf "\033]1337;SetUserVar=%s=%s\007" $1 `echo -n $2 | base64`
+}
+
 fzf_window() {
 	fzf --reverse --no-sort --border "rounded" --info inline --pointer "→" --prompt "Session > " --header "Select session" --preview "echo {2} | grep -q 'Session' && echo {} || ls {3}"
 }
@@ -70,12 +74,18 @@ get_session_name() {
 }
 
 selected=$(select_project)
+if [ -z "$selected" ]; then
+	exit 0
+fi
+
 is_session=$(is_selected_session "$selected")
 selected_name=$(get_sanitized_selected "$selected")
 if [ -z "$is_session" ]; then
 	session_name=$(get_session_name "$(transform_home_path "$selected_name")")
 	session=$(zellij list-sessions | grep "$session_name")
+	set_user_var ZELLIJ 1
 	zellij attach $session_name -c options --default-cwd $selected_name
 else
+	set_user_var ZELLIJ 1
 	zellij attach $selected_name -c
 fi
