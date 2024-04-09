@@ -1,6 +1,6 @@
 -- RTL
 vim.opt.termbidi = true
-vim.opt.mouse = a
+vim.opt.mouse = "a"
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.encoding = 'utf-8'

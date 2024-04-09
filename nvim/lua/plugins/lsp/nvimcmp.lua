@@ -75,14 +75,14 @@ return {
 				completeopt = 'menu,menuone,noinsert'
 			},
 			sources = cmp.config.sources({
-				{ name = 'luasnip',            priority = 10 },
+				{ name = 'luasnip',            priority = 6 },
 				{
 					name = 'async_path',
 					option = {
 						trailing_slash = true,
 					}
 				},
-				{ name = 'nvim_lsp',           priority = 6 },
+				{ name = 'nvim_lsp',           priority = 10 },
 				{ name = 'nvim_lua' },
 				{ name = 'jcha0713/cmp-tw2css' },
 				{
