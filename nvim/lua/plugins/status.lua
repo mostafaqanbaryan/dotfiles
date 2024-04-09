@@ -6,20 +6,19 @@ return {
 		{ 'kyazdani42/nvim-web-devicons', branch = 'master' },
 	},
 	config = function()
-		-- Color table for highlights
-		-- stylua: ignore
+		local palette = require('rose-pine.palette')
 		local colors = {
-			bg       = '#1f2335',
-			fg       = '#bbc2cf',
-			yellow   = '#ECBE7B',
-			cyan     = '#008080',
-			darkblue = '#081633',
-			green    = '#98be65',
+			bg       = palette.muted,
+			fg       = palette.base,
+			yellow   = palette.gold,
+			cyan     = palette.foam,
+			darkblue = palette.base,
+			green    = palette.gold,
 			orange   = '#FF8800',
 			violet   = '#a9a1e1',
 			magenta  = '#c678dd',
-			blue     = '#7aa2f7',
-			red      = '#ec5f67',
+			blue     = palette.rose,
+			red      = palette.love,
 		}
 
 		local conditions = {
@@ -38,7 +37,7 @@ return {
 
 		-- Config
 		local config = {
-			extensions = { 'fzf', 'fugitive' },
+			extensions = { 'fzf', 'fugitive', 'nvim-dap-ui', 'quickfix' },
 			options = {
 				disabled_filetypes = {
 					statusline = {},
@@ -60,13 +59,7 @@ return {
 				-- Disable sections and component separators
 				component_separators = '',
 				section_separators = '',
-				theme = {
-					-- We are going to use lualine_c an lualine_x as left and
-					-- right section. Both are highlighted by c theme .  So we
-					-- are just setting default looks o statusline
-					normal = { c = { fg = colors.fg, bg = colors.bg } },
-					inactive = { c = { fg = colors.fg, bg = colors.bg } },
-				},
+				theme = 'rose-pine',
 				winbar = {
 					"help",
 					"startify",
@@ -82,22 +75,6 @@ return {
 					"toggleterm",
 				},
 			},
-			--[[ winbar = {
-            lualine_a = { 'diagnostics' },
-            lualine_b = {},
-            lualine_c = {},
-            lualine_x = { get_winbar },
-            lualine_y = {},
-            lualine_z = {},
-            },
-            inactive_winbar = {
-            lualine_a = {},
-            lualine_b = {},
-            lualine_c = {},
-            lualine_x = {},
-            lualine_y = {},
-            lualine_z = {},
-            }, ]]
 			sections = {
 				-- these are to remove the defaults
 				lualine_a = {},
@@ -130,17 +107,9 @@ return {
 		end
 
 		ins_left {
-			function()
-				return '▊'
-			end,
-			color = { fg = colors.blue },      -- Sets highlighting of component
-			padding = { left = 0, right = 1 }, -- We don't need space before this
-		}
-
-		ins_left {
 			-- mode component
 			function()
-				return ''
+				return ''
 			end,
 			color = function()
 				-- auto change color according to neovims mode
@@ -168,7 +137,7 @@ return {
 				}
 				return { fg = mode_color[vim.fn.mode()] }
 			end,
-			padding = { right = 1 },
+			padding = { left = 1, right = 1 },
 		}
 
 		ins_left {
@@ -243,12 +212,12 @@ return {
 
 		ins_right { 'location', color = { fg = colors.orange, gui = 'bold' } }
 
-		ins_right {
-			'o:encoding',       -- option component same as &encoding in viml
-			fmt = string.upper, -- I'm not sure why it's upper case either ;)
-			cond = conditions.hide_in_width,
-			color = { fg = colors.green, gui = 'bold' },
-		}
+		-- ins_right {
+		-- 	'o:encoding', -- option component same as &encoding in viml
+		-- 	fmt = string.upper, -- I'm not sure why it's upper case either ;)
+		-- 	cond = conditions.hide_in_width,
+		-- 	color = { fg = colors.green, gui = 'bold' },
+		-- }
 
 		ins_right {
 			'filetype',
@@ -259,24 +228,16 @@ return {
 		ins_right {
 			'diff',
 			-- Is it me or the symbol for modified us really weird
-			symbols = { added = ' ', modified = '柳 ', removed = ' ' },
+			symbols = { added = ' ', modified = ' ', removed = ' ' },
 			diff_color = {
 				added = { fg = colors.green },
-				modified = { fg = colors.orange },
+				modified = { fg = colors.cyan },
 				removed = { fg = colors.red },
 			},
 			cond = conditions.hide_in_width,
 		}
 
 		ins_right { 'progress' }
-
-		ins_right {
-			function()
-				return '▊'
-			end,
-			color = { fg = colors.blue },
-			padding = { left = 1 },
-		}
 
 		-- Now don't forget to initialize lualine
 		require('lualine').setup(config)

@@ -35,9 +35,11 @@ return {
 
 		local kopts = { noremap = true, silent = true }
 
-		vim.cmd [[hi default link HlSearchNear IncSearch]]
-		vim.cmd [[hi default link HlSearchLens WildMenu]]
-		vim.cmd [[hi default link HlSearchLensNear IncSearch]]
+		local palette = require('rose-pine.palette')
+		vim.api.nvim_set_hl(0, 'HlSearchNear', { bg = palette.gold, fg = palette.base })
+		vim.api.nvim_set_hl(0, 'HlSearchLens', { bg = palette.base })
+		vim.api.nvim_set_hl(0, 'HlSearchLensNear', { fg = palette.rose })
+		vim.api.nvim_set_hl(0, 'Search', { bg = palette.pine, fg = palette.base })
 
 		vim.api.nvim_set_keymap('n', 'n',
 			[[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
