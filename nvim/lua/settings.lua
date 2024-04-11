@@ -4,16 +4,18 @@ vim.opt.mouse = "a"
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.encoding = 'utf-8'
-vim.opt.shiftwidth = 4
 vim.opt.showmatch = true
 vim.opt.showmode = true
 vim.opt.showcmd = true
 vim.opt.hidden = true
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
+
 vim.opt.smartindent = true
 vim.opt.autoindent = true
+
 vim.opt.smarttab = true
+vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.opt.tabstop = 4
 vim.opt.laststatus = 3
@@ -21,14 +23,11 @@ vim.opt.expandtab = false
 vim.opt.preserveindent = true
 vim.opt.scrolloff = 7
 vim.opt.ruler = true
--- vim.opt.wh = 10
--- vim.opt.wmh = 10
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
 -- Show indentation
 vim.opt.list = true
-vim.o.listchars = 'tab:┊ ,trail:-,extends:>,precedes:<,nbsp:+'
 
 -- Maintain undo history between sessions
 vim.opt.undolevels = 500
