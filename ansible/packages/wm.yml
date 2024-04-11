@@ -63,10 +63,10 @@
         name: "pipewire-pulse"
         state: "present"
 
-    - name: "Install wireplumber"
+    - name: "Install pipewire-media-session"
       become: true
       community.general.pacman: 
-        name: "wireplumber"
+        name: "pipewire-media-session"
         state: "present"
 
     - name: "Install waypaper"
