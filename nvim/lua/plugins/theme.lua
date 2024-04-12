@@ -53,8 +53,10 @@ return {
 			},
 
 			highlight_groups = {
+
 				-- Comment = { fg = "foam" },
 				-- VertSplit = { fg = "muted", bg = "muted" },
+				Folded = { bg = "none", fg = "muted" }
 			},
 
 			before_highlight = function(group, highlight, palette)
