@@ -8,10 +8,16 @@
         name: "qalculate-gtk"
         state: "present"
 
-    - name: "Install brave"
+    - name: "Install vivaldi"
       community.general.pacman: 
         executable: "yay"
-        name: "brave-bin"
+        name: "vivaldi"
+        state: "present"
+
+    - name: "Install vivaldi codecs"
+      community.general.pacman: 
+        executable: "yay"
+        name: "vivaldi-ffmpeg-codecs"
         state: "present"
 
     - name: "Install heynote"
