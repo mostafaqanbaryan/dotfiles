@@ -94,7 +94,7 @@ vimcmd_symbol = '[ 󰫻](bold #FF6600) '
 vimcmd_visual_symbol = '[ 󱂌](bold blue) '
 
 [buf]
-format = "via [$symbol]($style)"
+format = "via [$symbol]"
 
 [cmake]
 format = "via [$symbol]($style)"

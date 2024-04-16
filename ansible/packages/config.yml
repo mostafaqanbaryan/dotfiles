@@ -73,16 +73,16 @@
         state: "link"
         force: true
 
-    - name: "Remove wezterm's old config"
+    - name: "Remove kitty's old config"
       ignore_errors: true
       ansible.builtin.file:
-        path: "~/.wezterm.lua"
+        path: "~/.config/kitty"
         state: "absent"
 
-    - name: "Link wezterm's config"
+    - name: "Link kitty's config"
       ansible.builtin.file:
-        src: "$PWD/../../wezterm.lua"
-        dest: "~/.wezterm.lua"
+        src: "$PWD/../../kitty"
+        dest: "~/.config/kitty"
         state: "link"
         force: true
 

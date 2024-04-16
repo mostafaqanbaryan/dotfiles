@@ -14,10 +14,10 @@
         name: "starship"
         state: "present"
 
-    - name: "Install wezterm"
+    - name: "Install kitty"
       become: true
       community.general.pacman: 
-        name: "wezterm"
+        name: "kitty"
         state: "present"
 
     - name: "Install ranger"
