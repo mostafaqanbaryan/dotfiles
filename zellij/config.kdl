@@ -32,9 +32,10 @@ keybinds clear-defaults=true {
         bind "," { SwitchToMode "RenameTab"; }
 
         bind "w" {
-			Run "sessions"  {
+            Run "sessions"  {
                 close_on_exit true
-			}
+            };
+            TogglePaneEmbedOrFloating;
         	SwitchToMode "normal";
 		}
 
