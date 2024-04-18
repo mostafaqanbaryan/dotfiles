@@ -63,10 +63,10 @@
         name: "pipewire-pulse"
         state: "present"
 
-    - name: "Install wireplumber"
+    - name: "Install pipewire-media-session"
       become: true
       community.general.pacman: 
-        name: "wireplumber"
+        name: "pipewire-media-session"
         state: "present"
 
     - name: "Install waypaper"
@@ -88,12 +88,6 @@
       community.general.pacman: 
         executable: "yay"
         name: "swww"
-        state: "present"
-
-    - name: "Install fastfetch"
-      become: true
-      community.general.pacman: 
-        name: "fastfetch"
         state: "present"
 
     - name: "Install xcp - cp alternative"

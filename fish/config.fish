@@ -1,33 +1,41 @@
 function fish_greeting
     starship init fish | source
-    fastfetch
-end
-
-function cd -w='cd'
-  builtin cd $argv || return
-  check_directory_for_new_repository
-end
-
-function check_directory_for_new_repository
-  set current_repository (git rev-parse --show-toplevel 2> /dev/null)
-  if [ "$current_repository" ] && \
-    [ "$current_repository" != "$last_repository" ]
-    onefetch
-  end
-  set -gx last_repository $current_repository
+	zoxide init fish | source
+	zellij_tab_name_update
 end
 
 source ~/env.fish
 
+function zellij_tab_name_update --on-variable PWD
+    if set -q ZELLIJ
+        set tab_name ''
+        set tab_name $PWD
+        if test "$tab_name" = "$HOME"
+            set tab_name "~"
+        else
+            set tab_name (basename "$tab_name")
+        end
+        zellij action rename-tab $tab_name >/dev/null
+    end
+end
+
+function set_user_var
+   printf "\033]1337;SetUserVar=%s=%s\007" $argv[1] (echo -n $argv[2] | base64)
+end
+
 # Editor
 alias v "nvim"
-alias hx "helix"
+alias s "sessions"
 
 # Dockers
 abbr dcu "docker-compose -f docker-compose.yml up -d"
 abbr dcd "docker-compose -f docker-compose.yml down"
 abbr dcpu "docker-compose -f docker-compose.prod.yml up -d"
 abbr dcpd "docker-compose -f docker-compose.prod.yml down"
+
+function set_user_var
+   printf "\033]1337;SetUserVar=%s=%s\007" $argv[1] (echo -n $argv[2] | base64)
+end
 
 # Git
 abbr gu "git pull"
@@ -40,6 +48,8 @@ abbr gre "git rebase"
 abbr gcm 'git commit -m "'
 abbr gca "git commit --amend"
 abbr parent "git log --first-parent"
+abbr projects "zellij -l projects attach --create Local"
+alias zellij "set_user_var ZELLIJ 1 && /usr/bin/zellij"
 
 # Ctrl+Backspace
 bind \b backward-kill-word
@@ -56,16 +66,16 @@ bind -M insert \cn history-search-forward
 # Complete command
 bind \ce end-of-line
 bind -M insert \ce end-of-line
-bind \ca forward-bigword
-bind -M insert \ca forward-bigword
+bind \ca forward-word
+bind -M insert \ca forward-word
 
 # Fun
-alias coffee 'termdown "3m" && sh -c "speaker-test -t sine -f 1000 -l 1 & sleep .5 && kill -9 \$!" 2>&1 > /dev/null'
 alias download 'aria2c -c -x 10 -s 10'
 alias kodi 'kodi --standalone --windowing=x11'
 alias g 'lazygit'
 alias cp 'xcp'
 alias du 'dust'
+alias ls 'exa --icons=always --hyperlink --git-repos --git'
 
 ## SSH
 set -Ux GNOME_KEYRING_CONTROL /run/user/1000/keyring
@@ -81,6 +91,10 @@ set fish_cursor_visual underscore
 ## Rust
 set -Ua fish_user_paths $HOME/.cargo/bin
 
+set -x PATH "$PATH:$HOME/.local/bin"
+set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gcr/ssh"
+
 ## Default applications
-set -gx BROWSER google-chrome-stable
+set -gx BROWSER vivaldi
 set -gx EDITOR nvim
+# set -gx TERM xterm-256color

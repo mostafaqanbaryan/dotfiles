@@ -1,6 +1,8 @@
 add_newline = true
 
 format = """
+$jobs\
+╭─ \
 $time\
 $username\
 $hostname\
@@ -83,8 +85,7 @@ $battery\
 $status\
 $os\
 $container\
-$shell\
-$character"""
+╰─$character"""
 
 [character]
 success_symbol = '[ ➜](bold green) '
@@ -93,7 +94,7 @@ vimcmd_symbol = '[ 󰫻](bold #FF6600) '
 vimcmd_visual_symbol = '[ 󱂌](bold blue) '
 
 [buf]
-format = "via [$symbol]($style)"
+format = "via [$symbol]"
 
 [cmake]
 format = "via [$symbol]($style)"
@@ -196,4 +197,4 @@ staged = '[++\($count\)](green)'
 
 [time]
 disabled = false
-format = '[\[$time\]]($style) 🕙 '
+format = '[$time]($style) 🕙 '

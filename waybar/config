@@ -1,7 +1,7 @@
 {
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
-    "modules-center": ["clock", "idle_inhibitor", "custom/shamsi"],
-    "modules-right": ["hyprland/submap", "tray", "custom/scratchpad-indicator", "custom/media", "hyprland/language", "network", "custom/notification", "custom/updates", "group/group-audio", "custom/screenshot", "custom/power"],
+    "modules-center": ["tray", "clock", "idle_inhibitor", "custom/shamsi"],
+    "modules-right": ["hyprland/submap", "custom/scratchpad-indicator", "custom/media", "hyprland/language", "network", "custom/notification", "custom/updates", "group/group-audio", "custom/screenshot", "custom/power"],
 
     "hyprland/workspaces": {
         "format": "{icon}",

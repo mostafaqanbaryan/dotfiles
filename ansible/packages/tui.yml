@@ -14,10 +14,16 @@
         name: "starship"
         state: "present"
 
-    - name: "Install wezterm"
+    - name: "Install kitty"
       become: true
       community.general.pacman: 
-        name: "wezterm"
+        name: "kitty"
+        state: "present"
+
+    - name: "Install alacritty"
+      become: true
+      community.general.pacman: 
+        name: "alacritty"
         state: "present"
 
     - name: "Install ranger"
@@ -28,15 +34,29 @@
           - "python-pynvim"
         state: "present"
 
-    - name: "Install Yazi"
-      become: true
-      community.general.pacman: 
-        name: "yazi"
-        state: "present"
-
     - name: "Install zellij"
       become: true
       community.general.pacman: 
         name: "zellij"
+        state: "present"
+
+    - name: "Install xdotool for using sessions script"
+      become: true
+      community.general.pacman: 
+        name: "xdotool"
+        state: "present"
+
+    - name: "Install eza in place of ls"
+      become: true
+      community.general.pacman: 
+        executable: "yay"
+        name: "eza"
+        state: "present"
+
+    - name: "Install zoxide in place of cd"
+      become: true
+      community.general.pacman: 
+        executable: "yay"
+        name: "zoxide"
         state: "present"
 

@@ -62,11 +62,11 @@ e = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"
 "/" = ["search_selection", "global_search"]
 c = ":bc"
 o = "file_picker_in_current_buffer_directory"
-g = ":sh ~/.scripts/helix.sh git $(~/.scripts/helix.sh getfileinfo)"
-e = ":sh ~/.scripts/helix.sh explorer $(~/.scripts/helix.sh getfileinfo)"
-B = ":sh ~/.scripts/helix.sh blame $(~/.scripts/helix.sh getfileinfo)"
-r = ":pipe ~/.scripts/helix.sh getfileinfo"
-x = ":sh ~/.scripts/helix.sh copy $(~/.scripts/helix.sh getfileinfo | awk \"{ print \\$1 }\")"
+g = ":sh helix-commands git $(helix-commands getfileinfo)"
+e = ":sh helix-commands explorer $(helix-commands getfileinfo)"
+B = ":sh helix-commands blame $(helix-commands getfileinfo)"
+r = ":pipe helix-commands getfileinfo"
+x = ":sh helix-commands copy $(helix-commands getfileinfo | awk \"{ print \\$1 }\")"
 
 [keys.normal."'"]
 "." = "repeat_last_motion"

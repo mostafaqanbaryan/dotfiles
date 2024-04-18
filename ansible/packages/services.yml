@@ -30,6 +30,25 @@
         state: "started"
         enabled: true
 
+
+    - name: "Start pulsewire"
+      ansible.builtin.service:
+        name: "pipewire"
+        state: "started"
+        enabled: true
+
+    - name: "Start pipewire-pulse"
+      ansible.builtin.service:
+        name: pipewire-pulse
+        state: "started"
+        enabled: true
+
+    - name: "Start pipewire-media-session"
+      ansible.builtin.service:
+        name: "pipewire-media-session"
+        state: "started"
+        enabled: true
+
     - name: "Install gnome-keyring"
       become: true
       community.general.pacman: 

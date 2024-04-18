@@ -1,0 +1,2 @@
+#!/bin/sh
+docker exec -it $(docker ps --format '{{.Names}}' | fzf) $(printf "bash\nsh\nnginx -s reload\nnpm i\nphp artisan migrate" | fzf --bind enter:accept-or-print-query)

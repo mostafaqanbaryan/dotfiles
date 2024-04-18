@@ -5,7 +5,7 @@
     - name: "Link scripts"
       ansible.builtin.file:
         src: "$PWD/../../scripts"
-        dest: "~/.scripts"
+        dest: "~/.local/bin"
         state: "link"
         force: true
 
@@ -19,7 +19,7 @@
     - name: "Enable lockscreen cron"
       ansible.builtin.cron:
         name: "bing-lockscreen"
-        job: "$HOME/.scripts/bing-wallpaper.sh"
+        job: "bing-wallpaper"
         minute: "0"
 
     - name: "Enable mirrorlist cron"

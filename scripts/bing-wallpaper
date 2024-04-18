@@ -1,5 +1,5 @@
 #!/bin/sh
-# 0 */6 * * * sh ~/.scripts/bing-wallpaper.sh
+# 0 */6 * * * sh bing-wallpaper
 
 # exit on error
 set -e

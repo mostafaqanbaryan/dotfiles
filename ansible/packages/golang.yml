@@ -1,0 +1,17 @@
+- name: "Golang"
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: "Install golang"
+      become: true
+      community.general.pacman: 
+        executable: "yay"
+        name: "go"
+        state: "present"
+
+    - name: "Install delve for debugging go"
+      become: true
+      community.general.pacman: 
+        executable: "yay"
+        name: "delve"
+        state: "present"

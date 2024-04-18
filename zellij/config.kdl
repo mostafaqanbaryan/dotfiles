@@ -7,33 +7,66 @@ keybinds clear-defaults=true {
         bind "Enter" { SwitchToMode "normal"; }
     }
 
-    shared_except "locked" {
-        bind "Alt g" {
+    "normal" clear-defaults=true {
+		bind "Ctrl b" { SwitchToMode "tmux"; }
+	}
+
+    "tmux" clear-defaults=true {
+        bind "g" {
             Run "lazygit"  {
                 close_on_exit true
             };
             TogglePaneEmbedOrFloating;
+			SwitchToMode "normal";
         }
-        bind "Alt t" { NewTab; }
-        bind "F10" { CloseTab; }
-        bind "Alt h" { GoToPreviousTab; }
-        bind "Alt l" { GoToNextTab; }
-        bind "Alt z" { SwitchToMode "RenameTab"; }
-        bind "Alt ;" { ToggleFloatingPanes; }
-        bind "Alt a" { TogglePaneEmbedOrFloating; }
-        bind "Alt f" { SwitchToMode "entersearch"; SearchInput 0; }
-        bind "Alt s" { SwitchToMode "scroll"; }
-        bind "Alt r" { SwitchToMode "Resize"; }
-        bind "Alt q" { Detach; }
-        bind "Alt 1" { GoToTab 1; }
-        bind "Alt 2" { GoToTab 2; }
-        bind "Alt 3" { GoToTab 3; }
-        bind "Alt 4" { GoToTab 4; }
-        bind "Alt 5" { GoToTab 5; }
-        bind "Alt 6" { GoToTab 6; }
-        bind "Alt 7" { GoToTab 7; }
-        bind "Alt 8" { GoToTab 8; }
-        bind "Alt 9" { GoToTab 9; }
+        bind "f" { SwitchToMode "entersearch"; SearchInput 0; }
+        bind "s" { SwitchToMode "scroll"; }
+        bind "r" { SwitchToMode "Resize"; }
+
+        bind "Ctrl b" { SwitchToMode "normal"; }
+        bind "Esc" { SwitchToMode "normal"; }
+
+        bind "t" { NewTab; SwitchToMode "normal"; }
+        bind "Ctrl h" { GoToPreviousTab; SwitchToMode "normal"; }
+        bind "Ctrl l" { GoToNextTab; SwitchToMode "normal"; }
+        bind "," { SwitchToMode "RenameTab"; }
+
+        bind "w" {
+            Run "sessions"  {
+                close_on_exit true
+            };
+            TogglePaneEmbedOrFloating;
+        	SwitchToMode "normal";
+		}
+
+        bind "\\" { NewPane "Right"; SwitchToMode "normal"; }
+        bind "-" { NewPane "Down"; SwitchToMode "normal"; }
+        bind "x" { CloseFocus; SwitchToMode "normal"; }
+        bind "z" { ToggleFocusFullscreen; SwitchToMode "normal"; }
+        bind "a" { TogglePaneEmbedOrFloating; SwitchToMode "normal"; }
+        bind "e" { EditScrollback; SwitchToMode "normal"; }
+
+		bind "l" { MoveFocus "Right"; SwitchToMode "normal"; }
+		bind "h" { MoveFocus "Left"; SwitchToMode "normal"; }
+		bind "k" { MoveFocus "Up"; SwitchToMode "normal"; }
+		bind "j" { MoveFocus "Down"; SwitchToMode "normal"; }
+
+		bind "L" { MovePane "Right"; SwitchToMode "normal"; }
+		bind "H" { MovePane "Left"; SwitchToMode "normal"; }
+		bind "K" { MovePane "Up"; SwitchToMode "normal"; }
+		bind "J" { MovePane "Down"; SwitchToMode "normal"; }
+
+        bind ";" { ToggleFloatingPanes; SwitchToMode "normal"; }
+        bind "d" { Detach; SwitchToMode "normal"; }
+        bind "1" { GoToTab 1; SwitchToMode "normal"; }
+        bind "2" { GoToTab 2; SwitchToMode "normal"; }
+        bind "3" { GoToTab 3; SwitchToMode "normal"; }
+        bind "4" { GoToTab 4; SwitchToMode "normal"; }
+        bind "5" { GoToTab 5; SwitchToMode "normal"; }
+        bind "6" { GoToTab 6; SwitchToMode "normal"; }
+        bind "7" { GoToTab 7; SwitchToMode "normal"; }
+        bind "8" { GoToTab 8; SwitchToMode "normal"; }
+        bind "9" { GoToTab 9; SwitchToMode "normal"; }
     }
 
     resize {
@@ -124,10 +157,23 @@ themes {
         black "#181825";
         white "#cdd6f4";
     }
+	rose-pine-moon {
+		bg "#44415a"
+		fg "#e0def4"
+		red "#eb6f92"
+		green "#3e8fb0"
+		blue "#9ccfd8"
+		yellow "#f6c177"
+		magenta "#c4a7e7"
+		orange "#fe640b"
+		cyan "#ea9a97"
+		black "#393552"
+		white "#e0def4"
+	}
 }
 
-theme "catppuccin-macchiato"
+theme "rose-pine-moon"
 pane_frames false
+session_serialization false
 mouse_mode true
 scroll_buffer_size 100000
-default_layout "projects"

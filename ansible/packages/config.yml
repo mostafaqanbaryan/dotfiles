@@ -73,31 +73,45 @@
         state: "link"
         force: true
 
-    - name: "Remove wezterm's old config"
+    - name: "Remove kitty's old config"
       ignore_errors: true
       ansible.builtin.file:
-        path: "~/.wezterm.lua"
+        path: "~/.config/kitty"
         state: "absent"
 
-    - name: "Link wezterm's config"
+    - name: "Link kitty's config"
       ansible.builtin.file:
-        src: "$PWD/../../wezterm.lua"
-        dest: "~/.wezterm.lua"
+        src: "$PWD/../../kitty"
+        dest: "~/.config/kitty"
+        state: "link"
+        force: true
+
+    - name: "Remove alacritty's old config"
+      ignore_errors: true
+      ansible.builtin.file:
+        path: "~/.config/alacritty"
+        state: "absent"
+
+    - name: "Link alacritty's config"
+      ansible.builtin.file:
+        src: "$PWD/../../alacritty"
+        dest: "~/.config/alacritty"
         state: "link"
         force: true
 
     - name: "Remove ranger's old config"
       ignore_errors: true
       ansible.builtin.file:
-        path: "~/.config/ranger/ranger.conf"
+        path: "~/.config/ranger"
         state: "absent"
 
     - name: "Link ranger's config"
       ansible.builtin.file:
-        src: "$PWD/../../ranger.conf"
-        dest: "~/.config/ranger/ranger.conf"
+        src: "$PWD/../../ranger"
+        dest: "~/.config/ranger"
         state: "link"
         force: true
+
 
     - name: "Remove yazi's old config"
       ignore_errors: true
