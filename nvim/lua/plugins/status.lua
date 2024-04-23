@@ -3,7 +3,7 @@ return {
 	lazy = false,
 	branch = 'master',
 	dependencies = {
-		{ 'kyazdani42/nvim-web-devicons', branch = 'master' },
+		'nvim-tree/nvim-web-devicons',
 	},
 	config = function()
 		local palette = require('rose-pine.palette')
