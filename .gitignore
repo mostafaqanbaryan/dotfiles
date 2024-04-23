@@ -12,6 +12,8 @@ services/timers.target.wants
 nvim/view
 nvim/bundle
 nvim/undodir
+nvim/sessions/*
+!nvim/sessions/.gitkeep
 nvim/.netrwhist
 nvim/lazy-lock.json
 
