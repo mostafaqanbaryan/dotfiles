@@ -361,8 +361,11 @@ main() {
     esac
   done
   shift $((OPTIND -1))
-
-  read input_data
+  if [[ -z "$1" ]]; then
+    read input_data
+  else
+    input_data=$1
+  fi
 
   if [[ $gregorian -eq 1 ]]; then
     to_gregorian $(parse_input $input_data)
