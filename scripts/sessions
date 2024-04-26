@@ -68,7 +68,7 @@ session_name=$(get_session_name "$(transform_home_path "$selected_name")")
 session=$(zellij list-sessions | grep "$session_name")
 # If we're inside of zellij, detach
 if [[ -n "$ZELLIJ" ]]; then
-	zellij pipe --plugin file:~/Projects/zellij-attach/target/wasm32-wasi/release/zellij-attach.wasm -- "$session_name::$selected_name"
+	zellij pipe --plugin file:~/dotfiles/zellij/plugins/zellij-switch.wasm -- "$session_name::$selected_name"
 else
 	if [[ -n "$is_session" ]]; then
 		zellij attach $selected_name -c
