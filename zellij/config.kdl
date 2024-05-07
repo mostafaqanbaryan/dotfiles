@@ -23,7 +23,10 @@ keybinds clear-defaults=true {
         bind "s" { SwitchToMode "scroll"; }
         bind "r" { SwitchToMode "Resize"; }
 
-        bind "Ctrl b" { SwitchToMode "normal"; }
+        bind "Ctrl b" { 
+			Write 002;
+			SwitchToMode "normal";
+		}
         bind "Esc" { SwitchToMode "normal"; }
 
         bind "t" { NewTab; SwitchToMode "normal"; }
