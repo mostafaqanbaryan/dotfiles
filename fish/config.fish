@@ -71,6 +71,6 @@ set -x PATH "$PATH:$HOME/.local/bin"
 set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gcr/ssh"
 
 ## Default applications
-set -gx BROWSER vivaldi
+set -gx BROWSER brave
 set -gx EDITOR nvim
 # set -gx TERM xterm-256color
