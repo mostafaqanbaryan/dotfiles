@@ -1,3 +1,20 @@
+getBlock = function()
+	local pattern = '%:p:h'
+	local current = vim.fn.expand(pattern)
+	local dir = current
+	while dir ~= '/' do
+		local f = io.open(dir .. '/controller.php', 'r')
+		if f ~= nil then
+			io.close(f)
+			return dir
+		else
+			pattern = pattern .. ':h'
+			dir = vim.fn.expand(pattern)
+		end
+	end
+	return current
+end
+
 getRoot = function()
 	local value = io.popen("git rev-parse --show-toplevel"):read("*a"):gsub("[\n\r]", "")
 	if not value then
@@ -13,14 +30,17 @@ return {
 	cmd = { 'CGFiles', 'CBuffers', 'CurrentDirFiles' },
 	keys = {
 		{ '<Leader>@' },
-		{ '<Leader>f',  '<cmd>lua require("fzf-lua").git_files()<CR>',                                                           { silent = true } },
-		{ '<Leader>b',  '<cmd>lua require("fzf-lua").buffers()<CR>',                                                             { silent = true } },
-		{ '<Leader>o',  '<cmd>lua require("fzf-lua").files({ cwd = vim.fn.expand("%:p:h")})<CR>',                                { silent = true } },
-		{ '<Leader>iw', '<cmd>lua require("fzf-lua").grep_cword({ cwd = getRoot()  })<CR>',                                      { silent = true } },
-		{ '<Leader>iW', '<cmd>lua require("fzf-lua").grep_cWORD({ cwd = getRoot() })<CR>',                                       { silent = true } },
-		{ '<Leader>/',  '<cmd>lua require("fzf-lua").grep({ cwd = getRoot() })<CR>',                                             { silent = true } },
-		{ '<Leader>/',  '<cmd>lua require("fzf-lua").grep_visual({ cwd = getRoot() })<CR>',                                      { silent = true }, mode = 'v', },
-		{ '<F4>',       '<cmd>lua require("fzf-lua").lsp_code_actions({ winopts = { preview = { layout = "horizontal" }}})<CR>', { silent = true } },
+		{ '<Leader>f',  '<cmd>lua require("fzf-lua").git_files()<CR>',                                                                                                     { silent = true } },
+		{ '<Leader>b',  '<cmd>lua require("fzf-lua").buffers()<CR>',                                                                                                       { silent = true } },
+		{ '<Leader>o',  '<cmd>lua require("fzf-lua").files({ cwd = getBlock() })<CR>',                                                                                     { silent = true } },
+		{ '<Leader>iw', '<cmd>lua require("fzf-lua").grep_cword({ cwd = getRoot()  })<CR>',                                                                                { silent = true } },
+		{ '<Leader>iW', '<cmd>lua require("fzf-lua").grep_cWORD({ cwd = getRoot() })<CR>',                                                                                 { silent = true } },
+		{ '<Leader>/',  '<cmd>lua require("fzf-lua").grep({ cwd = getRoot() })<CR>',                                                                                       { silent = true } },
+		{ '<Leader>/',  '<cmd>lua require("fzf-lua").grep_visual({ cwd = getRoot() })<CR>',                                                                                { silent = true }, mode = 'v', },
+		{ '<Leader>s',  '<cmd>lua require("fzf-lua").lsp_document_symbols({ winopts = { preview = { layout = "horizontal" }}})<CR>',                                       { silent = true } },
+		{ 'gr',         '<cmd>lua require("fzf-lua").lsp_references({ sync = true, jump_to_single_result = true, winopts = { preview = { layout = "horizontal" }}})<CR>',  { silent = true } },
+		{ 'gd',         '<cmd>lua require("fzf-lua").lsp_definitions({ sync = true, jump_to_single_result = true, winopts = { preview = { layout = "horizontal" }}})<CR>', { silent = true } },
+		{ '<F4>',       '<cmd>lua require("fzf-lua").lsp_code_actions({ winopts = { preview = { layout = "horizontal" }}})<CR>',                                           { silent = true } },
 	},
 	dependencies = {
 		{ 'nvim-tree/nvim-web-devicons' },
