@@ -13,11 +13,13 @@ end)
 return {
 	automatically_reload_config = true,
 	enable_kitty_keyboard = true,
-	enable_wayland = false,
 	window_background_opacity = 0.9,
 	color_scheme = "Catppuccin Macchiato",
 	font = wezterm.font_with_fallback {
-		"Cascadia Code",
+		{
+			family = "Cascadia Code",
+			harfbuzz_features = { 'ss01', 'ss02', 'ss03', 'ss19', 'ss20' },
+		},
 		"Vazir Code",
 	},
 	font_size = 12,
