@@ -4,11 +4,6 @@ if [ "$(command -v zellij)" = "" ]; then
     exit 1
 fi
 
-if [ "$(command -v zoxide)" = "" ]; then
-    echo "Zoxide is not installed"
-    exit 1
-fi
-
 home_replacer() {
     HOME_REPLACER=""                                          # default to a noop
     echo "$HOME" | grep -E "^[a-zA-Z0-9\-_/.@]+$" &>/dev/null # chars safe to use in sed
@@ -33,7 +28,9 @@ fzf_window() {
 }
 
 select_project() {
-    project_dir=$({ zellij list-sessions -s | awk '{ print "("NR")\t[Session]\t"$1 }'; zoxide query -l | awk '{ print "("NR")\t[Directory]\t"$1 }' ; } | fzf_window)
+	list=$(find ~/Projects/ -maxdepth 1 -type d)
+	list="$(realpath ~/dotfiles) ${list}"
+    project_dir=$({ zellij list-sessions -s | awk '{ print "("NR")\t[Session]\t"$1 }'; echo $list | tr --truncate-set1 " /" "\n" | awk '{ print "("NR")\t[Directory]\t"$1 }' ; } | fzf_window)
     if [ "$project_dir" = "" ]; then
         exit
     fi
@@ -57,23 +54,29 @@ get_session_name() {
     echo "$session_name"
 }
 
-selected=$(select_project)
+if [[ -n "$1" ]]; then
+	selected=$(realpath $1)
+else
+	selected=$(select_project)
+fi
+
 if [ -z "$selected" ]; then
 	exit 0
 fi
 
 is_session=$(is_selected_session "$selected")
-selected_name=$(get_sanitized_selected "$selected")
-session_name=$(get_session_name "$(transform_home_path "$selected_name")")
+cwd=$(get_sanitized_selected "$selected")
+session_name=$(get_session_name "$(transform_home_path "$cwd")")
 session=$(zellij list-sessions | grep "$session_name")
+
 # If we're inside of zellij, detach
 if [[ -n "$ZELLIJ" ]]; then
-	zellij pipe --plugin file:~/dotfiles/zellij/plugins/zellij-switch.wasm -- "$session_name::$selected_name"
+	zellij pipe --plugin file:~/dotfiles/zellij/plugins/zellij-switch.wasm -- "$session_name::$cwd"
 else
-	if [[ -n "$is_session" ]]; then
-		zellij attach $selected_name -c
+	if [[ -n "$session" ]]; then
+		zellij attach $session_name -c
 	else
-		zellij attach $session_name -c options --default-cwd $selected_name
+		zellij attach $session_name -c options --default-cwd $cwd
 	fi
 fi
 
