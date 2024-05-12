@@ -1,4 +1,4 @@
-getBlock = function()
+get_block = function()
 	local pattern = '%:p:h'
 	local current = vim.fn.expand(pattern)
 	local dir = current
@@ -32,7 +32,8 @@ return {
 		{ '<Leader>@' },
 		{ '<Leader>f',  '<cmd>lua require("fzf-lua").git_files()<CR>',                                                                                                     { silent = true } },
 		{ '<Leader>b',  '<cmd>lua require("fzf-lua").buffers()<CR>',                                                                                                       { silent = true } },
-		{ '<Leader>o',  '<cmd>lua require("fzf-lua").files({ cwd = getBlock() })<CR>',                                                                                     { silent = true } },
+		{ '<Leader>o',  '<cmd>lua require("fzf-lua").files({ cwd = get_block() })<CR>',                                                                                    { silent = true } },
+		{ '<Leader>g',  '<cmd>ListFilesFromBranch<CR>',                                                                                                                    { silent = true } },
 		{ '<Leader>iw', '<cmd>lua require("fzf-lua").grep_cword({ cwd = getRoot()  })<CR>',                                                                                { silent = true } },
 		{ '<Leader>iW', '<cmd>lua require("fzf-lua").grep_cWORD({ cwd = getRoot() })<CR>',                                                                                 { silent = true } },
 		{ '<Leader>/',  '<cmd>lua require("fzf-lua").grep({ cwd = getRoot() })<CR>',                                                                                       { silent = true } },
@@ -125,5 +126,19 @@ return {
 				}
 			})
 		end)
+
+		vim.api.nvim_create_user_command('ListFilesFromBranch', function()
+			require 'fzf-lua'.files({
+				cmd = "git status --porcelain | awk '{ print $2 }'",
+				prompt = "HEAD > ",
+				previewer = false,
+				preview = require 'fzf-lua'.shell.raw_preview_action_cmd(function(items)
+					local file = require 'fzf-lua'.path.entry_to_file(items[1])
+					return string.format('git diff HEAD -- "%s" | delta --line-numbers', file.path)
+				end)
+			})
+		end, {
+			nargs = 0,
+		})
 	end
 }
