@@ -16,11 +16,11 @@ get_block = function()
 end
 
 getRoot = function()
-	local value = io.popen("git rev-parse --show-toplevel"):read("*a"):gsub("[\n\r]", "")
-	if not value then
-		value = '.'
+	local root = vim.fs.root(0, { '.git', 'Makefile', 'package.json', 'composer.json' })
+	if not root then
+		root = '.'
 	end
-	return value
+	return root
 end
 
 

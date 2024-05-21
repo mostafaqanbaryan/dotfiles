@@ -30,8 +30,6 @@ vim.keymap.set('n', 'j', 'gj')
 vim.keymap.set('n', 'k', 'gk')
 
 -- Title as filename
-vim.api.nvim_create_autocmd('BufEnter',
-	{ pattern = '*', command = 'let &titlestring = expand("%:t") . " (" . expand("%:~:h") . ") - NeoVim"' })
 vim.opt.title = true
 
 -- Search in VisualMode
