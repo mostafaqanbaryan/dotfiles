@@ -26,6 +26,13 @@ vim.opt.ruler = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
+-- Highlight current line
+vim.opt.cursorline = true
+vim.opt.cursorlineopt = 'both'
+
+-- Show search and replace result in split
+vim.opt.inccommand = 'split'
+
 -- Show indentation
 vim.opt.list = true
 
@@ -41,6 +48,7 @@ vim.o.ttimeoutlen = 100
 vim.opt.linebreak = true
 vim.opt.cindent = false
 vim.opt.foldmethod = 'indent'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.opt.foldlevel = 0
 vim.opt.wrap = true
 vim.opt.breakindent = true

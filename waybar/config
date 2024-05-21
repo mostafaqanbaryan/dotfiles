@@ -63,7 +63,8 @@
             "activated": "",
             "deactivated": ""
         },
-		"on-click": "toggleRemote"
+		"timeout": 60,
+		"start-activated": true
     },
     "tray": {
         "icon-size": 15,

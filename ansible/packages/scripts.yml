@@ -26,6 +26,6 @@
       become: true
       ansible.builtin.cron:
         name: "update-mirrorlist"
-        job: "reflector --latest 5 --sort score --save /etc/pacman.d/mirrorlist"
+        job: "reflector --latest 30 --sort score --save /etc/pacman.d/mirrorlist"
         minute: "0"
         hour: "*/6"
