@@ -2,21 +2,6 @@
   hosts: localhost
   connection: local
   tasks:
-    - name: "Install gdm"
-      become: true
-      ignore_errors: true
-      community.general.pacman: 
-        name: "gdm"
-        state: "present"
-
-    - name: "Start gdm system-wide"
-      become: true
-      ignore_errors: true
-      ansible.builtin.service:
-        name: "gdm"
-        state: "started"
-        enabled: true
-
     - name: "Install cronie"
       become: true
       community.general.pacman: 
