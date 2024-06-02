@@ -29,7 +29,7 @@ return {
 	branch = 'main',
 	cmd = { 'CGFiles', 'CBuffers', 'CurrentDirFiles' },
 	keys = {
-		{ '<Leader>@' },
+		{ '<Leader>2' },
 		{ '<Leader>f',  '<cmd>lua require("fzf-lua").git_files()<CR>',                                                                                                     { silent = true } },
 		{ '<Leader>b',  '<cmd>lua require("fzf-lua").buffers()<CR>',                                                                                                       { silent = true } },
 		{ '<Leader>o',  '<cmd>lua require("fzf-lua").files({ cwd = get_block() })<CR>',                                                                                    { silent = true } },
@@ -77,11 +77,14 @@ return {
 				files = {
 					cmd = 'git ls-files --exclude-standard --cached --others'
 				}
+			},
+			finder = {
+				async = false
 			}
 		})
 
-		vim.keymap.set('n', '<leader>@', function()
-			function fetch()
+		vim.keymap.set('n', '<leader>2', function()
+			local function fetch()
 				local query = vim.treesitter.query.parse('php',
 					'(method_declaration (name)  @name) (function_definition (name)  @name)')
 				local line_count = vim.api.nvim_buf_line_count(0)
@@ -99,7 +102,7 @@ return {
 				return list
 			end
 
-			function get_line(selected)
+			local function get_line(selected)
 				local doSplit = string.gmatch(selected[1], "([0-9]+)\t")
 				local line_num = doSplit()
 				return tonumber(line_num) + 1
