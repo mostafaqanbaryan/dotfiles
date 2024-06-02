@@ -4,23 +4,26 @@ return {
 	branch = 'master',
 	config = function()
 		-- Start from 1
-		vim.g.startify_custom_indices = vim.cmd("map(range(1,100), 'string(v:val)')")
-		vim.g.startify_session_sort = 1
-		vim.g.startify_session_number = 10
+		vim.g.startify_custom_indices      = vim.cmd("map(range(1,100), 'string(v:val)')")
+		vim.g.startify_session_sort        = 1
+		vim.g.startify_session_number      = 10
 		vim.g.startify_session_persistence = 1
-		vim.g.startify_session_dir = '~/.config/nvim/sessions'
+		vim.g.startify_session_autoload    = 1
+		vim.g.startify_session_dir         = '~/.config/nvim/sessions'
+		vim.g.startify_relative_path       = 0
+		vim.g.startify_change_to_dir       = 0
 
-		vim.g.startify_commands = {
+		vim.g.startify_commands            = {
 			{ c = { 'Open Configs', ':Config' } }
 		}
-		vim.g.startify_lists = {
+		vim.g.startify_lists               = {
 			{ type = 'commands',  header = { '   [Commands]' } },
 			{ type = 'files',     header = { '   [Files]' } },
 			{ type = 'dir',       header = { '   [Directory] ' .. vim.fn.getcwd() } },
 			{ type = 'sessions',  header = { '   [Sessions]' } },
 			{ type = 'bookmarks', header = { '   [Bookmarks]' } },
 		}
-		vim.g.startify_custom_header = {
+		vim.g.startify_custom_header       = {
 			"                                                                                                    ",
 			"                                                                                                    ",
 			"                                                                                                    ",
