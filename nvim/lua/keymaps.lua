@@ -39,7 +39,7 @@ vim.keymap.set('v', '/', 'y/<C-R>"<CR>')
 vim.keymap.set('n', 'cu', ':%s/<C-R><C-W>//cg<Left><Left><Left>')
 
 -- Go to last buffer and delete the current one
-vim.keymap.set('n', '<Leader>c', ':bnext<CR>:bd#<CR>', { silent = true })
+vim.keymap.set('n', '<Leader>c', ':bnext<CR>:bwipeout#<CR>', { silent = true })
 
 -- Clean slate
 vim.keymap.set('n', '<leader>n', '<cmd>bufdo bd<CR>', { silent = true })
