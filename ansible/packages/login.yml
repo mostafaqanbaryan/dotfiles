@@ -9,14 +9,6 @@
         name: "sddm"
         state: "present"
 
-    - name: "Start sddm system-wide"
-      become: true
-      ignore_errors: true
-      ansible.builtin.service:
-        name: "sddm"
-        state: "started"
-        enabled: true
-
     - name: "Install qt5"
       become: true
       community.general.pacman:
@@ -47,6 +39,12 @@
         name: "qt5-svg"
         state: "present"
 
+    - name: "Purge old theme"
+      become: true
+      ansible.builtin.file:
+        path: "/usr/share/sddm/themes/sugar-dark"
+        state: "absent"
+
     - name: "Clone theme"
       become: true
       ansible.builtin.git:
@@ -62,7 +60,7 @@
       ansible.builtin.file:
         src: "$PWD/../../sddm/theme/theme.conf"
         dest: "/usr/share/sddm/themes/sugar-dark/theme.conf"
-        state: "link"
+        state: "hard"
         force: true
 
     - name: "Enable theme"
@@ -70,5 +68,14 @@
       ansible.builtin.file:
         src: "$PWD/../../sddm/config"
         dest: "/etc/sddm.conf.d"
-        state: "hard"
+        state: "link"
         force: true
+
+    - name: "Start sddm system-wide"
+      become: true
+      ignore_errors: true
+      ansible.builtin.service:
+        name: "sddm"
+        state: "started"
+        enabled: true
+
