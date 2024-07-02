@@ -36,6 +36,7 @@ return {
 		{ '<Leader>g',  '<cmd>ListFilesFromBranch<CR>',                                                                                                                    { silent = true } },
 		{ '<Leader>iw', '<cmd>lua require("fzf-lua").grep_cword({ cwd = getRoot()  })<CR>',                                                                                { silent = true } },
 		{ '<Leader>iW', '<cmd>lua require("fzf-lua").grep_cWORD({ cwd = getRoot() })<CR>',                                                                                 { silent = true } },
+		{ '<Leader>?',  '<cmd>lua require("fzf-lua").blines()<CR>',                                                                                                        { silent = true } },
 		{ '<Leader>/',  '<cmd>lua require("fzf-lua").grep({ cwd = getRoot() })<CR>',                                                                                       { silent = true } },
 		{ '<Leader>/',  '<cmd>lua require("fzf-lua").grep_visual({ cwd = getRoot() })<CR>',                                                                                { silent = true }, mode = 'v', },
 		{ '<Leader>s',  '<cmd>lua require("fzf-lua").lsp_document_symbols({ winopts = { preview = { layout = "horizontal" }}})<CR>',                                       { silent = true } },
