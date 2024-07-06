@@ -29,17 +29,17 @@ return {
 	branch = 'main',
 	cmd = { 'CGFiles', 'CBuffers', 'CurrentDirFiles' },
 	keys = {
-		{ '<Leader>2' },
-		{ '<Leader>f',  '<cmd>lua require("fzf-lua").git_files()<CR>',                                                                                                     { silent = true } },
-		{ '<Leader>b',  '<cmd>lua require("fzf-lua").buffers()<CR>',                                                                                                       { silent = true } },
-		{ '<Leader>o',  '<cmd>lua require("fzf-lua").files({ cwd = get_block() })<CR>',                                                                                    { silent = true } },
-		{ '<Leader>g',  '<cmd>ListFilesFromBranch<CR>',                                                                                                                    { silent = true } },
+		{ '<Leader>fm' },
+		{ '<Leader>fa', '<cmd>lua require("fzf-lua").git_files()<CR>',                                                                                                     { silent = true } },
+		{ '<Leader>fb', '<cmd>lua require("fzf-lua").buffers()<CR>',                                                                                                       { silent = true } },
+		{ '<Leader>fc', '<cmd>lua require("fzf-lua").files({ cwd = get_block() })<CR>',                                                                                    { silent = true } },
+		{ '<Leader>fg', '<cmd>ListFilesFromBranch<CR>',                                                                                                                    { silent = true } },
+		{ '<Leader>fs', '<cmd>lua require("fzf-lua").lsp_document_symbols({ winopts = { preview = { layout = "horizontal" }}})<CR>',                                       { silent = true } },
 		{ '<Leader>iw', '<cmd>lua require("fzf-lua").grep_cword({ cwd = getRoot()  })<CR>',                                                                                { silent = true } },
 		{ '<Leader>iW', '<cmd>lua require("fzf-lua").grep_cWORD({ cwd = getRoot() })<CR>',                                                                                 { silent = true } },
 		{ '<Leader>?',  '<cmd>lua require("fzf-lua").blines()<CR>',                                                                                                        { silent = true } },
 		{ '<Leader>/',  '<cmd>lua require("fzf-lua").grep({ cwd = getRoot() })<CR>',                                                                                       { silent = true } },
 		{ '<Leader>/',  '<cmd>lua require("fzf-lua").grep_visual({ cwd = getRoot() })<CR>',                                                                                { silent = true }, mode = 'v', },
-		{ '<Leader>s',  '<cmd>lua require("fzf-lua").lsp_document_symbols({ winopts = { preview = { layout = "horizontal" }}})<CR>',                                       { silent = true } },
 		{ 'gr',         '<cmd>lua require("fzf-lua").lsp_references({ sync = true, jump_to_single_result = true, winopts = { preview = { layout = "horizontal" }}})<CR>',  { silent = true } },
 		{ 'gd',         '<cmd>lua require("fzf-lua").lsp_definitions({ sync = true, jump_to_single_result = true, winopts = { preview = { layout = "horizontal" }}})<CR>', { silent = true } },
 		{ '<F4>',       '<cmd>lua require("fzf-lua").lsp_code_actions({ winopts = { preview = { layout = "horizontal" }}})<CR>',                                           { silent = true } },
@@ -84,7 +84,7 @@ return {
 			}
 		})
 
-		vim.keymap.set('n', '<leader>2', function()
+		vim.keymap.set('n', '<leader>fm', function()
 			local function fetch()
 				local query = vim.treesitter.query.parse('php',
 					'(method_declaration (name)  @name) (function_definition (name)  @name)')
