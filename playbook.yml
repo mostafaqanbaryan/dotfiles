@@ -1,0 +1,42 @@
+- hosts: localhost
+  vars:
+    source_key: "./.ssh/id_rsa"
+    dest_key: "{{ lookup('env', 'HOME') }}/.ssh/id_rsa"
+  pre_tasks:
+  - name: Grant access to pacman and yay to do whatever without root access
+    ansible.builtin.shell:
+      cmd: 'echo "$USER ALL=(ALL) NOPASSWD:/usr/bin/yay,/usr/bin/pacman" > /tmp/110-grant-pacman-yay'
+    tags:
+      - install
+
+  - name: Copy access file
+    become: true
+    ansible.builtin.copy:
+      src: '/tmp/110-grant-pacman-yay'
+      dest: '/etc/sudoers.d/110-grant-pacman-yay'
+    tags:
+      - install
+
+  post_tasks:
+  - name: "Revoke access of pacman and yay"
+    become: true
+    ansible.builtin.file:
+      path: /etc/sudoers.d/11-grant-pacman-yay
+      state: absent
+    tags:
+      - install
+
+  tasks:
+    - import_tasks: ansible/keys.yml
+    - import_tasks: ansible/bar.yml
+    - import_tasks: ansible/editor.yml
+    - import_tasks: ansible/fonts.yml
+    - import_tasks: ansible/golang.yml
+    - import_tasks: ansible/login.yml
+    - import_tasks: ansible/rofi.yml
+    - import_tasks: ansible/services.yml
+    - import_tasks: ansible/tui.yml
+    - import_tasks: ansible/utilities.yml
+    - import_tasks: ansible/wm.yml
+    - import_tasks: ansible/scripts.yml
+    - import_tasks: ansible/config.yml

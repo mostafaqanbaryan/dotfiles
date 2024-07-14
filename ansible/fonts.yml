@@ -1,0 +1,27 @@
+- name: "Install vazir font"
+  community.general.pacman: 
+    executable: "yay"
+    name: 
+      - "vazir-code-fonts"
+    state: "present"
+  tags:
+    - install
+
+- name: "Install nerd fonts"
+  community.general.pacman: 
+    executable: "yay"
+    name: 
+      - "ttf-nerd-fonts-symbols-mono"
+    state: "present"
+  tags:
+    - install
+
+# - name: "Copy fonts"
+#   ansible.builtin.copy:
+#     src: "{{ item }}"
+#     dest: "~/.local/share/fonts"
+#   with_fileglob:
+#     src: "$PWD/../fonts/*"
+#   tags:
+#     - install
+#     - config

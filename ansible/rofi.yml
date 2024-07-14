@@ -1,0 +1,41 @@
+- name: "Install rofi"
+  become: true
+  community.general.pacman: 
+    executable: "yay"
+    name: "rofi-lbonn-wayland"
+    state: "present"
+  tags:
+    - install
+
+- name: "Clone rofi themes"
+  ansible.builtin.git:
+    repo: "https://github.com/adi1090x/rofi.git"
+    dest: "/tmp/rofi"
+    depth: 1
+    single_branch: true
+    recursive: true
+    version: master
+  tags:
+    - install
+
+- name: "Set the permission of rofi themes' executable"
+  ansible.builtin.file:
+    path: "/tmp/rofi/setup.sh"
+    mode: "0544"
+  tags:
+    - install
+
+- name: "Install rofi themes"
+  ansible.builtin.command:
+    chdir: "/tmp/rofi"
+    cmd: "./setup.sh"
+  tags:
+    - install
+
+- name: "Remove rofi themes clone"
+  ansible.builtin.file:
+    path: "/tmp/rofi"
+    state: "absent"
+  tags:
+    - install
+

@@ -1,0 +1,23 @@
+- name: "Install calculator"
+  community.general.pacman: 
+    executable: "yay"
+    name: "qalculate-gtk"
+    state: "present"
+  tags:
+    - install
+
+- name: "Install brave"
+  community.general.pacman: 
+    executable: "yay"
+    name: "brave"
+    state: "present"
+  tags:
+    - install
+
+- name: "Install musicplayer"
+  community.general.pacman: 
+    executable: "yay"
+    name: "tauon-music-box"
+    state: "present"
+  tags:
+    - install

@@ -1,0 +1,17 @@
+- name: "Install golang"
+  become: true
+  community.general.pacman: 
+    executable: "yay"
+    name: "go"
+    state: "present"
+  tags:
+    - install
+
+- name: "Install delve for debugging go"
+  become: true
+  community.general.pacman: 
+    executable: "yay"
+    name: "delve"
+    state: "present"
+  tags:
+    - install

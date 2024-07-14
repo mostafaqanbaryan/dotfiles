@@ -1,9 +1,0 @@
-- name: "Revoke access of yay"
-  hosts: localhost
-  connection: local
-  tasks:
-    - name: "Revoke access of pacman and yay"
-      become: true
-      ansible.builtin.file:
-        path: /etc/sudoers.d/11-grant-pacman-yay
-        state: absent

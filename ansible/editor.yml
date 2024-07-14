@@ -1,0 +1,16 @@
+- name: "Install fzf"
+  become: true
+  community.general.pacman: 
+    name: ["fzf", "bat", "ripgrep"]
+    state: "present"
+  tags:
+    - install
+
+- name: "Install Neovim"
+  become: true
+  community.general.pacman: 
+    name: ["neovim", "noto-fonts-emoji"]
+    state: "present"
+  tags:
+    - install
+

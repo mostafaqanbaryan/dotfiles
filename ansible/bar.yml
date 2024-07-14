@@ -1,0 +1,40 @@
+- name: "Install waybar"
+  become: true
+  community.general.pacman: 
+    name: "waybar"
+    state: "present"
+  tags:
+    - install
+
+- name: "Install grim for taking screenshots"
+  become: true
+  community.general.pacman: 
+    name: "grim"
+    state: "present"
+  tags:
+    - install
+
+- name: "Install swappy as snapshop editor tool"
+  become: true
+  community.general.pacman: 
+    name: "swappy"
+    state: "present"
+  tags:
+    - install
+
+- name: "Install slurp for partial screenshots with grim"
+  become: true
+  community.general.pacman: 
+    name: "slurp"
+    state: "present"
+  tags:
+    - install
+
+- name: "Install pavucontrol for sound control"
+  become: true
+  community.general.pacman: 
+    name: "pavucontrol"
+    state: "present"
+  tags:
+    - install
+

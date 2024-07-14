@@ -1,0 +1,77 @@
+- name: "Install fish"
+  become: true
+  community.general.pacman: 
+    name: "fish"
+    state: "present"
+  tags:
+    - install
+
+- name: "Install starship"
+  become: true
+  community.general.pacman: 
+    name: "starship"
+    state: "present"
+  tags:
+    - install
+
+- name: "Install ranger"
+  community.general.pacman: 
+    executable: "yay"
+    name: 
+      - "ranger"
+      - "python-pynvim"
+    state: "present"
+  tags:
+    - install
+
+- name: "Install zellij"
+  become: true
+  community.general.pacman: 
+    name: "zellij"
+    state: "present"
+  tags:
+    - install
+
+- name: "Install wtype for bitwarden script"
+  become: true
+  community.general.pacman: 
+    name: "wtype"
+    state: "present"
+  tags:
+    - install
+
+- name: "Install eza in place of ls"
+  become: true
+  community.general.pacman: 
+    executable: "yay"
+    name: "eza"
+    state: "present"
+  tags:
+    - install
+
+- name: "Install zoxide in place of cd"
+  become: true
+  community.general.pacman: 
+    executable: "yay"
+    name: "zoxide"
+    state: "present"
+  tags:
+    - install
+
+- name: "Install xcp - cp alternative"
+  ignore_errors: true
+  community.general.pacman: 
+    executable: "yay"
+    name: "xcp"
+    state: "present"
+  tags:
+    - install
+
+- name: "Install dust - du alternative"
+  ignore_errors: true
+  community.general.pacman: 
+    executable: "yay"
+    name: "dust"
+    state: "present"
+  tags:
+    - install
