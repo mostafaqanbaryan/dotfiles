@@ -62,11 +62,9 @@ return {
 					enable = true,
 					swap_next = {
 						[']a'] = '@parameter.inner',
-						[']f'] = '@function.outer'
 					},
 					swap_previous = {
 						['[a'] = '@parameter.inner',
-						['[f'] = '@function.outer'
 					}
 				}
 			}
