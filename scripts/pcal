@@ -2,10 +2,10 @@
 # https://github.com/a5hk/pcal
 
 BREAKS=(-61 9 38 199 426 686 756 818 1111 1181 1210 1635 2060 2097 2192 2262 2324 2394 2456 3178)
-DAY_NAMES_FA=(Sh Ye Do Se Ch Pa Jo)
+DAY_NAMES_FA=(شن یک دو سه چه پن جم)
 declare -A DAY_NAMES=([Sh]=0 [Ye]=1 [Do]=2 [Se]=3 [Ch]=4 [Pa]=5 [Jo]=6)
 declare -A DAY_NAMES_EN=([Sat]=Sh [Sun]=Ye [Mon]=Do [Tue]=Se [Wed]=Ch [Thu]=Pa [Fri]=Jo)
-MONTH_NAMES=(Farvardin Ordibehesht Khordad Tir Mordad Shahrivar Mehr Aban Azar Dey Bahman Esfand)
+MONTH_NAMES=(فروردین اردیبهشت خرداد تیر مرداد شهریور مهر آبان آذر دی بهمن اسفند)
 
 exit_error() {
   >&2 echo "$1"
@@ -222,12 +222,12 @@ print_current_month() {
   local etag=''
   local current_day=$(current_persian_day)
   local current_month_name=${MONTH_NAMES[$((current_month - 1))]}
-  local month_name_length=${#current_month_name}
-  local month_pad=$(((25 + month_name_length) / 2))
 
-  printf " %s <b>%${month_pad}s</b>" $(current_persian_year)  $current_month_name
+  printf " <span size='x-large'>$(current_persian_year)</span>"
   printf ' \\n '
-  printf '<i>%s</i> ' ${DAY_NAMES_FA[@]} 
+  printf "<span size='large'>$current_month_name</span>"
+  printf ' \\n '
+  printf '<tt><i>%s</i></tt> ' ${DAY_NAMES_FA[@]} 
   printf ' \\n '
 
   for ((i = 0; i < 6; i++)); do
@@ -235,10 +235,13 @@ print_current_month() {
       if [[ $counter -lt $index || $day -gt $month_length ]]; then
         printf "   "
       else
+        stag='<tt><s>'
+        etag='</s></tt>'
+
         if [[ $day -eq  $current_day ]]; then
-          stag='<u><b>'
-          etag='</b></u>'
-        else
+          stag="<u><span foreground='#ff6600'><tt>"
+          etag='</tt></span></u>'
+        elif [[ $day -gt  $current_day ]]; then
           stag=''
           etag=''
         fi

@@ -174,7 +174,6 @@
     },
     "custom/shamsi": {
         "format": "{}",
-        "escape": true,
         "tooltip": true,
         "return-type": "json",
         "min-length": 14,
