@@ -1,0 +1,7 @@
+- name: "Install nodejs"
+  community.general.pacman: 
+    executable: "yay"
+    name: ["nodejs", "npm"]
+    state: "present"
+  tags:
+    - install

@@ -32,6 +32,7 @@
     - import_tasks: ansible/editor.yml
     - import_tasks: ansible/fonts.yml
     - import_tasks: ansible/golang.yml
+    - import_tasks: ansible/javascript.yml
     - import_tasks: ansible/login.yml
     - import_tasks: ansible/rofi.yml
     - import_tasks: ansible/services.yml
