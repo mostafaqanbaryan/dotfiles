@@ -1,5 +1,5 @@
 -- clear search
-vim.keymap.set('n', '<leader>\\', ':let @/=""<CR>:nohlsearch<CR>', { silent = true })
+vim.keymap.set('n', '<esc>', '<cmd>noh<cr><esc>', { silent = true, desc = "Escape and Clear hlsearch" })
 
 -- Remap paste
 vim.keymap.set('v', 'p', 'P')
@@ -8,6 +8,14 @@ vim.keymap.set('v', 'P', 'p')
 -- Copy/Paste outside vim
 vim.keymap.set('n', '<Leader>yiw', '"+yiw:echo "Copied <iword> to clipboard!"<CR>', { silent = true })
 vim.keymap.set('n', '<Leader>yiW', '"+yiW:echo "Copied <IWORD> to clipboard!"<CR>', { silent = true })
+vim.keymap.set('n', '<Leader>yi"', '"+yi":echo "Copied sentence to clipboard!"<CR>', { silent = true })
+vim.keymap.set('n', '<Leader>yi\'', '"+yi\':echo "Copied sentence to clipboard!"<CR>', { silent = true })
+vim.keymap.set('n', '<Leader>yi(', '"+yi(:echo "Copied sentence to clipboard!"<CR>', { silent = true })
+vim.keymap.set('n', '<Leader>yi)', '"+yi(:echo "Copied sentence to clipboard!"<CR>', { silent = true })
+vim.keymap.set('n', '<Leader>yi[', '"+yi[:echo "Copied sentence to clipboard!"<CR>', { silent = true })
+vim.keymap.set('n', '<Leader>yi]', '"+yi[:echo "Copied sentence to clipboard!"<CR>', { silent = true })
+vim.keymap.set('n', '<Leader>yi{', '"+yi{:echo "Copied sentence to clipboard!"<CR>', { silent = true })
+vim.keymap.set('n', '<Leader>yi}', '"+yi{:echo "Copied sentence to clipboard!"<CR>', { silent = true })
 vim.keymap.set('n', '<Leader>yy', '"+yy:echo "Copied line to clipboard!"<CR>', { silent = true })
 vim.keymap.set('v', '<Leader>y', '"+y:echo "Selection yanked to clipboard!"<CR>', { silent = true })
 

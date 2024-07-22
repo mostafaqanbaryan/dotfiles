@@ -4,7 +4,7 @@ return {
 		'BlameToggle'
 	},
 	keys = {
-		{ '<Leader>B', '<cmd>BlameToggle<CR>', { silent = true } },
+		{ '<Leader>b', '<cmd>BlameToggle<CR>', { silent = true } },
 	},
 	config = function()
 		require("blame").setup({

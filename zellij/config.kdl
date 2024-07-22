@@ -8,8 +8,8 @@ keybinds clear-defaults=true {
     }
 
     "normal" clear-defaults=true {
-		bind "Ctrl b" { SwitchToMode "tmux"; }
-	}
+        bind "Ctrl b" { SwitchToMode "tmux"; }
+    }
 
     "tmux" clear-defaults=true {
         bind "g" {
@@ -17,16 +17,16 @@ keybinds clear-defaults=true {
                 close_on_exit true
             };
             TogglePaneEmbedOrFloating;
-			SwitchToMode "normal";
+            SwitchToMode "normal";
         }
         bind "f" { SwitchToMode "entersearch"; SearchInput 0; }
         bind "s" { SwitchToMode "scroll"; }
         bind "r" { SwitchToMode "Resize"; }
 
         bind "Ctrl b" { 
-			Write 002;
-			SwitchToMode "normal";
-		}
+            Write 002;
+            SwitchToMode "normal";
+        }
         bind "Esc" { SwitchToMode "normal"; }
 
         bind "t" { NewTab; SwitchToMode "normal"; }
@@ -39,8 +39,8 @@ keybinds clear-defaults=true {
                 close_on_exit true
             };
             TogglePaneEmbedOrFloating;
-        	SwitchToMode "normal";
-		}
+            SwitchToMode "normal";
+        }
 
         bind "\\" { NewPane "Right"; SwitchToMode "normal"; }
         bind "-" { NewPane "Down"; SwitchToMode "normal"; }
@@ -49,15 +49,15 @@ keybinds clear-defaults=true {
         bind "a" { TogglePaneEmbedOrFloating; SwitchToMode "normal"; }
         bind "e" { EditScrollback; SwitchToMode "normal"; }
 
-		bind "l" { MoveFocus "Right"; SwitchToMode "normal"; }
-		bind "h" { MoveFocus "Left"; SwitchToMode "normal"; }
-		bind "k" { MoveFocus "Up"; SwitchToMode "normal"; }
-		bind "j" { MoveFocus "Down"; SwitchToMode "normal"; }
+        bind "l" { MoveFocus "Right"; SwitchToMode "normal"; }
+        bind "h" { MoveFocus "Left"; SwitchToMode "normal"; }
+        bind "k" { MoveFocus "Up"; SwitchToMode "normal"; }
+        bind "j" { MoveFocus "Down"; SwitchToMode "normal"; }
 
-		bind "L" { MovePane "Right"; SwitchToMode "normal"; }
-		bind "H" { MovePane "Left"; SwitchToMode "normal"; }
-		bind "K" { MovePane "Up"; SwitchToMode "normal"; }
-		bind "J" { MovePane "Down"; SwitchToMode "normal"; }
+        bind "L" { MovePane "Right"; SwitchToMode "normal"; }
+        bind "H" { MovePane "Left"; SwitchToMode "normal"; }
+        bind "K" { MovePane "Up"; SwitchToMode "normal"; }
+        bind "J" { MovePane "Down"; SwitchToMode "normal"; }
 
         bind ";" { ToggleFloatingPanes; SwitchToMode "normal"; }
         bind "d" { Detach; SwitchToMode "normal"; }
@@ -160,19 +160,19 @@ themes {
         black "#181825";
         white "#cdd6f4";
     }
-	rose-pine-moon {
-		bg "#44415a"
-		fg "#e0def4"
-		red "#eb6f92"
-		green "#3e8fb0"
-		blue "#9ccfd8"
-		yellow "#f6c177"
-		magenta "#c4a7e7"
-		orange "#fe640b"
-		cyan "#ea9a97"
-		black "#393552"
-		white "#e0def4"
-	}
+    rose-pine-moon {
+        bg "#44415a"
+        fg "#e0def4"
+        red "#eb6f92"
+        green "#3e8fb0"
+        blue "#9ccfd8"
+        yellow "#f6c177"
+        magenta "#c4a7e7"
+        orange "#fe640b"
+        cyan "#ea9a97"
+        black "#393552"
+        white "#e0def4"
+    }
 }
 
 theme "rose-pine-moon"

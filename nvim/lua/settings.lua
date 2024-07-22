@@ -19,7 +19,7 @@ vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.opt.tabstop = 4
 vim.opt.laststatus = 3
-vim.opt.expandtab = false
+vim.opt.expandtab = true
 vim.opt.preserveindent = true
 vim.opt.scrolloff = 7
 vim.opt.ruler = true
@@ -62,19 +62,19 @@ vim.opt.smartcase = true
 vim.g.html_indent_tags = 'li│p'
 
 local function paste()
-	return {
-		vim.fn.split(vim.fn.getreg(""), "\n"),
-		vim.fn.getregtype(""),
-	}
+    return {
+        vim.fn.split(vim.fn.getreg(""), "\n"),
+        vim.fn.getregtype(""),
+    }
 end
 vim.g.clipboard = {
-	name = 'OSC 52',
-	copy = {
-		['+'] = require('vim.ui.clipboard.osc52').copy('+'),
-		['*'] = require('vim.ui.clipboard.osc52').copy('*'),
-	},
-	paste = {
-		['+'] = paste,
-		['*'] = paste,
-	},
+    name = 'OSC 52',
+    copy = {
+        ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+        ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+    },
+    paste = {
+        ['+'] = paste,
+        ['*'] = paste,
+    },
 }

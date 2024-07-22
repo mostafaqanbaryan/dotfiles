@@ -19,10 +19,10 @@ return {
 		formatters_by_ft = {
 			lua = { "stylua" },
 			python = { "isort", "black" },
-			javascript = { { "biome", "prettierd", "prettier" } },
-			typescript = { { "biome", "prettierd", "prettier" } },
-			typescriptreact = { { "biome", "prettierd", "prettier" } },
-			javascriptreact = { { "biome", "prettierd", "prettier" } },
+			javascript = { { "prettierd", "prettier" } },
+			typescript = { { "prettierd", "prettier" } },
+			typescriptreact = { { "prettierd", "prettier" } },
+			javascriptreact = { { "prettierd", "prettier" } },
 			php = { { "prettierd", "prettier" } },
 		},
 		-- Customize formatters
