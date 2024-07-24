@@ -42,7 +42,6 @@ return {
         { '<Leader>/',  '<cmd>lua require("fzf-lua").grep_visual({ cwd = getRoot() })<CR>',                                                                                { silent = true }, mode = 'v', },
         { 'gr',         '<cmd>lua require("fzf-lua").lsp_references({ sync = true, jump_to_single_result = true, winopts = { preview = { layout = "horizontal" }}})<CR>',  { silent = true } },
         { 'gd',         '<cmd>lua require("fzf-lua").lsp_definitions({ sync = true, jump_to_single_result = true, winopts = { preview = { layout = "horizontal" }}})<CR>', { silent = true } },
-        { '<F4>',       '<cmd>lua require("fzf-lua").lsp_code_actions({ winopts = { preview = { layout = "horizontal" }}})<CR>',                                           { silent = true } },
     },
     dependencies = {
         { 'nvim-tree/nvim-web-devicons' },
@@ -73,9 +72,6 @@ return {
                     ["ctrl-a"] = "select-all",
                     ["ctrl-c"] = "deselect-all",
                 }
-            },
-            fzf_opts = {
-                ['--ansi'] = false
             },
             git = {
                 files = {
