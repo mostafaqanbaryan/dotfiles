@@ -57,3 +57,12 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-f>', '<C-f>zz')
 vim.keymap.set('n', '<C-b>', '<C-b>zz')
+
+-- Avoid x and s to override register
+vim.keymap.set('n', 'x', '"_x')
+vim.keymap.set('n', 'X', '"_X')
+vim.keymap.set('n', 's', '"_s')
+
+-- Smarter indentation
+vim.keymap.set('n', '>', '>>')
+vim.keymap.set('n', '<', '<<')
