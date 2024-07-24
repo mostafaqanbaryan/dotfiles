@@ -179,3 +179,23 @@
     - install
     - config
 
+- name: "Remove ssh old config"
+  ignore_errors: true
+  ansible.builtin.file:
+    path: "~/.ssh/config"
+    state: "absent"
+  tags:
+    - install
+    - config
+
+- name: "Link ssh config"
+  ignore_errors: true
+  ansible.builtin.file:
+    src: "$PWD/ssh_config"
+    dest: "~/.ssh/config"
+    state: "link"
+    force: true
+  tags:
+    - install
+    - config
+
