@@ -62,7 +62,3 @@ vim.keymap.set('n', '<C-b>', '<C-b>zz')
 vim.keymap.set('n', 'x', '"_x')
 vim.keymap.set('n', 'X', '"_X')
 vim.keymap.set('n', 's', '"_s')
-
--- Smarter indentation
-vim.keymap.set('n', '>', '>>')
-vim.keymap.set('n', '<', '<<')
