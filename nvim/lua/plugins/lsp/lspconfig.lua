@@ -59,7 +59,7 @@ return {
                 { buffer = bufnr }
             )
 
-            -- see :help lsp-zero-keybindings
+            -- See :help lsp-zero-keybindings
             -- to learn the available actions
             lsp_zero.default_keymaps({ buffer = bufnr })
             vim.api.nvim_create_autocmd('CursorHold', {
@@ -96,7 +96,7 @@ return {
         -- lsp zero mason
         require('mason-lspconfig').setup({
             lazy = false,
-            ensure_installed = { "intelephense", "tsserver", "lua_ls", "tailwindcss", "gopls", "bashls" },
+            ensure_installed = { "intelephense", "tsserver", "lua_ls", "tailwindcss", "gopls", "bashls", "harper_ls" },
             handlers = {
                 lsp_zero.default_setup,
                 lua_ls = function()
