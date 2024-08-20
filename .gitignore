@@ -1,6 +1,5 @@
 *.swp
 .ssh
-ssh_config
 
 # Services
 services/default.target.wants
