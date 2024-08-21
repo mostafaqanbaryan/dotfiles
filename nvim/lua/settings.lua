@@ -25,7 +25,6 @@ vim.opt.scrolloff = 7
 vim.opt.ruler = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
-vim.opt.foldmethod = 'indent'
 
 -- Highlight current line
 vim.opt.cursorline = true
