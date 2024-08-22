@@ -91,3 +91,11 @@
   tags:
     - install
 
+- name: "Install udiskie for automounting removable devices"
+  ignore_errors: true
+  community.general.pacman: 
+    name: "udiskie"
+    state: "present"
+  tags:
+    - install
+
