@@ -30,8 +30,8 @@ return {
     cmd = { 'CGFiles', 'CBuffers', 'CurrentDirFiles' },
     keys = {
         { '<Leader>fm' },
-        { '<Leader>fa', '<cmd>lua require("fzf-lua").files()<CR>',                                                                                                         { silent = true } },
-        { '<Leader>ff', '<cmd>lua require("fzf-lua").git_files()<CR>',                                                                                                     { silent = true } },
+        { '<Leader>ff', '<cmd>lua require("fzf-lua").files()<CR>',                                                                                                         { silent = true } },
+        { '<Leader>fa', '<cmd>lua require("fzf-lua").git_files()<CR>',                                                                                                     { silent = true } },
         { '<Leader>fb', '<cmd>lua require("fzf-lua").buffers()<CR>',                                                                                                       { silent = true } },
         { '<Leader>fc', '<cmd>lua require("fzf-lua").files({ cwd = get_block() })<CR>',                                                                                    { silent = true } },
         { '<Leader>fg', '<cmd>ListFilesFromBranch<CR>',                                                                                                                    { silent = true } },
