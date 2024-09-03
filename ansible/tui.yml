@@ -75,3 +75,21 @@
     state: "present"
   tags:
     - install
+
+- name: "Install lazygit"
+  ignore_errors: true
+  community.general.pacman: 
+    executable: "yay"
+    name: "lazygit"
+    state: "present"
+  tags:
+    - install
+
+- name: "Install difftastic in place of diff"
+  ignore_errors: true
+  community.general.pacman: 
+    executable: "yay"
+    name: "difftastic"
+    state: "present"
+  tags:
+    - install
