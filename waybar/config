@@ -1,6 +1,6 @@
 {
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
-    "modules-center": ["tray", "clock", "idle_inhibitor", "custom/shamsi"],
+    "modules-center": ["tray", "clock", "idle_inhibitor", "custom/audio_idle_inhibitor", "custom/shamsi"],
     "modules-right": ["hyprland/submap", "custom/scratchpad-indicator", "custom/media", "hyprland/language", "network", "custom/notification", "custom/updates", "group/group-audio", "custom/screenshot", "custom/power"],
 
     "hyprland/workspaces": {
@@ -184,6 +184,18 @@
         "format": "{} 󰚰",
         "exec": "checkupdates | wc -l",
         "interval": 600
+    },
+    "custom/audio_idle_inhibitor": {
+        "format": "{icon}",
+        "exec": "sway-audio-idle-inhibit --dry-print-both-waybar",
+        "exec-if": "which sway-audio-idle-inhibit",
+        "return-type": "json",
+        "format-icons": {
+            "output": "",
+            "input": "",
+            "output-input": "  ",
+            "none": ""
+        }
     },
     "layer": "top"
 }
