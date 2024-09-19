@@ -6,7 +6,6 @@ end
 source ~/env.fish
 
 # Editor
-alias v "nvim"
 alias s "sessions"
 
 # Dockers
