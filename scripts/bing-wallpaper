@@ -16,7 +16,7 @@ tmp=/tmp/lockscreen.jpg
 directory=${LOCK_SCREEN_WALLPAPER_PATH:-"$HOME/Pictures/wallpapers"}
 output=${WALLPAPER_OUTPUT:-"*"}
 baseurl="https://www.bing.com/"
-result=$(proxychains curl $baseurl"HPImageArchive.aspx?format=js&idx=0&n=20&mkt=en-US" -s)
+result=$(curl $baseurl"HPImageArchive.aspx?format=js&idx=0&n=20&mkt=en-US" -s)
 images=$(echo $result | jq '.images[]')
 urls=( $(echo $images | jq -r '.url') )
 dates=( $(echo $images | jq -r '.startdate') )
@@ -25,7 +25,7 @@ for url in "${urls[@]}"; do
     filename=${dates[$counter]}.jpg
     counter=$[$counter+1]
     if [ ! -e $directory/$filename ]; then
-       proxychains aria2c "$baseurl$url" -q -d $directory -o $filename
+       aria2c "$baseurl$url" -q -d $directory -o $filename
     fi
 done
 IFS=$oldIFS
