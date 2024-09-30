@@ -96,7 +96,7 @@ return {
         -- lsp zero mason
         require('mason-lspconfig').setup({
             lazy = false,
-            ensure_installed = { "intelephense", "tsserver", "lua_ls", "tailwindcss", "gopls", "bashls", "harper_ls" },
+            ensure_installed = { "intelephense", "ts_ls", "lua_ls", "tailwindcss", "gopls", "bashls", "harper_ls" },
             handlers = {
                 lsp_zero.default_setup,
                 lua_ls = function()

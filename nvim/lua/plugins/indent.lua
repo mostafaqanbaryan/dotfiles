@@ -1,13 +1,16 @@
 return {
-    "lukas-reineke/indent-blankline.nvim",
+    'nvimdev/indentmini.nvim',
     lazy = false,
-    main = "ibl",
-    opts = {},
-    init = function()
-        require("ibl").setup({
-            indent = {
-                tab_char = '▍'
-            }
+    dependencies = {
+        'nvim-tree/nvim-web-devicons',
+    },
+    config = function()
+        require("indentmini").setup({
+            exclude = { "startify" },
+            -- only_current = true
         })
-    end
+        local palette = require('rose-pine.palette')
+        vim.cmd.highlight('IndentLine guifg=#413f4f') -- palette.muted with a little transparency
+        vim.cmd.highlight('IndentLineCurrent guifg=' .. palette.muted)
+    end,
 }
