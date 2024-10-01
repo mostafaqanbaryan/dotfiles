@@ -2,7 +2,7 @@
   ignore_errors: true
   community.general.pacman: 
     executable: "yay"
-    name: "hyprland"
+    name: ["hyprland", "hyprpicker-git"]
     state: "present"
   tags:
     - install

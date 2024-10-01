@@ -1,7 +1,7 @@
 {
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
-    "modules-center": ["tray", "clock", "idle_inhibitor", "custom/audio_idle_inhibitor", "custom/shamsi"],
-    "modules-right": ["hyprland/submap", "custom/scratchpad-indicator", "custom/media", "hyprland/language", "network", "custom/notification", "custom/updates", "group/group-audio", "custom/screenshot", "custom/power"],
+    "modules-center": ["tray", "clock", "idle_inhibitor", "custom/shamsi"],
+    "modules-right": ["hyprland/submap", "custom/scratchpad-indicator", "custom/media", "hyprland/language", "network", "custom/notification", "custom/updates", "group/group-audio", "custom/audio_idle_inhibitor", "custom/colorpicker", "custom/screenshot", "custom/power"],
 
     "hyprland/workspaces": {
         "format": "{icon}",
@@ -172,6 +172,12 @@
         "on-click": "sleep 0.1 && grim -g \"$(slurp)\" - | swappy -f -",
         "on-click-middle": "sleep 0.1 && grim -g \"$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | \"\\(.x),\\(.y) \\(.width)x\\(.height)\"' | slurp)\" - | swappy -f -"
     },
+    "custom/colorpicker": {
+        "format": "",
+        "tooltip": false,
+        "min-length": 4,
+        "on-click": "hyprpicker -a"
+    },
     "custom/shamsi": {
         "format": "{}",
         "tooltip": true,
@@ -187,6 +193,7 @@
     },
     "custom/audio_idle_inhibitor": {
         "format": "{icon}",
+        "min-length": 3,
         "exec": "sway-audio-idle-inhibit --dry-print-both-waybar",
         "exec-if": "which sway-audio-idle-inhibit",
         "return-type": "json",
