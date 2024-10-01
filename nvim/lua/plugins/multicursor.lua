@@ -1,6 +1,7 @@
 return {
     "jake-stewart/multicursor.nvim",
     branch = "1.0",
+    event = 'VeryLazy',
     config = function()
         local mc = require("multicursor-nvim")
 
@@ -12,6 +13,7 @@ return {
 
         -- Add a cursor and jump to the next word under cursor.
         vim.keymap.set({ "n", "v" }, "<c-n>", function() mc.addCursor("*") end)
+        vim.keymap.set({ "n", "v" }, "<c-p>", function() mc.deleteCursor() end)
 
         -- Jump to the next word under cursor but do not add a cursor.
         vim.keymap.set({ "n", "v" }, "<c-s>", function() mc.skipCursor("*") end)
@@ -42,7 +44,7 @@ return {
             elseif mc.hasCursors() then
                 mc.clearCursors()
             else
-                vim.cmd [[<cmd>noh<cr><esc>]]
+                vim.cmd [[noh]]
             end
         end)
 
