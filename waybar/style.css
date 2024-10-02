@@ -2,7 +2,7 @@
     border: none;
     font-family: "Monego Ligatures", "Symbols Nerd Font Mono", Roboto, Arial, sans-serif;
     font-size: 13px;
-    color: rgb(252, 197, 203);
+    color: white;
 }
 
 window#waybar {
@@ -14,7 +14,7 @@ window#waybar > .horizontal {
     padding: 4px 0;
     border-radius: 0 0 12px 12px;
     border: 2px solid rgba(252, 197, 203, 0.1);
-    background: rgba(234, 27, 42, 0.2);
+    background: rgba(255,255,255,0.1);
 }
 
 /*-----module groups----*/
