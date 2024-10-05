@@ -232,8 +232,8 @@
         "max-length": 4
     },
     "hyprland/language": {
-        "format": "{short}",
-        "on-click": "swaymsg input type:keyboard xkb_switch_layout next",
+        "format": "{long}",
+        "on-click": "hyprctl switchxkblayout all next",
     },
     "group/group-icons": {
         "orientation": "inherit",
