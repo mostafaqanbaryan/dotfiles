@@ -1,7 +1,7 @@
 {
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
     "modules-center": ["tray", "clock", "idle_inhibitor", "custom/shamsi"],
-    "modules-right": ["hyprland/submap", "custom/scratchpad-indicator", "custom/media", "hyprland/language", "network", "custom/notification", "custom/updates", "group/group-audio", "custom/audio_idle_inhibitor", "custom/colorpicker", "custom/screenshot", "custom/power"],
+    "modules-right": ["hyprland/submap", "custom/scratchpad-indicator", "custom/media", "hyprland/language", "network", "custom/notification", "custom/updates", "group/group-audio", "privacy", "custom/colorpicker", "custom/screenshot", "custom/power"],
 
     "hyprland/workspaces": {
         "format": "{icon}",
@@ -191,18 +191,23 @@
         "exec": "checkupdates | wc -l",
         "interval": 600
     },
-    "custom/audio_idle_inhibitor": {
-        "format": "{icon}",
-        "min-length": 3,
-        "exec": "sway-audio-idle-inhibit --dry-print-both-waybar",
-        "exec-if": "which sway-audio-idle-inhibit",
-        "return-type": "json",
-        "format-icons": {
-            "output": "",
-            "input": "",
-            "output-input": "  ",
-            "none": ""
-        }
+    "privacy": {
+        "icon-spacing": 14,
+        "icon-size": 18,
+        "min-length": 6,
+        "transition-duration": 250,
+        "modules": [
+            {
+                "type": "screenshare",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+            },
+            {
+                "type": "audio-in",
+                "tooltip": true,
+                "tooltip-icon-size": 24
+            }
+        ]
     },
     "layer": "top"
 }

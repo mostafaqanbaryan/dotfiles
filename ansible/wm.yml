@@ -99,12 +99,3 @@
   tags:
     - install
 
-- name: "Install sway-audio-idle-inhibit to prevent sleep when audio output is enable"
-  ignore_errors: true
-  community.general.pacman: 
-    executable: "yay"
-    name: "sway-audio-idle-inhibit-git"
-    state: "present"
-  tags:
-    - install
-
