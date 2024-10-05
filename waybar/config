@@ -1,7 +1,7 @@
 {
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
-    "modules-center": ["tray", "clock", "idle_inhibitor", "custom/shamsi"],
-    "modules-right": ["hyprland/submap", "custom/scratchpad-indicator", "custom/media", "hyprland/language", "network", "custom/notification", "custom/updates", "group/group-audio", "privacy", "custom/colorpicker", "custom/screenshot", "custom/power"],
+    "modules-center": ["clock", "idle_inhibitor", "custom/shamsi"],
+    "modules-right": ["hyprland/submap", "custom/scratchpad-indicator", "custom/media", "hyprland/language", "network", "custom/notification", "custom/updates", "group/group-audio", "privacy",  "group/group-icons", "memory", "load"],
 
     "hyprland/workspaces": {
         "format": "{icon}",
@@ -119,8 +119,9 @@
         "on-click": "sleep 0.1 && pavucontrol"
     },
 	"custom/power": {
-		"format": " ",
-		"on-click": "sleep 0.1 && $HOME/.config/rofi/scripts/powermenu_t6"
+        "format": " ",
+        "min-length": 3,
+        "on-click": "sleep 0.1 && $HOME/.config/rofi/scripts/powermenu_t6"
 	},
     "custom/scratchpad-indicator": {
         "format-text": "{}",
@@ -194,7 +195,6 @@
     "privacy": {
         "icon-spacing": 14,
         "icon-size": 18,
-        "min-length": 6,
         "transition-duration": 250,
         "modules": [
             {
@@ -207,6 +207,48 @@
                 "tooltip": true,
                 "tooltip-icon-size": 24
             }
+        ]
+    },
+    "power-profiles-daemon": {
+        "format": "{icon}",
+        "min-length": 4,
+        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+        "tooltip": true,
+        "format-icons": {
+            "default": "",
+            "performance": "",
+            "balanced": "",
+            "power-saver": ""
+        }
+    },
+    "memory": {
+        "interval": 30,
+        "format": "{}% /",
+        "max-length": 6
+    },
+    "load": {
+        "interval": 5,
+        "format": "{load1}",
+        "max-length": 4
+    },
+    "hyprland/language": {
+        "format": "{short}",
+        "on-click": "swaymsg input type:keyboard xkb_switch_layout next",
+    },
+    "group/group-icons": {
+        "orientation": "inherit",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "not-power",
+            "transition-left-to-right": false,
+        },
+        "modules": [
+            "custom/power", // First element is the "group leader" and won't ever be hidden
+            "tray",
+            "custom/colorpicker",
+            "custom/screenshot",
+            "power-profiles-daemon",
+            "battery"
         ]
     },
     "layer": "top"

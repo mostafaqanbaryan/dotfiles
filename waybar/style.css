@@ -57,7 +57,6 @@ window#waybar > .horizontal {
 #tray,
 #mode,
 #language,
-#custom-power,
 #custom-menu,
 #custom-notification,
 #custom-updates,
@@ -73,11 +72,7 @@ window#waybar > .horizontal {
     font-weight: bold;
     font-size: 8px;
 }
-#custom-power {
-    border-radius: 100px;
-    margin: 5px;
-    padding: 1px 1px 1px 6px;
-}
+
 /*-----Indicators----*/
 #idle_inhibitor.activated {
     color: #2dcc36;
