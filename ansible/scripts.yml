@@ -21,7 +21,7 @@
 - name: "Enable lockscreen cron"
   ansible.builtin.cron:
     name: "bing-lockscreen"
-    job: "bing-wallpaper"
+    job: "~/.local/bin/./bing-wallpaper"
     minute: "0"
   tags:
     - install
