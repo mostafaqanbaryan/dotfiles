@@ -64,14 +64,16 @@ if [ -z "$selected" ]; then
 	exit 0
 fi
 
-is_session=$(is_selected_session "$selected")
 cwd=$(get_sanitized_selected "$selected")
 session_name=$(get_session_name "$(transform_home_path "$cwd")")
 session=$(zellij list-sessions | grep "$session_name")
+is_current_session=$(zellij list-sessions -n | grep "^$session_name \[Created" | grep "(current)")
 
 # If we're inside of zellij, detach
 if [[ -n "$ZELLIJ" ]]; then
-	zellij pipe --plugin file:~/dotfiles/zellij/plugins/zellij-switch.wasm -- "$session_name::$cwd"
+    if [[ -z "$is_current_session" ]]; then
+	    zellij pipe --plugin file:~/dotfiles/zellij/plugins/zellij-switch.wasm -- "$session_name::$cwd"
+    fi
 else
 	if [[ -n "$session" ]]; then
 		zellij attach $session_name -c
