@@ -27,20 +27,22 @@ fzf_window() {
 	fzf --reverse --no-sort --border "rounded" --info inline --pointer "→" --prompt "Session > " --header "Select session" --preview "echo {2} | grep -q 'Session' && echo {} || ls {3}"
 }
 
-select_project() {
+sessions_list(){
+    zellij list-sessions -s | awk '{ print "("NR")\t[Session]\t"$1 }'
+}
+
+project_list(){
 	list=$(find ~/Projects/ -maxdepth 1 -type d)
 	list="$(realpath ~/dotfiles) ${list}"
-    project_dir=$({ zellij list-sessions -s | awk '{ print "("NR")\t[Session]\t"$1 }'; echo $list | tr --truncate-set1 " /" "\n" | awk '{ print "("NR")\t[Directory]\t"$1 }' ; } | fzf_window)
+    echo $list | tr --truncate-set1 " /" "\n" | awk '{ print "("NR")\t[Directory]\t"$1 }' 
+}
+
+select_project() {
+    project_dir=$({ sessions_list; project_list; } | fzf_window)
     if [ "$project_dir" = "" ]; then
         exit
     fi
 	echo "$project_dir"
-}
-
-is_selected_session(){
-	if [ -n "$(echo "$1" | grep "^([0-9]*)\\\t\[Session\]")" ]; then
-		echo 1
-	fi
 }
 
 get_sanitized_selected(){
@@ -81,4 +83,3 @@ else
 		zellij attach $session_name -c options --default-cwd $cwd
 	fi
 fi
-
