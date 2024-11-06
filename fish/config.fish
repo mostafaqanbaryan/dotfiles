@@ -15,9 +15,9 @@ abbr dcpu "docker-compose -f docker-compose.prod.yml up -d"
 abbr dcpd "docker-compose -f docker-compose.prod.yml down"
 
 # Git
-abbr gu "git pull"
+abbr gl "git pull"
 abbr gp "git push -u origin HEAD"
-abbr gl "git log"
+abbr glo "git log"
 abbr gst "git status"
 abbr gco "git checkout"
 abbr gdi "git diff"
