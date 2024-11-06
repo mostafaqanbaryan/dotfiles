@@ -43,7 +43,7 @@ customCommands:
         title: "Task Id"
         key: "TaskId"
         suggestions:
-          command: "echo {{.SelectedLocalBranch.Name}} | sed 's/^\\(bugFix\\|hotFix\\|feature\\)\\/T\\([0-9]*\\)\\-.*$/\\2/'"
+          command: "echo $(git rev-parse --abbrev-ref HEAD) | sed 's/^\\(bugFix\\|hotFix\\|feature\\)\\/T\\([0-9]*\\)\\-.*$/\\2/'"
       - type: "input"
         title: "Message"
         key: "Message"
