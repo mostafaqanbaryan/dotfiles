@@ -29,9 +29,8 @@ return {
     branch = 'main',
     cmd = { 'CGFiles', 'CBuffers', 'CurrentDirFiles' },
     keys = {
-        { '<Leader>fm' },
-        { '<Leader>ff', '<cmd>lua require("fzf-lua").files()<CR>',                                                                                                         { silent = true } },
-        { '<Leader>fa', '<cmd>lua require("fzf-lua").git_files()<CR>',                                                                                                     { silent = true } },
+        { '<Leader>ff' },
+        { '<Leader>fa', '<cmd>lua require("fzf-lua").files()<CR>',                                                                                                         { silent = true } },
         { '<Leader>fb', '<cmd>lua require("fzf-lua").buffers()<CR>',                                                                                                       { silent = true } },
         { '<Leader>fc', '<cmd>lua require("fzf-lua").files({ cwd = get_block() })<CR>',                                                                                    { silent = true } },
         { '<Leader>fg', '<cmd>ListFilesFromBranch<CR>',                                                                                                                    { silent = true } },
@@ -74,17 +73,12 @@ return {
                     ["ctrl-c"] = "deselect-all",
                 }
             },
-            git = {
-                files = {
-                    cmd = 'git ls-files --exclude-standard --cached --others'
-                }
-            },
             finder = {
                 async = false
             }
         })
 
-        vim.keymap.set('n', '<leader>fm', function()
+        vim.keymap.set('n', '<leader>ff', function()
             local function fetch()
                 local query = vim.treesitter.query.parse('php',
                     '(method_declaration (name)  @name) (function_definition (name)  @name)')

@@ -15,15 +15,15 @@ keybinds clear-defaults=true {
         bind "g" {
             Run "lazygit"  {
                 close_on_exit true
+                direction "Down"
             };
-            TogglePaneEmbedOrFloating;
             SwitchToMode "normal";
         }
         bind "f" { SwitchToMode "entersearch"; SearchInput 0; }
         bind "s" { SwitchToMode "scroll"; }
         bind "r" { SwitchToMode "Resize"; }
 
-        bind "Ctrl b" { 
+        bind "Ctrl b" {
             Write 002;
             SwitchToMode "normal";
         }
@@ -37,8 +37,8 @@ keybinds clear-defaults=true {
         bind "w" {
             Run "sessions"  {
                 close_on_exit true
+                direction "Down"
             };
-            TogglePaneEmbedOrFloating;
             SwitchToMode "normal";
         }
 
