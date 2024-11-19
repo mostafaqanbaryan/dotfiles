@@ -13,9 +13,8 @@ keybinds clear-defaults=true {
 
     "tmux" clear-defaults=true {
         bind "g" {
-            Run "lazygit"  {
+            Run "zellij" "run" "-fc" "--" "lazygit"  {
                 close_on_exit true
-                direction "Down"
             };
             SwitchToMode "normal";
         }
@@ -35,9 +34,8 @@ keybinds clear-defaults=true {
         bind "," { SwitchToMode "RenameTab"; }
 
         bind "w" {
-            Run "sessions"  {
+            Run "zellij" "run" "-fc" "--" "sessions"  {
                 close_on_exit true
-                direction "Down"
             };
             SwitchToMode "normal";
         }
