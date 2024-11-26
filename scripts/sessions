@@ -32,8 +32,8 @@ sessions_list(){
 }
 
 project_list(){
-	list=$(find ~/Projects/ -maxdepth 1 -type d)
-	list="$(realpath ~/dotfiles) ${list}"
+    list=$(find ~/Projects/ -maxdepth 1 -type d)
+    list="$(realpath ~/dotfiles) ${list}"
     echo $list | tr --truncate-set1 " /" "\n" | awk '{ print "("NR")\t[Directory]\t"$1 }' 
 }
 
@@ -42,11 +42,11 @@ select_project() {
     if [ "$project_dir" = "" ]; then
         exit
     fi
-	echo "$project_dir"
+    echo "$project_dir"
 }
 
 get_sanitized_selected(){
-	echo "$1" | sed "s/^([0-9]*)\t\[[^]]*\]\t//"
+    echo "$1" | sed "s/^([0-9]*)\t\[[^]]*\]\t//"
 }
 
 get_session_name() {
@@ -57,13 +57,13 @@ get_session_name() {
 }
 
 if [[ -n "$1" ]]; then
-	selected=$(realpath $1)
+    selected=$(realpath $1)
 else
-	selected=$(select_project)
+    selected=$(select_project)
 fi
 
 if [ -z "$selected" ]; then
-	exit 0
+    exit 0
 fi
 
 cwd=$(get_sanitized_selected "$selected")
@@ -74,7 +74,7 @@ is_current_session=$(zellij list-sessions -n | grep "^$session_name \[Created" |
 # If we're inside of zellij, detach
 if [[ -n "$ZELLIJ" ]]; then
     if [[ -z "$is_current_session" ]]; then
-	    zellij pipe --plugin file:~/dotfiles/zellij/plugins/zellij-switch.wasm -- "$session_name::$cwd"
+        zellij pipe --plugin https://github.com/mostafaqanbaryan/zellij-switch/releases/download/0.2.0/zellij-switch.wasm -- "--session=$session_name --cwd=$cwd"
     fi
 else
 	if [[ -n "$session" ]]; then
