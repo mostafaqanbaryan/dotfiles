@@ -29,7 +29,6 @@ return {
     },
 
     keys = {
-        { key = "s",     mods = "CTRL",         action = act.EmitEvent 'trigger-sessions' },
         { key = ";",     mods = "CTRL",         action = act.SendKey { key = 'b', mods = 'CTRL' } },
         { key = "j",     mods = "META",         action = act.SendKey { key = 'DownArrow' } },
         { key = "k",     mods = "META",         action = act.SendKey { key = 'UpArrow' } },
