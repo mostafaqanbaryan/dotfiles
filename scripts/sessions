@@ -4,6 +4,8 @@ if [ "$(command -v zellij)" = "" ]; then
     exit 1
 fi
 
+LAST_SESSION="$(cat /tmp/zellij_last_session)"
+
 home_replacer() {
     HOME_REPLACER=""                                          # default to a noop
     echo "$HOME" | grep -E "^[a-zA-Z0-9\-_/.@]+$" &>/dev/null # chars safe to use in sed
@@ -24,11 +26,25 @@ transform_home_path() {
 }
 
 fzf_window() {
-	fzf --reverse --no-sort --border "rounded" --info inline --pointer "→" --prompt "Session > " --header "Select session" --preview "echo {2} | grep -q 'Session' && echo {} || ls {3}"
+    fzf --reverse --no-sort --border "rounded" --info inline --pointer "→" --prompt "Session > " --header "Select session" --preview "echo {2} | grep -q 'Session' && echo {} || ls {3}"
+}
+
+set_last_session() {
+    echo "$1" > /tmp/zellij_last_session
+}
+
+last_session() {
+    if [[ -n "$LAST_SESSION" ]]; then
+        echo $LAST_SESSION | awk '{ print "("NR")\t[Session]\t"$1 }'
+    fi
 }
 
 sessions_list(){
-    zellij list-sessions -s | awk '{ print "("NR")\t[Session]\t"$1 }'
+    if [[ -n "$LAST_SESSION" ]]; then
+        zellij list-sessions -s | grep -v "$(echo $LAST_SESSION)" | awk '{ print "("NR")\t[Session]\t"$1 }'
+    else
+        zellij list-sessions -s | awk '{ print "("NR")\t[Session]\t"$1 }'
+    fi
 }
 
 project_list(){
@@ -38,7 +54,7 @@ project_list(){
 }
 
 select_project() {
-    project_dir=$({ sessions_list; project_list; } | fzf_window)
+    project_dir=$({ last_session; sessions_list; project_list; } | fzf_window)
     if [ "$project_dir" = "" ]; then
         exit
     fi
@@ -69,7 +85,10 @@ fi
 cwd=$(get_sanitized_selected "$selected")
 session_name=$(get_session_name "$(transform_home_path "$cwd")")
 session=$(zellij list-sessions | grep "$session_name")
+current_session=$(zellij list-sessions -n | grep '(current)' | grep -o '^[^ ]*')
 is_current_session=$(zellij list-sessions -n | grep "^$session_name \[Created" | grep "(current)")
+
+set_last_session "$current_session"
 
 # If we're inside of zellij, detach
 if [[ -n "$ZELLIJ" ]]; then
@@ -77,9 +96,10 @@ if [[ -n "$ZELLIJ" ]]; then
         zellij pipe --plugin https://github.com/mostafaqanbaryan/zellij-switch/releases/download/0.2.0/zellij-switch.wasm -- "--session=$session_name --cwd=$cwd"
     fi
 else
-	if [[ -n "$session" ]]; then
-		zellij attach $session_name -c
-	else
-		zellij attach $session_name -c options --default-cwd $cwd
-	fi
+    if [[ -n "$session" ]]; then
+        zellij attach $session_name -c
+    else
+        zellij attach $session_name -c options --default-cwd $cwd
+    fi
 fi
+
