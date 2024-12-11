@@ -1,0 +1,5 @@
+[manager]
+[[manager.prepend_keymap]]
+on   = ["g", "i"]
+run  = 'shell --block "lazygit -f $0"'
+desc = "File history"
