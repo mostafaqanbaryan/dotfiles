@@ -51,6 +51,7 @@ alias g 'lazygit'
 alias cp 'xcp'
 alias du 'dust'
 alias ls 'exa --icons=always --hyperlink --git-repos --git'
+alias search 'yazi (realpath (fzf))'
 
 ## SSH
 set -Ux GNOME_KEYRING_CONTROL /run/user/1000/keyring
@@ -72,4 +73,3 @@ set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gcr/ssh"
 ## Default applications
 set -gx BROWSER brave
 set -gx EDITOR nvim
-# set -gx TERM xterm-256color
