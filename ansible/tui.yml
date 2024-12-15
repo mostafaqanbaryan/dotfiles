@@ -1,7 +1,7 @@
-- name: "Install fish"
+- name: "Install shell"
   become: true
   community.general.pacman: 
-    name: "fish"
+    name: "nushell"
     state: "present"
   tags:
     - install
@@ -14,12 +14,11 @@
   tags:
     - install
 
-- name: "Install ranger"
+- name: "Install filemanager"
   community.general.pacman: 
     executable: "yay"
     name: 
-      - "ranger"
-      - "python-pynvim"
+      - "yazi"
     state: "present"
   tags:
     - install

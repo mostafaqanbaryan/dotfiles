@@ -31,3 +31,6 @@ lazygit/state.yml
 
 # Helix
 helix/external-snippets
+
+# Nushell
+nushell/history.txt

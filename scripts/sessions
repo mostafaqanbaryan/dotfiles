@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
 if [ "$(command -v zellij)" = "" ]; then
     echo "Zellij is not installed"
     exit 1
@@ -26,7 +26,7 @@ transform_home_path() {
 }
 
 fzf_window() {
-    fzf --reverse --no-sort --border "rounded" --info inline --pointer "→" --prompt "Session > " --header "Select session" --preview "echo {2} | grep -q 'Session' && echo {} || ls {3}"
+    fzf --reverse --no-sort --border "rounded" --info inline --pointer "→" --prompt "Session > " --header "Select session" --preview "bash -c \"echo {2} | grep -q 'Session' && echo {} || ls {3}\""
 }
 
 set_last_session() {
