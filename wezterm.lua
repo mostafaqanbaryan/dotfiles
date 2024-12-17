@@ -41,7 +41,11 @@ return {
         VTE_VERSION = '6003',
     },
 
+    disable_default_quick_select_patterns = true,
     quick_select_patterns = {
-        '[^\\s]*[0-9]\\.[^\\s]*'
+        '(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})',                     -- IPv4
+        '(?:[^.\\s]+\\.)?[^.\\s]+\\.(?:ir|com|net|org|me)(?:\\/[^\\s]+)?', -- Domains
+        '(?:[a-z0-9]+\\d[a-z][a-z0-9]+)',                                  -- Hash ids
+        '(?:[a-zA-Z0-9]+\\-)+[a-zA-Z0-9]+',                                -- Snackcase for docker names
     }
 }
