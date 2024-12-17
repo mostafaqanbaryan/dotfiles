@@ -2,6 +2,7 @@ add_newline = true
 
 format = """
 $jobs\
+╭─ \
 $time\
 $username\
 $hostname\
@@ -83,13 +84,14 @@ $jobs\
 $battery\
 $status\
 $os\
-$container \n"""
+$container\
+╰─$character"""
 
-# [character]
-# success_symbol = '[ ➜](bold green) '
-# error_symbol = '[ ✗](bold red) '
-# vimcmd_symbol = '[ 󰫻](bold #FF6600) '
-# vimcmd_visual_symbol = '[ 󱂌](bold blue) '
+[character]
+success_symbol = '[ ➜](bold green) '
+error_symbol = '[ ✗](bold red) '
+vimcmd_symbol = '[ 󰫻](bold #FF6600) '
+vimcmd_visual_symbol = '[ 󱂌](bold blue) '
 
 [buf]
 format = "via [$symbol]"

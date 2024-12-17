@@ -1,7 +1,7 @@
 - name: "Install shell"
   become: true
   community.general.pacman: 
-    name: "nushell"
+    name: ["fish", "nushell"]
     state: "present"
   tags:
     - install

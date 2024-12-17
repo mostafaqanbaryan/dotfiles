@@ -25,6 +25,25 @@
     - install
     - config
 
+- name: "Remove nushell's old config"
+  ignore_errors: true
+  ansible.builtin.file:
+    path: "~/.config/nushell"
+    state: "absent"
+  tags:
+    - install
+    - config
+
+- name: "Link nushell's config"
+  ansible.builtin.file:
+    src: "$PWD/nushell"
+    dest: "~/.config/nushell"
+    state: "link"
+    force: true
+  tags:
+    - install
+    - config
+
 - name: "Remove hyprland's old config"
   ignore_errors: true
   ansible.builtin.file:
