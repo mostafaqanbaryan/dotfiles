@@ -2,7 +2,7 @@
   become: true
   community.general.pacman: 
     executable: "yay"
-    name: ["rofi-lbonn-wayland", "rofi-emoji-git"]
+    name: ["rofi-lbonn-wayland-git", "rofi-emoji-git"]
     state: "present"
   tags:
     - install

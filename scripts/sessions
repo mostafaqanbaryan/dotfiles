@@ -4,7 +4,7 @@ if [ "$(command -v zellij)" = "" ]; then
     exit 1
 fi
 
-LAST_SESSION="$(cat /tmp/zellij_last_session)"
+LAST_SESSION="$(cat /tmp/zellij_last_session || '')"
 
 home_replacer() {
     HOME_REPLACER=""                                          # default to a noop

@@ -43,9 +43,12 @@ return {
 
     disable_default_quick_select_patterns = true,
     quick_select_patterns = {
+        '(?:[.\\w\\-@~]+)?(?:/+[.\\w\\-@]+)+',                             -- path
         '(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})',                     -- IPv4
         '(?:[^.\\s]+\\.)?[^.\\s]+\\.(?:ir|com|net|org|me)(?:\\/[^\\s]+)?', -- Domains
         '(?:[a-z0-9]+\\d[a-z][a-z0-9]+)',                                  -- Hash ids
         '(?:[a-zA-Z0-9]+\\-)+[a-zA-Z0-9]+',                                -- Snackcase for docker names
+        '#[0-9a-fA-F]{6}',                                                 -- Hex colors
+        "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"     -- UUIDs
     }
 }

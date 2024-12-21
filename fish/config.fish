@@ -3,7 +3,10 @@ function fish_greeting
 	zoxide init fish | source
 end
 
-source ~/env.fish
+if ! test -f "$HOME/.env.fish" 
+    touch $HOME/.env.fish
+end
+source $HOME/.env.fish
 
 # Editor
 alias s "sessions"
