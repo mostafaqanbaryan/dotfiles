@@ -23,7 +23,7 @@ abbr gp "git push -u origin HEAD"
 abbr glo "git log"
 abbr gst "git status"
 abbr gco "git checkout"
-abbr gdi "git diff"
+abbr gd "git diff"
 abbr gre "git rebase"
 abbr gcm 'git commit -m "'
 abbr gca "git commit --amend"

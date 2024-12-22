@@ -51,6 +51,15 @@ vim.opt.wrap = true
 vim.opt.breakindent = true
 vim.opt.signcolumn = 'yes'
 
+vim.o.foldcolumn = '1' -- '0' is not bad
+vim.o.foldlevel = 0
+vim.o.foldlevelstart = 99
+vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+vim.o.foldenable = true
+vim.opt.foldmethod = 'manual'
+-- vim.opt.foldmethod = 'expr'
+-- vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+
 -- Case insensitive UNLESS using uppercase characters
 vim.opt.ignorecase = true
 vim.opt.smartcase = true

@@ -7,8 +7,6 @@ return {
         { 'nvim-treesitter/nvim-treesitter-textobjects', branch = 'master' },
         -- Fix class/function name at top
         { 'nvim-treesitter/nvim-treesitter-context',     branch = 'master' },
-        -- Indent object
-        { 'kiyoon/treesitter-indent-object.nvim',        branch = 'master' },
         { 'briangwaltney/paren-hint.nvim',               branch = 'main' },
     },
     config = function()
@@ -87,17 +85,10 @@ return {
             zindex = 20,     -- The Z-index of the context window
             mode = 'cursor', -- Line used to calculate context. Choices: 'cursor', 'topline'
         }
+
         -- Jumping to context (upwards)
         vim.keymap.set("n", "[c", function()
             require("treesitter-context").go_to_context(vim.v.count1)
         end, { silent = true })
-
-        require("treesitter_indent_object").setup()
-        vim.keymap.set({ "x", "o" }, "ai", "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_outer()<CR>")
-        vim.keymap.set({ "x", "o" }, "aI",
-            "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_outer(true)<CR>")
-        vim.keymap.set({ "x", "o" }, "ii", "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_inner()<CR>")
-        vim.keymap.set({ "x", "o" }, "iI",
-            "<Cmd>lua require'treesitter_indent_object.textobj'.select_indent_inner(true)<CR>")
     end
 }
