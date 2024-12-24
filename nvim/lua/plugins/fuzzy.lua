@@ -307,7 +307,7 @@ return {
     branch = 'main',
     cmd = { 'CGFiles', 'CBuffers', 'CurrentDirFiles' },
     keys = {
-        { '<Leader>ff' },
+        { '<Leader>fm' },
         { '<Leader>fa', '<cmd>lua require("fzf-lua").files()<CR>',                                                                                                         { silent = true } },
         { '<Leader>fb', '<cmd>lua require("fzf-lua").buffers()<CR>',                                                                                                       { silent = true } },
         { '<Leader>fc', '<cmd>lua require("fzf-lua").files({ cwd = get_block() })<CR>',                                                                                    { silent = true } },
@@ -356,7 +356,7 @@ return {
             }
         })
 
-        vim.keymap.set('n', '<leader>ff', function()
+        vim.keymap.set('n', '<leader>fm', function()
             local function get_line(selected)
                 -- local doSplit = string.gmatch(selected[1], "([0-9]+):\t")
                 local doSplit = string.gmatch(selected[1], ":([0-9]+)")

@@ -3,11 +3,6 @@ function fish_greeting
 	zoxide init fish | source
 end
 
-if ! test -f "$HOME/.env.fish" 
-    touch $HOME/.env.fish
-end
-source $HOME/.env.fish
-
 # Editor
 alias s "sessions"
 
@@ -28,6 +23,8 @@ abbr gre "git rebase"
 abbr gcm 'git commit -m "'
 abbr gca "git commit --amend"
 abbr parent "git log --first-parent"
+abbr dev "git checkout develop"
+
 
 # Ctrl+Backspace
 bind \b backward-kill-word
@@ -76,3 +73,11 @@ set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gcr/ssh"
 ## Default applications
 set -gx BROWSER brave
 set -gx EDITOR nvim
+
+alias v "$EDITOR"
+
+# Override
+if ! test -f "$HOME/.env.fish" 
+    touch $HOME/.env.fish
+end
+source $HOME/.env.fish
