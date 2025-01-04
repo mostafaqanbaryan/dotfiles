@@ -1,6 +1,6 @@
 return {
     'windwp/nvim-autopairs',
-    lazy = false,
+    event = 'VeryLazy',
     branch = 'master',
     config = function()
         require 'nvim-autopairs'.setup({

@@ -1,6 +1,6 @@
 return {
     'nvimdev/indentmini.nvim',
-    lazy = false,
+    event = 'VeryLazy',
     dependencies = {
         'nvim-tree/nvim-web-devicons',
     },

@@ -1,6 +1,5 @@
 return {
     "folke/neodev.nvim",
-    lazy = false,
     cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {

@@ -1,1 +1,5 @@
-return { 'tpope/vim-surround', branch = 'master', lazy = false }
+return {
+    'tpope/vim-surround',
+    branch = 'master',
+    event = 'VeryLazy',
+}

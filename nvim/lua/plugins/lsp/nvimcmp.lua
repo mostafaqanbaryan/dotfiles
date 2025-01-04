@@ -35,7 +35,7 @@ return {
             'L3MON4D3/LuaSnip',
             version = "v2.*",
             build = "make install_jsregexp",
-            lazy = false,
+            event = 'VeryLazy',
             dependencies = {
                 { 'hrsh7th/cmp-nvim-lsp-signature-help', event = "UiEnter", branch = 'main' },
                 { 'saadparwaiz1/cmp_luasnip',            event = "UiEnter", branch = 'master' },
