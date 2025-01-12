@@ -46,13 +46,13 @@ return {
             -- Fastaction
             vim.keymap.set(
                 'n',
-                '<leader>a',
+                '<F4>',
                 '<cmd>lua require("fastaction").code_action()<CR>',
                 { buffer = bufnr }
             )
             vim.keymap.set(
                 'v',
-                '<leader>a',
+                '<F4>',
                 "<esc><cmd>lua require('fastaction').range_code_action()<CR>",
                 { buffer = bufnr }
             )
