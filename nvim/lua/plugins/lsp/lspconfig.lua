@@ -3,7 +3,6 @@ return {
     cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
-        { 'hrsh7th/cmp-nvim-lsp' },
         { 'williamboman/mason-lspconfig.nvim' },
         { 'neovim/nvim-lspconfig' },
         { 'Chaitanyabsprip/fastaction.nvim' }

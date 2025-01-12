@@ -1,0 +1,1 @@
+{"fn":{"prefix":"fn","body":["public function ${1:name}(): ${2:void} {","    ${3:return '';}","}"]}}
