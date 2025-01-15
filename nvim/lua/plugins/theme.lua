@@ -3,8 +3,20 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
+        -- Sync vim background with terminal to prevent extra spaces (padding) for transparent backgrounds
+        vim.api.nvim_create_autocmd({ "UIEnter", "ColorScheme" }, {
+            callback = function()
+                local normal = vim.api.nvim_get_hl(0, { name = "Normal" })
+                if not normal.bg then return end
+                io.write(string.format("\027]11;#%06x\027\\", normal.bg))
+            end,
+        })
+        vim.api.nvim_create_autocmd("UILeave", {
+            callback = function() io.write("\027]111\027\\") end,
+        })
+
         require("rose-pine").setup({
-            variant = "moon", -- auto, main, moon, or dawn
+            variant = "moon",      -- auto, main, moon, or dawn
             dark_variant = "moon", -- main, moon, or dawn
             dim_inactive_windows = false,
             extend_background_behind_borders = true,
@@ -12,7 +24,7 @@ return {
             enable = {
                 terminal = true,
                 legacy_highlights = true, -- Improve compatibility for previous versions of Neovim
-                migrations = true, -- Handle deprecated options automatically
+                migrations = true,        -- Handle deprecated options automatically
             },
 
             styles = {
