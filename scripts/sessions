@@ -93,8 +93,7 @@ set_last_session "$current_session"
 tmux_running=$(pgrep tmux)
 
 if [[ -z $tmux_running ]]; then
-    echo "No tmux server running!"
-    exit 1
+    tmux start
 fi
 
 if ! tmux has-session -t=$session_name 2> /dev/null; then
