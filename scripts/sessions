@@ -39,18 +39,36 @@ last_session() {
     fi
 }
 
+sessions_list_names() {
+    tmux list-sessions | sed 's/:.*$//'
+}
 sessions_list(){
     if [[ -n "$LAST_SESSION" ]]; then
         tmux list-sessions | sed 's/:.*$//' | grep -v "$(echo $LAST_SESSION)" | awk '{ print "("NR")\t[Session]\t"$1 }'
     else
-        tmux list-sessions | sed 's/:.*$//' | awk '{ print "("NR")\t[Session]\t"$1 }'
+        sessions_list_names | awk '{ print "("NR")\t[Session]\t"$1 }'
     fi
 }
 
 project_list(){
+    project_list_session_excluded | tr --truncate-set1 " /" "\n" | awk '{ print "("NR")\t[Directory]\t"$1 }' 
+}
+
+project_list_session_excluded(){
     list=$(find ~/Projects/ -maxdepth 1 -type d)
     list="$(realpath ~/dotfiles) ${list}"
-    echo $list | tr --truncate-set1 " /" "\n" | awk '{ print "("NR")\t[Directory]\t"$1 }' 
+    OLDIFS="$IFS"
+    IFS=$'\n'
+    for item in $list; do
+        foo=$(sessions_list_names)
+        bar=$(echo $foo | sed "s/ /\\\|/g")
+        echo $item | grep -q "/\($bar\)$"
+        if [[ "$?" -eq 0 ]]; then
+            continue 2
+        fi
+        echo $item
+    done
+    IFS="$OLDIFS"
 }
 
 select_project() {
