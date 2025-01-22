@@ -34,3 +34,6 @@ helix/external-snippets
 
 # Nushell
 nushell/history.txt
+
+# Tmux
+tmux/plugins
