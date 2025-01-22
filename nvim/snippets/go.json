@@ -1,0 +1,1 @@
+{"New Route":{"prefix":"nr","body":["r.${1:Get}(\"${2:/}\", func(w http.ResponseWriter, r *http.Request) {","    ${3:if _, err := w.Write([]byte(\"hi\")); err != nil {","\t\tfmt.Fprintf(os.Stderr, \"Error in GET response: %s\", err)","\t}","    }","})"]}}
