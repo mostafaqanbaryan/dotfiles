@@ -38,6 +38,9 @@ return {
                 go_pkgs = {
                     module = "blink-go-import",
                     name = "Import",
+                },
+                lsp = {
+                    fallbacks = {}
                 }
             },
             cmdline = {}
