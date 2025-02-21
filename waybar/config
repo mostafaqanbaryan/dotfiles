@@ -1,7 +1,7 @@
 {
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
     "modules-center": ["clock", "idle_inhibitor", "custom/shamsi"],
-    "modules-right": ["hyprland/submap", "custom/scratchpad-indicator", "custom/media", "hyprland/language", "network", "custom/notification", "custom/updates", "group/group-audio", "privacy",  "group/group-icons", "memory", "load"],
+    "modules-right": ["hyprland/submap", "custom/scratchpad-indicator", "custom/media", "hyprland/language", "network", "custom/notification", "custom/updates", "group/group-audio", "privacy",  "group/group-icons", "memory", "load", "temperature"],
 
     "hyprland/workspaces": {
         "format": "{icon}",
@@ -257,6 +257,12 @@
             "power-profiles-daemon",
             "battery"
         ]
+    },
+    "temperature": {
+        "interval": 2,
+        "critical-threshold": 88,
+        "format-critical": "!!! {temperatureC}°C !!! ",
+        "format": "{temperatureC}°C "
     },
     "layer": "top"
 }
