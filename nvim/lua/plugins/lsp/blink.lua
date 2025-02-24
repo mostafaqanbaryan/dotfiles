@@ -43,8 +43,10 @@ return {
                     fallbacks = {}
                 }
             },
-            cmdline = {}
         },
+        cmdline = {
+            enabled = false,
+        }
     },
     opts_extend = { "sources.default" }
 }
