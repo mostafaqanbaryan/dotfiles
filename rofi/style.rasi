@@ -1,0 +1,22 @@
+@import "~/.config/rofi/launchers/type-1/style-11.rasi"
+
+* {
+    background:     #444;
+    background-alt: #777;
+    foreground:     #FFFFFFFF;
+    selected:       #61AFEFFF;
+    active:         #98C379FF;
+    urgent:         #E06C75FF;
+}
+
+window, scrollbar {
+    border-radius:               10px;
+}
+
+message, element, inputbar {
+    border-radius:               5px;
+}
+
+entry {
+    placeholder:                 "";
+}

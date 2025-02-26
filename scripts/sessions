@@ -119,6 +119,7 @@ set_last_session "$current_session"
 
 if ! mux has-session -t=$session_name 2> /dev/null; then
     tmux new-session -ds $session_name -c $cwd
+    tmux split-window -h -c $cwd -l 50 -t $session_name
 fi
 
 if [[ -z $TMUX ]]; then
