@@ -118,7 +118,7 @@ is_current_session=$(mux list-sessions | grep "^$session_name: .* (created" | gr
 set_last_session "$current_session"
 
 if ! mux has-session -t=$session_name 2> /dev/null; then
-    tmux new-session -ds $session_name -c $cwd
+    tmux new-session -ds $session_name  -x - -y - -c $cwd
     tmux split-window -h -c $cwd -l 50 -t $session_name
 fi
 
