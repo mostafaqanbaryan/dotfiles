@@ -5,11 +5,19 @@ return {
     dependencies = {
         { 'williamboman/mason-lspconfig.nvim' },
         { 'neovim/nvim-lspconfig' },
-        { 'Chaitanyabsprip/fastaction.nvim' }
+        { 'nvimdev/lspsaga.nvim' }
     },
     config = function()
         -- neodev must be initialized before lspconfig
         require("neodev").setup()
+        require('lspsaga').setup({
+            ui = {
+                enable = false
+            },
+            symbol_in_winbar = {
+                enable = false
+            }
+        })
 
         local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
         for type, icon in pairs(signs) do
@@ -19,12 +27,10 @@ return {
 
         -- Show source in diagnostics
         vim.diagnostic.config({
-            update_in_insert = true,
+            update_in_insert = false,
             severity_sort = true,
             virtual_text = false,
-            float = {
-                source = true
-            },
+            float = false,
         })
 
         -- Remove background of virtual text
@@ -43,39 +49,30 @@ return {
                 vim.lsp.inlay_hint.enable(true)
             end
 
-            -- Fastaction
-            vim.keymap.set(
-                'n',
-                '<F4>',
-                '<cmd>lua require("fastaction").code_action()<CR>',
-                { buffer = bufnr }
-            )
-            vim.keymap.set(
-                'v',
-                '<F4>',
-                "<esc><cmd>lua require('fastaction').range_code_action()<CR>",
-                { buffer = bufnr }
-            )
+            -- LSPSaga
+            vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", { silent = true, buffer = true, remap = true })
+            vim.keymap.set("n", "gdp", "<cmd>Lspsaga peek_definition<CR>", { silent = true, buffer = true, remap = true })
+            vim.keymap.set("n", "gdd", "<cmd>Lspsaga goto_definition<CR>", { silent = true, buffer = true, remap = true })
+            vim.keymap.set("n", "gra", "<cmd>Lspsaga code_action<CR>", { silent = true, buffer = true, remap = true })
+            vim.keymap.set("n", "grn", "<cmd>Lspsaga rename<CR>", { silent = true, buffer = true, remap = true })
+            vim.keymap.set("n", "grr", "<cmd>Lspsaga finder ref<CR>", { silent = true, buffer = true, remap = true })
+            vim.keymap.set("n", "gri", "<cmd>Lspsaga finder imp<CR>", { silent = true, buffer = true, remap = true })
+            vim.keymap.set("n", "]d", "<cmd>Lspsaga diagnostic_jump_next<CR>",
+                { silent = true, buffer = true, remap = true })
+            vim.keymap.set("n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<CR>",
+                { silent = true, buffer = true, remap = true })
+            vim.keymap.set("n", "]D", function()
+                    require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
+                end,
+                { silent = true, buffer = true, remap = true })
+            vim.keymap.set("n", "[D", function()
+                    require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
+                end,
+                { silent = true, buffer = true, remap = true })
 
             -- See :help lsp-zero-keybindings
             -- to learn the available actions
             lsp_zero.default_keymaps({ buffer = bufnr })
-            vim.api.nvim_create_autocmd('CursorHold', {
-                pattern = "*",
-                callback = function()
-                    vim.diagnostic.open_float(0, {
-                        scope = 'cursor',
-                        focusable = false,
-                        close_events = {
-                            'CursorMoved',
-                            'CursorMovedI',
-                            'BufHidden',
-                            'InsertCharPre',
-                            'WinLeave',
-                        }
-                    })
-                end
-            })
         end)
 
 
@@ -95,7 +92,7 @@ return {
         require('mason-lspconfig').setup({
             lazy = false,
             automatic_installation = true,
-            ensure_installed = { "intelephense", "vtsls", "lua_ls", "eslint", "gopls", "bashls", "harper_ls" },
+            ensure_installed = { "intelephense", "vtsls", "lua_ls", "eslint_d", "gopls", "bashls", "harper_ls" },
             handlers = {
                 lsp_zero.default_setup,
                 lua_ls = function()
