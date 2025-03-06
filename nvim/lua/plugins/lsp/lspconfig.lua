@@ -51,8 +51,8 @@ return {
 
             -- LSPSaga
             vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", { silent = true, buffer = true, remap = true })
-            vim.keymap.set("n", "gdp", "<cmd>Lspsaga peek_definition<CR>", { silent = true, buffer = true, remap = true })
-            vim.keymap.set("n", "gdd", "<cmd>Lspsaga goto_definition<CR>", { silent = true, buffer = true, remap = true })
+            vim.keymap.set("n", "gd", "<cmd>Lspsaga goto_definition<CR>", { silent = true, buffer = true, remap = true })
+            vim.keymap.set("n", "grp", "<cmd>Lspsaga peek_definition<CR>", { silent = true, buffer = true, remap = true })
             vim.keymap.set("n", "gra", "<cmd>Lspsaga code_action<CR>", { silent = true, buffer = true, remap = true })
             vim.keymap.set("n", "grn", "<cmd>Lspsaga rename<CR>", { silent = true, buffer = true, remap = true })
             vim.keymap.set("n", "grr", "<cmd>Lspsaga finder ref<CR>", { silent = true, buffer = true, remap = true })
