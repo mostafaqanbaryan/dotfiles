@@ -20,6 +20,8 @@ return {
         keymap = {
             ['<C-u>'] = { 'scroll_documentation_up', 'fallback' },
             ['<C-d>'] = { 'scroll_documentation_down', 'fallback' },
+            ['<C-j>'] = { 'snippet_forward', 'fallback' },
+            ['<C-k>'] = { 'snippet_backward', 'fallback' },
         },
         completion = {
             accept = { auto_brackets = { enabled = true }, },
@@ -41,6 +43,24 @@ return {
                 },
                 lsp = {
                     fallbacks = {}
+                },
+                -- Path completion from cwd instead of current buffer's directory
+                path = {
+                    opts = {
+                        get_cwd = function(_)
+                            return vim.fn.getcwd()
+                        end,
+                    },
+                },
+                -- Show from all buffers
+                buffer = {
+                    opts = {
+                        get_bufnrs = function()
+                            return vim.tbl_filter(function(bufnr)
+                                return vim.bo[bufnr].buftype == ''
+                            end, vim.api.nvim_list_bufs())
+                        end
+                    }
                 }
             },
         },
