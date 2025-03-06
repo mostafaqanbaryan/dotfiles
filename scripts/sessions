@@ -65,7 +65,7 @@ project_list(){
 
 project_list_session_excluded(){
     list=$(find ~/Projects/ -maxdepth 1 -type d)
-    list="$(realpath ~/dotfiles) ${list}"
+    list=$(echo -e "$(realpath ~/dotfiles)\n${list}")
     OLDIFS="$IFS"
     IFS=$'\n'
     for item in $list; do
