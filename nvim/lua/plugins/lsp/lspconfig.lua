@@ -11,7 +11,6 @@ return {
 		-- neodev must be initialized before lspconfig
 		require("neodev").setup()
 		require("lspsaga").setup({
-
 			ui = {
 				enable = false,
 			},
@@ -107,6 +106,38 @@ return {
 			},
 		})
 
+		-- Fixed `use of internal package ... not allowed` incorrect error
+		lspconfig.gopls.setup({
+			cmd = { "gopls" },
+			settings = {
+				gopls = {
+					analyses = {
+						unusedparams = true,
+						shadow = true,
+						nilness = true,
+						unusedwrite = true,
+						useany = true,
+					},
+					staticcheck = true, -- Enable staticcheck
+					codelenses = {
+						generate = true,
+						gc_details = true,
+						test = true,
+					},
+					hints = {
+						assignVariableTypes = false,
+						compositeLiteralFields = true,
+						constantValues = true,
+						functionTypeParameters = true,
+						parameterNames = true,
+						rangeVariableTypes = true,
+					},
+				},
+			},
+			root_dir = function()
+				return vim.fn.getcwd() -- Use the current working directory as the root
+			end,
+		})
 		-- lsp zero mason
 		require("mason-lspconfig").setup({
 			lazy = false,
