@@ -134,9 +134,6 @@ return {
 					},
 				},
 			},
-			root_dir = function()
-				return vim.fn.getcwd() -- Use the current working directory as the root
-			end,
 		})
 		-- lsp zero mason
 		require("mason-lspconfig").setup({
