@@ -139,7 +139,16 @@ return {
 		require("mason-lspconfig").setup({
 			lazy = false,
 			automatic_installation = true,
-			ensure_installed = { "intelephense", "vtsls", "lua_ls", "eslint_d", "gopls", "bashls", "harper_ls" },
+			ensure_installed = {
+				"intelephense",
+				"vtsls",
+				"lua_ls",
+				"eslint",
+				"prettier",
+				"gopls",
+				"bashls",
+				"harper_ls",
+			},
 			handlers = {
 				lsp_zero.default_setup,
 				lua_ls = function()
