@@ -4,7 +4,7 @@ status=$?
 value=$(echo "$selected" | cliphist decode)
 
 # Copy to clipboard
-echo "$value" | wl-copy
+echo "$value" | wl-copy -n
 
 # Type
 case "$status" in
