@@ -1,0 +1,16 @@
+#!/bin/bash
+selected=$(grep -P "^Host ([^*]+)$" $HOME/.ssh/config | sed 's/Host //' | rofi $@ -dmenu -sort -i -dmenu -matching fuzzy -sort-method fzf -mesg "<b>Alt+1</b>: Copy IP  <b>Alt+2</b>: Copy username" -theme "$HOME/dotfiles/rofi/style.rasi" -p "SSH")
+
+status=$?
+
+# Type
+case "$status" in
+    10)
+        ssh -G "$selected" | sed -nE "s/^hostname (.)/\1/p" | wl-copy -n
+    ;;
+    11)
+        ssh -G "$selected" | sed -nE "s/^user (.)/\1/p" | wl-copy -n
+    ;;
+    0) wezterm start ssh "$selected";;
+    *) exit "$status";;
+esac
