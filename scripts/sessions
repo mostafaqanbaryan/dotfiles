@@ -68,9 +68,9 @@ project_list_session_excluded(){
     list=$(echo -e "$(realpath ~/dotfiles)\n${list}")
     OLDIFS="$IFS"
     IFS=$'\n'
+    foo=$(sessions_list_names)
+    bar=$(echo $foo | sed "s/ /\\\|/g")
     for item in $list; do
-        foo=$(sessions_list_names)
-        bar=$(echo $foo | sed "s/ /\\\|/g")
         echo $item | grep -q "/\($bar\)$"
         if [[ "$?" -eq 0 ]]; then
             continue 2
