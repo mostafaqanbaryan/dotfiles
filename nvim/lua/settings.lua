@@ -10,6 +10,7 @@ vim.opt.showcmd = true
 vim.opt.hidden = true
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
+vim.o.winborder = "rounded"
 
 vim.opt.smartindent = true
 vim.opt.autoindent = true
