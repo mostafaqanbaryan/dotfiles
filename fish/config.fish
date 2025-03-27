@@ -7,10 +7,10 @@ end
 alias s "sessions"
 
 # Dockers
-abbr dcu "docker-compose -f docker-compose.yml up -d"
-abbr dcd "docker-compose -f docker-compose.yml down"
-abbr dcpu "docker-compose -f docker-compose.prod.yml up -d"
-abbr dcpd "docker-compose -f docker-compose.prod.yml down"
+abbr dcu "docker compose -f docker-compose.yml up -d"
+abbr dcd "docker compose -f docker-compose.yml down"
+abbr dcpu "docker compose -f docker-compose.prod.yml up -d"
+abbr dcpd "docker compose -f docker-compose.prod.yml down"
 
 # Git
 abbr gl "git pull"
