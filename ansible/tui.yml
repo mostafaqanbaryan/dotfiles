@@ -92,3 +92,10 @@
     state: "present"
   tags:
     - install
+
+- name: "Install wezterm terminfo for neovim styles (undercurl) to work in tmux"
+  ignore_errors: true
+  ansible.builtin.command:
+    cmd: "curl https://raw.githubusercontent.com/wez/wezterm/main/termwiz/data/wezterm.terminfo | tic -x -"
+  tags:
+    - install
