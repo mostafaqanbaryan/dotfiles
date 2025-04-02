@@ -1,9 +1,9 @@
 {
-    "modules-left": ["hyprland/workspaces", "hyprland/window"],
+    "modules-left": ["sway/workspaces", "sway/window"],
     "modules-center": ["clock", "idle_inhibitor", "custom/shamsi"],
-    "modules-right": ["hyprland/submap", "custom/scratchpad-indicator", "custom/media", "hyprland/language", "network", "custom/notification", "custom/updates", "group/group-audio", "privacy",  "group/group-icons", "memory", "load", "temperature"],
+    "modules-right": ["sway/mode", "custom/scratchpad-indicator", "custom/media", "sway/language", "network", "custom/notification", "custom/updates", "group/group-audio", "privacy",  "group/group-icons", "memory", "load", "temperature"],
 
-    "hyprland/workspaces": {
+    "sway/workspaces": {
         "format": "{icon}",
         "format-icons": {
             "1": "",
@@ -15,7 +15,7 @@
             "default": ""
         }
     },
-    "hyprland/window": {
+    "sway/window": {
         "format": "<small>{}</small>",
         "separate-outputs": true
     },
@@ -45,7 +45,7 @@
         "tooltip-format": "MPD (connected)",
         "tooltip-format-disconnected": "MPD (disconnected)"
     },
-    "hyprland/submap": {
+    "sway/submap": {
         "format": "<span style=\"italic\">{}</span>"
     },
     "network": {
@@ -180,12 +180,6 @@
         "on-click": "sleep 0.1 && grim -g \"$(slurp)\" - | swappy -f -",
         "on-click-middle": "sleep 0.1 && grim -g \"$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | \"\\(.x),\\(.y) \\(.width)x\\(.height)\"' | slurp)\" - | swappy -f -"
     },
-    "custom/colorpicker": {
-        "format": "",
-        "tooltip": false,
-        "min-length": 4,
-        "on-click": "hyprpicker -a"
-    },
     "custom/shamsi": {
         "format": "{}",
         "tooltip": true,
@@ -238,9 +232,9 @@
         "format": "{load1}",
         "max-length": 4
     },
-    "hyprland/language": {
+    "sway/language": {
         "format": "{long}",
-        "on-click": "hyprctl switchxkblayout all next",
+        "on-click": "swaymsg input type:keyboard xkb_switch_layout next",
     },
     "group/group-icons": {
         "orientation": "inherit",
@@ -252,7 +246,6 @@
         "modules": [
             "custom/power", // First element is the "group leader" and won't ever be hidden
             "tray",
-            "custom/colorpicker",
             "custom/screenshot",
             "power-profiles-daemon",
             "battery"

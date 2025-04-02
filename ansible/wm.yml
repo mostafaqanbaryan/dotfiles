@@ -82,11 +82,11 @@
   tags:
     - install
 
-- name: "Install avizo as notification daemon"
+- name: "Install notification daemon"
   ignore_errors: true
   community.general.pacman: 
     executable: "yay"
-    name: ["avizo", "pamixer", "brightnessctl"]
+    name: ["swaync", "avizo", "pamixer", "brightnessctl"]
     state: "present"
   tags:
     - install
