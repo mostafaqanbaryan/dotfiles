@@ -276,16 +276,14 @@ workspace $workspace10 output HDMI-A-1
 # For app_id: swaymsg -t get_tree | grep app_id
 assign [class="Google-chrome"] workspace $workspace1
 assign [app_id="google-chrome"] workspace $workspace1
-assign [class="brave-browser"] workspace $workspace1
-assign [class="Brave-browser"] workspace $workspace1
-assign [class="Vivaldi"] workspace $workspace1
-assign [class="Vivaldi-stable"] workspace $workspace1
+assign [app_id="brave-browser"] workspace $workspace1
+assign [app_id="Brave-browser"] workspace $workspace1
+assign [app_id="Vivaldi"] workspace $workspace1
+assign [app_id="Vivaldi-stable"] workspace $workspace1
 
 assign [app_id="org.wezfurlong.wezterm"] workspace $workspace2
 assign [class="org.wezfurlong.wezterm"] workspace $workspace2
 assign [class="wezterm"] workspace $workspace2
-assign [class="kitty"] workspace $workspace2
-assign [class="alacritty"] workspace $workspace2
 
 assign [app_id="org.gnome.Nautilus"] workspace $workspace5
 assign [app_id="thunar"] workspace $workspace5
