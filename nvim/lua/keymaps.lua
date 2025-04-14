@@ -58,3 +58,12 @@ vim.keymap.set("n", "<C-b>", "<C-b>zz")
 vim.keymap.set("n", "x", '"_x')
 vim.keymap.set("n", "X", '"_X')
 vim.keymap.set("n", "s", '"_s')
+
+-- Close quickfix with ESC/q
+vim.api.nvim_create_autocmd({ "FileType" }, {
+	pattern = "qf",
+	callback = function()
+		vim.api.nvim_buf_set_keymap(0, "n", "<ESC>", "<cmd>q<CR>", { silent = true, noremap = true })
+		vim.api.nvim_buf_set_keymap(0, "n", "q", "<cmd>q<CR>", { silent = true, noremap = true })
+	end,
+})
