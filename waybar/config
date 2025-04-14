@@ -63,7 +63,6 @@
             "activated": "",
             "deactivated": ""
         },
-		"timeout": 60,
 		"start-activated": true
     },
     "tray": {
