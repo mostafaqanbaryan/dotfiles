@@ -332,7 +332,7 @@ return {
 		},
 		{
 			"<Leader>fg",
-			'<cmd>lua require("fzf-lua").git_status({ cwd = getRoot() })<CR>',
+			'<cmd>lua require("fzf-lua").git_status()<CR>',
 			{ silent = true },
 		},
 		{
