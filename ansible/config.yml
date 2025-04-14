@@ -63,6 +63,44 @@
     - install
     - config
 
+- name: "Remove sway's old config"
+  ignore_errors: true
+  ansible.builtin.file:
+    path: "~/.config/sway"
+    state: "absent"
+  tags:
+    - install
+    - config
+
+- name: "Link sway's config"
+  ansible.builtin.file:
+    src: "$PWD/sway"
+    dest: "~/.config/sway"
+    state: "link"
+    force: true
+  tags:
+    - install
+    - config
+
+- name: "Remove swaync's old config"
+  ignore_errors: true
+  ansible.builtin.file:
+    path: "~/.config/swaync"
+    state: "absent"
+  tags:
+    - install
+    - config
+
+- name: "Link swaync's config"
+  ansible.builtin.file:
+    src: "$PWD/sway"
+    dest: "~/.config/swaync"
+    state: "link"
+    force: true
+  tags:
+    - install
+    - config
+
 - name: "Remove wezterm's old config"
   ignore_errors: true
   ansible.builtin.file:
