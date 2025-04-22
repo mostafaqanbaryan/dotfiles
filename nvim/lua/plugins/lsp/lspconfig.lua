@@ -55,6 +55,7 @@ return {
 			"intelephense",
 			"harper_ls",
 			"eslint",
+			"pylsp",
 			"lua_ls",
 			"gopls",
 			"php_ls",
