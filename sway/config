@@ -161,7 +161,7 @@ bindsym --to-code {
 
     # Screenshot
     Print exec grim - | wl-copy && notify-send -t 1000 "Screenshot copied!" -i 2
-    ALT+Print exec grim -g "$(hyprctl activewindow | grep size | sed "s/,/x/" | sed "s/size:/$(hyprctl activewindow | grep "at:" | sed "s/at: //")/")" - | swappy -f -
+    # ALT+Print exec grim -g "$(sway activewindow | grep size | sed "s/,/x/" | sed "s/size:/$(hyprctl activewindow | grep "at:" | sed "s/at: //")/")" - | swappy -f -
 
     # Move your focus around
     $mod+$left focus left
