@@ -1,0 +1,17 @@
+- name: "Install hyprland"
+  ignore_errors: true
+  community.general.pacman: 
+    executable: "yay"
+    name: ["hyprland", "hyprpicker-git", "hyprsunset"]
+    state: "present"
+  tags:
+    - hyprland
+
+- name: "Install xdg-desktop-portal-hyprland"
+  become: true
+  community.general.pacman: 
+    name: ["xdg-desktop-portal-hyprland",  "xdg-desktop-portal-gtk"]
+    state: "present"
+  tags:
+    - install
+

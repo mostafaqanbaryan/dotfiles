@@ -1,12 +1,3 @@
-- name: "Install hyprland"
-  ignore_errors: true
-  community.general.pacman: 
-    executable: "yay"
-    name: ["hyprland", "hyprpicker-git", "hyprsunset"]
-    state: "present"
-  tags:
-    - install
-
 - name: "Install wl-clipboard"
   become: true
   community.general.pacman: 
@@ -35,14 +26,6 @@
   become: true
   community.general.pacman: 
     name: "swayidle"
-    state: "present"
-  tags:
-    - install
-
-- name: "Install xdg-desktop-portal-hyprland"
-  become: true
-  community.general.pacman: 
-    name: [ "xdg-desktop-portal-wlr", "xdg-desktop-portal-hyprland",  "xdg-desktop-portal-gtk"]
     state: "present"
   tags:
     - install

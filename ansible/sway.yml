@@ -1,0 +1,17 @@
+- name: "Install sway"
+  ignore_errors: true
+  community.general.pacman: 
+    executable: "yay"
+    name: ["sway"]
+    state: "present"
+  tags:
+    - sway
+
+- name: "Install xdg-desktop-portal"
+  become: true
+  community.general.pacman: 
+    name: ["xdg-desktop-portal-wlr",  "xdg-desktop-portal-gtk"]
+    state: "present"
+  tags:
+    - install
+
