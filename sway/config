@@ -49,6 +49,11 @@ include /etc/sway/config.d/*
 # mouse button for dragging.
 floating_modifier $mod normal
 
+
+input type:pointer {
+    pointer_accel 1 # set mouse sensitivity (between -1 and 1)
+}
+
 input type:keyboard {
 
     # Set keyboard layout
