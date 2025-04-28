@@ -61,6 +61,18 @@ return {
 			"php_ls",
 		})
 
+		vim.filetype.add({
+			extension = {
+				env = "sh",
+			},
+			filename = {
+				[".env"] = "sh",
+			},
+			pattern = {
+				[".env.[%w]+"] = "sh",
+			},
+		})
+
 		vim.api.nvim_create_autocmd("LspAttach", {
 			callback = function(args)
 				local client = vim.lsp.get_client_by_id(args.data.client_id)
