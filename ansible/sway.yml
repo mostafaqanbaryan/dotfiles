@@ -7,11 +7,11 @@
   tags:
     - sway
 
-- name: "Install xdg-desktop-portal"
+- name: "Install screencast"
   become: true
   community.general.pacman: 
-    name: ["xdg-desktop-portal-wlr",  "xdg-desktop-portal-gtk"]
+    name: ["xdg-desktop-portal-wlr", "xdg-desktop-portal-gtk"]
     state: "present"
   tags:
-    - install
+    - sway
 

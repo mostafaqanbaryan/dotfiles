@@ -7,11 +7,20 @@
   tags:
     - hyprland
 
-- name: "Install xdg-desktop-portal-hyprland"
+- name: "Install screencast"
   become: true
   community.general.pacman: 
-    name: ["xdg-desktop-portal-hyprland",  "xdg-desktop-portal-gtk"]
+    name: ["xdg-desktop-portal-hyprland", "xdg-desktop-portal-wlr", "xdg-desktop-portal-gtk"]
     state: "present"
   tags:
-    - install
+    - hyprland
+
+- name: "Layout based on workspace"
+  become: true
+  community.general.pacman: 
+    executable: "yay"
+    name: "hyprland-per-window-layout"
+    state: "present"
+  tags:
+    - hyprland
 
