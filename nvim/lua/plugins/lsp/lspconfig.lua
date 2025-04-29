@@ -34,8 +34,19 @@ return {
 		vim.diagnostic.config({
 			severity_sort = true,
 			virtual_text = false,
-			virtual_lines = {
-				current_line = true,
+			float = {
+				focusable = true,
+				source = true,
+				border = "rounded",
+				scope = "cursor",
+			},
+			jump = {
+				float = {
+					focusable = true,
+					source = true,
+					border = "rounded",
+					scope = "cursor",
+				},
 			},
 			signs = {
 				text = {
@@ -92,6 +103,22 @@ return {
 					"<cmd>lua vim.diagnostic.goto_prev( {severity=vim.diagnostic.severity.ERROR, wrap = true} )<CR>",
 					{ silent = true }
 				)
+
+				vim.keymap.set("n", ";", function()
+					-- If we find a floating window, close it.
+					local found_float = false
+					for _, win in ipairs(vim.api.nvim_list_wins()) do
+						local l = vim.api.nvim_win_get_config(win)
+						if l.relative ~= "" and l.focusable then
+							vim.api.nvim_win_close(win, true)
+							found_float = true
+						end
+					end
+
+					if not found_float then
+						vim.diagnostic.open_float()
+					end
+				end, { silent = true })
 			end,
 		})
 	end,
