@@ -33,7 +33,7 @@
 - name: "Install piprwire"
   become: true
   community.general.pacman: 
-    name: ["pipewire",  "pipewire-pulse",  "pipewire-media-session"]
+    name: ["pipewire", "pipewire-pulse", "pipewire-media-session"]
     state: "present"
   tags:
     - install
@@ -42,7 +42,7 @@
   ignore_errors: true
   community.general.pacman: 
     executable: "yay"
-    name: "waypaper-git"
+    name: ["waypaper-git", "python-imageio", "python-screeninfo"]
     state: "present"
   tags:
     - install
