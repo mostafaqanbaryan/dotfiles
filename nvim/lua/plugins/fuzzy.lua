@@ -336,6 +336,16 @@ return {
 			{ silent = true },
 		},
 		{
+			"<Leader>fG",
+			'<cmd>lua require("fzf-lua").git_diff({ ref = "develop" })<CR>',
+			{ silent = true },
+		},
+		{
+			"<Leader>fh",
+			'<cmd>lua require("fzf-lua").git_hunks({ ref = "develop" })<CR>',
+			{ silent = true },
+		},
+		{
 			"<Leader>fs",
 			'<cmd>lua require("fzf-lua").lsp_document_symbols({ winopts = { preview = { layout = "horizontal" }}})<CR>',
 			{ silent = true },
