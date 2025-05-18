@@ -104,7 +104,7 @@ return {
 					{ silent = true }
 				)
 
-				vim.keymap.set("n", ";", function()
+				vim.keymap.set("n", "<leader>;", function()
 					-- If we find a floating window, close it.
 					local found_float = false
 					for _, win in ipairs(vim.api.nvim_list_wins()) do
