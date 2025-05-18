@@ -59,6 +59,10 @@ vim.keymap.set("n", "x", '"_x')
 vim.keymap.set("n", "X", '"_X')
 vim.keymap.set("n", "s", '"_s')
 
+-- Unimpaired bindings
+vim.keymap.set("n", "[e", '"uddk"uP')
+vim.keymap.set("n", "]e", '"udd"up')
+
 -- Close quickfix with ESC/q
 vim.api.nvim_create_autocmd({ "FileType" }, {
 	pattern = "qf",
