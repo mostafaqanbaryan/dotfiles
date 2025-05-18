@@ -16,7 +16,7 @@ return {
 	}),
 	-- font_size = 10,
 	font_size = 12,
-	line_height = 1.6,
+	line_height = 1.7,
 	enable_tab_bar = true,
 	use_fancy_tab_bar = true,
 	hide_tab_bar_if_only_one_tab = true,
