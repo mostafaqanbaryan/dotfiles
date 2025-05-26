@@ -4,6 +4,12 @@ function fish_greeting
 end
 
 # Editor
+function vim
+    tmux set-option -g status-style bg=#232136
+    nvim $argv
+    tmux set-option -g status-style bg=default
+end
+alias v "vim"
 alias s "sessions"
 
 # Dockers
@@ -73,8 +79,6 @@ set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gcr/ssh"
 ## Default applications
 set -gx BROWSER brave
 set -gx EDITOR nvim
-
-alias v "$EDITOR"
 
 # Override
 if ! test -f "$HOME/.env.fish" 
