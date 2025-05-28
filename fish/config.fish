@@ -6,7 +6,7 @@ end
 # Editor
 function vim
     tmux set-option -g status-style bg=#232136
-    nvim $argv
+    PHP_CS_FIXER_IGNORE_ENV=1 nvim $argv
     tmux set-option -g status-style bg=default
 end
 alias v "vim"
