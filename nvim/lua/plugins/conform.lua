@@ -24,7 +24,7 @@ return {
 			typescript = { "prettier", stop_after_first = true },
 			typescriptreact = { "prettier", stop_after_first = true },
 			javascriptreact = { "prettier", stop_after_first = true },
-			php = { "prettier", "php-cs-fixer", stop_after_first = true },
+			php = { "php_cs_fixer", "prettier", stop_after_first = true },
 		},
 		-- Customize formatters
 		formatters = {
