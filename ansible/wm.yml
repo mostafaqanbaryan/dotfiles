@@ -33,7 +33,7 @@
 - name: "Install piprwire"
   become: true
   community.general.pacman: 
-    name: ["pipewire", "pipewire-pulse", "pipewire-media-session"]
+    name: ["pipewire", "pipewire-pulse", "wireplumber"]
     state: "present"
   tags:
     - install
