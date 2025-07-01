@@ -1,0 +1,29 @@
+- name: "Install nvidia"
+  community.general.pacman: 
+    executable: "yay"
+    name: "nvidia-390xx-dkms"
+    state: "present"
+  tags:
+    - nvidia
+
+- name: "Install bumblebee"
+  community.general.pacman: 
+    executable: "yay"
+    name: "bumblebee"
+    state: "present"
+  tags:
+    - nvidia
+
+- name: "Copy nvidia config"
+  ansible.builtin.file:
+    src: "$PWD/xorg.conf.nvidia"
+    dest: "/etc/bumblebee/xorg.conf.nvidia"
+    state: "hard"
+    force: true
+  tags:
+    - nvidia
+
+
+## Add nvidia to MODULES in /etc/mkinitcpio.conf
+#  MODULES=(... nvidia ...)
+#  sudo mkinitcpio -P
