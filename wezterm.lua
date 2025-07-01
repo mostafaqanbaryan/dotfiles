@@ -45,6 +45,7 @@ return {
 
 	disable_default_quick_select_patterns = true,
 	quick_select_patterns = {
+		"(?:\\w+_)+\\w+", -- snake_cases
 		"(?:[.\\w\\-@~]+)?(?:/+[.\\w\\-@]+)+", -- path
 		"(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})", -- IPv4
 		"(?:[^.\\s]+\\.)?[^.\\s]+\\.(?:ir|com|net|org|me)(?:\\/[^\\s]+)?", -- Domains
