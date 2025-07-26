@@ -1,21 +1,21 @@
 return {
-	'FabijanZulj/blame.nvim',
+	"FabijanZulj/blame.nvim",
 	cmd = {
-		'BlameToggle'
+		"BlameToggle",
 	},
 	keys = {
-		{ '<Leader>b', '<cmd>BlameToggle<CR>', { silent = true } },
+		{ "<Leader>b", "<cmd>BlameToggle<CR>", { silent = true } },
 	},
 	config = function()
 		require("blame").setup({
-			date_format = "%Y.%m.%d %H:%M:%S",
+			date_format = "%r",
 			mappings = {
 				commit_info = "i",
 				show_commit = "I",
 				stack_push = "<CR>",
 				stack_pop = "<ESC>",
 				close = { "q" },
-			}
+			},
 		})
-	end
+	end,
 }
