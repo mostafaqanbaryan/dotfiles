@@ -426,10 +426,22 @@ return {
 			fzf.fzf_exec(M.get_current_functions_formatted(), {
 				ansi = true,
 				prompt = "Functions > ",
-				preview = require("fzf-lua").shell.raw_preview_action_cmd(function(selected)
+				preview = require("fzf-lua").shell.stringify_cmd(function(selected, fzf_lines)
 					local line = get_line(selected)
+					if line == nil then
+						return ""
+					end
 					local start_pos = math.max(line - 5, 1)
 					local end_pos = math.min(line + 5, lines)
+					vim.inspect(
+						string.format(
+							"bat --style=default --color=always -H %d --line-range %d:%d %s",
+							line,
+							start_pos,
+							end_pos,
+							filename
+						)
+					)
 					return string.format(
 						"bat --style=default --color=always -H %d --line-range %d:%d %s",
 						line,
@@ -437,7 +449,7 @@ return {
 						end_pos,
 						filename
 					)
-				end),
+				end, {}, "{} {q}"),
 				actions = {
 					["default"] = function(selected)
 						vim.api.nvim_win_set_cursor(0, { get_line(selected), 0 })
