@@ -414,7 +414,10 @@ return {
 
 		vim.keymap.set("n", "<leader>fm", function()
 			local function get_line(selected)
-				-- local doSplit = string.gmatch(selected[1], "([0-9]+):\t")
+				if #selected == 0 then
+					return nil
+				end
+
 				local doSplit = string.gmatch(selected[1], ":([0-9]+)")
 				local line_num = doSplit()
 				return tonumber(line_num)
@@ -452,7 +455,10 @@ return {
 				end, {}, "{} {q}"),
 				actions = {
 					["default"] = function(selected)
-						vim.api.nvim_win_set_cursor(0, { get_line(selected), 0 })
+						local line = get_line(selected)
+						if line ~= nil then
+							vim.api.nvim_win_set_cursor(0, { line, 0 })
+						end
 					end,
 				},
 			})
