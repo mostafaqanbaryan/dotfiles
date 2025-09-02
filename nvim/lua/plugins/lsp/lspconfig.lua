@@ -1,5 +1,5 @@
-local function setup_format_on_save(args)
-	vim.g.disable_autoformat = true
+local function setup_format_on_save()
+	vim.g.disable_autoformat = false
 
 	local formatter_group = vim.api.nvim_create_augroup("formatter_au", { clear = true })
 
@@ -52,7 +52,7 @@ local function setup_format_on_save(args)
 	vim.api.nvim_create_autocmd("BufWritePre", {
 		pattern = "*",
 		group = formatter_group,
-		callback = function()
+		callback = function(args)
 			if vim.g.disable_autoformat then
 				return
 			end
