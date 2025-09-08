@@ -80,6 +80,9 @@ return {
 		vim.lsp.config("gopls", {
 			settings = {
 				gopls = {
+					completeUnimported = true,
+					usePlaceholders = true,
+					deepCompletion = true,
 					analyses = {
 						unusedparams = true,
 						shadow = true,
@@ -100,6 +103,16 @@ return {
 						functionTypeParameters = true,
 						parameterNames = true,
 						rangeVariableTypes = true,
+					},
+				},
+			},
+		})
+
+		vim.lsp.config("lua_ls", {
+			settings = {
+				Lua = {
+					diagnostics = {
+						globals = { "vim" },
 					},
 				},
 			},
