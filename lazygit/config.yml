@@ -4,6 +4,11 @@ gui:
   skipHookPrefix: "\U0001F525"
   parseEmoji: true
 
+git:
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never
+
 customCommands:
   - key: "c"
     context: "files"
