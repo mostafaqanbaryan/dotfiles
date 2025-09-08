@@ -284,7 +284,7 @@ M.get_current_functions_formatted = function()
 	return res
 end
 
-get_block = function()
+GetBlock = function()
 	local pattern = "%:p:h"
 	local current = vim.fn.expand(pattern)
 	local dir = current
@@ -301,7 +301,7 @@ get_block = function()
 	return current
 end
 
-getRoot = function()
+GetRoot = function()
 	local root = vim.fs.root(0, { ".git", "Makefile", "package.json", "composer.json" })
 	if not root then
 		root = "."
@@ -327,7 +327,7 @@ return {
 		},
 		{
 			"<Leader>fc",
-			'<cmd>lua require("fzf-lua").files({ cwd = get_block() })<CR>',
+			'<cmd>lua require("fzf-lua").files({ cwd = GetBlock() })<CR>',
 			{ silent = true },
 		},
 		{
@@ -357,22 +357,22 @@ return {
 		},
 		{
 			"<Leader>iw",
-			'<cmd>lua require("fzf-lua").grep_cword({ cwd = getRoot()  })<CR>',
+			'<cmd>lua require("fzf-lua").grep_cword({ cwd = GetRoot()  })<CR>',
 			{ silent = true },
 		},
 		{
 			"<Leader>iW",
-			'<cmd>lua require("fzf-lua").grep_cWORD({ cwd = getRoot() })<CR>',
+			'<cmd>lua require("fzf-lua").grep_cWORD({ cwd = GetRoot() })<CR>',
 			{ silent = true },
 		},
 		{
 			"<Leader>/",
-			'<cmd>lua require("fzf-lua").grep({ cwd = getRoot() })<CR>',
+			'<cmd>lua require("fzf-lua").grep({ cwd = GetRoot() })<CR>',
 			{ silent = true },
 		},
 		{
 			"<Leader>/",
-			'<cmd>lua require("fzf-lua").grep_visual({ cwd = getRoot() })<CR>',
+			'<cmd>lua require("fzf-lua").grep_visual({ cwd = GetRoot() })<CR>',
 			{ silent = true },
 			mode = "v",
 		},
