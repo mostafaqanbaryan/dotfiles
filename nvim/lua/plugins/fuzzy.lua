@@ -366,6 +366,11 @@ return {
 			{ silent = true },
 		},
 		{
+			"<Leader>?",
+			'<cmd>lua require("fzf-lua").live_grep({ resume = true, cwd = GetRoot() })<CR>',
+			{ silent = true },
+		},
+		{
 			"<Leader>/",
 			'<cmd>lua require("fzf-lua").grep({ cwd = GetRoot() })<CR>',
 			{ silent = true },
