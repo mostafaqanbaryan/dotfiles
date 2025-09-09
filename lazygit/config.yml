@@ -92,7 +92,7 @@ customCommands:
           preset: "branches"
     command: "sh ~/dotfiles/lazygit/branch.sh {{.Form.Type | quote}} {{.Form.TaskId | quote}} {{.Form.Name | quote}}"
     loadingText: "Checking out to the new branch..."
-  - key: "<c-p>"
+  - key: "<c-u>"
     context: "global"
     description: "Push"
     prompts:
