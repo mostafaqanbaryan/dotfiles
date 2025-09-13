@@ -4,6 +4,7 @@ return {
 	dependencies = {
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		"williamboman/mason-lspconfig.nvim",
+		"jay-babu/mason-nvim-dap.nvim",
 	},
 	config = function()
 		local mason = require("mason")
@@ -31,6 +32,11 @@ return {
 				"goimports-reviser", -- go formatter
 				"eslint", -- js linter
 			},
+		})
+
+		require("mason-nvim-dap").setup({
+			ensure_installed = { "php-debug-adaptor", "delve" },
+			automatic_installation = true,
 		})
 
 		require("mason-lspconfig").setup({
