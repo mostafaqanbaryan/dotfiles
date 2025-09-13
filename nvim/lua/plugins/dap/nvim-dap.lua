@@ -19,10 +19,10 @@ return {
 	},
 	cmd = {
 		"DapRunToCursor",
-		"DapWindow",
 		"DapBreakpoint",
 	},
 	keys = {
+		{ "<F4>", "<cmd>DapViewToggle<CR>" },
 		{ "<F5>", "<cmd>DapContinue<CR>" },
 		{
 			"<Leader><F5>",
@@ -30,50 +30,43 @@ return {
 				require("dap").run_last()
 			end,
 		},
-		{ "<Leader>dc", "<cmd>DapRunToCursor<CR>" },
-		{ "<F6>", "<cmd>DapTerminate<CR>" },
-
-		{ "<Up>", "<cmd>lua require('dap').step_up()<CR>" },
-		{ "<Down>", "<cmd>DapStepOver<CR>" },
-		{ "<Right>", "<cmd>DapStepInto<CR>" },
-		{ "<Left>", "<cmd>DapStepOut<CR>" },
-
-		{ "<F12>", "<cmd>DapBreakpoint<CR>" },
+		{ "<F17>", "<cmd>DapRunToCursor<CR>" },
 		{
-			"<Leader>dl",
+			"<F6>",
+			function()
+				require("dap").terminate()
+				require("dap-view").close()
+				vim.keymap.del("n", "<Up>")
+				vim.keymap.del("n", "<Down>")
+				vim.keymap.del("n", "<Right>")
+				vim.keymap.del("n", "<Left>")
+			end,
+		},
+
+		{
+			"<F12>",
+			function()
+				require("dap").toggle_breakpoint()
+			end,
+		},
+		{
+			"<Leader><F12>",
+			function()
+				vim.ui.input({ prompt = "Condition: " }, function(input)
+					if input == "" then
+						require("dap").toggle_breakpoint()
+					else
+						require("dap").set_breakpoint(input)
+					end
+				end)
+			end,
+		},
+		{
+			"<F24>",
 			function()
 				require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))
 			end,
 		},
-
-		{ "<Leader>de", "<cmd>DapWindow<CR>" },
-
-		{
-			"<Leader>dh",
-			function()
-				require("dap.ui.widgets").hover()
-			end,
-			{ mode = { "n", "v" } },
-		},
-		{
-			"<Leader>dp",
-			function()
-				require("dap.ui.widgets").preview()
-			end,
-			{ mode = { "n", "v" } },
-		},
-
-		{
-			"<Leader>df",
-			function()
-				local widgets = require("dap.ui.widgets")
-				widgets.centered_float(widgets.frames)
-			end,
-		},
-		-- { '<Leader>ds', function()
-		-- 	local widgets = require('dap.ui.widgets')
-		-- 	widgets.centered_float(widgets.scopes)
-		-- end },
 	},
 	config = function()
 		vim.fn.sign_define("DapBreakpoint", { text = "🛑", texthl = "", linehl = "", numhl = "" })
@@ -86,11 +79,11 @@ return {
 			enabled = true, -- enable this plugin (the default)
 			enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
 			highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
-			highlight_new_as_changed = false, -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
+			highlight_new_as_changed = true, -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
 			show_stop_reason = true, -- show stop reason when stopped for exceptions
 			commented = false, -- prefix virtual text with comment string
 			only_first_definition = true, -- only show virtual text at first definition (if there are multiple)
-			all_references = false, -- show virtual text on all all references of the variable (not only definitions)
+			all_references = false, -- show virtual text on all references of the variable (not only definitions)
 			clear_on_continue = false, -- clear virtual text on "continue" (might cause flickering when stepping)
 			display_callback = function(variable, buf, stackframe, node, options)
 				if options.virt_text_pos == "inline" then
@@ -110,43 +103,32 @@ return {
 		})
 
 		local dap, dv = require("dap"), require("dap-view")
-		vim.api.nvim_create_user_command("DapBreakpoint", function()
-			vim.ui.input({ prompt = "Condition: " }, function(input)
-				if input == "" then
-					dap.toggle_breakpoint()
-				else
-					dap.set_breakpoint(input)
-				end
-			end)
-		end, { desc = "Set/unset breakpoint" })
 
 		vim.api.nvim_create_user_command("DapRunToCursor", function()
 			dap.run_to_cursor()
 		end, { desc = "Run/Continue debugging to cursor position" })
 
-		vim.api.nvim_create_user_command("DapWindow", function()
-			dap.repl.toggle()
-		end, { desc = "Open/close debug window" })
-
 		dap.listeners.before.attach["dap-view-config"] = function()
+			vim.keymap.set("n", "<Up>", "<cmd>lua require('dap').step_up()<CR>")
+			vim.keymap.set("n", "<Down>", "<cmd>DapStepOver<CR>")
+			vim.keymap.set("n", "<Right>", "<cmd>DapStepInto<CR>")
+			vim.keymap.set("n", "<Left>", "<cmd>DapStepOut<CR>")
 			dv.open()
 		end
+
 		dap.listeners.before.launch["dap-view-config"] = function()
+			vim.keymap.set("n", "<Up>", "<cmd>lua require('dap').step_up()<CR>")
+			vim.keymap.set("n", "<Down>", "<cmd>DapStepOver<CR>")
+			vim.keymap.set("n", "<Right>", "<cmd>DapStepInto<CR>")
+			vim.keymap.set("n", "<Left>", "<cmd>DapStepOut<CR>")
 			dv.open()
-		end
-		dap.listeners.before.event_terminated["dap-view-config"] = function()
-			dv.close()
-		end
-		dap.listeners.before.event_exited["dap-view-config"] = function()
-			dv.close()
 		end
 
 		dap.adapters.php = {
 			type = "executable",
-			command = "vscode-php-debug",
+			command = "node",
+			args = { vim.fn.stdpath("data") .. "/mason/packages/php-debug-adapter/extension/out/phpDebug.js" },
 		}
-
-		dap.set_log_level("DEBUG")
 
 		dap.configurations.php = {
 			{

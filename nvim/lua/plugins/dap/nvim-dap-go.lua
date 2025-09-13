@@ -51,15 +51,15 @@ return {
 			dap_configurations = config,
 		})
 
-		vim.api.nvim_create_user_command("DapRunProject", function()
+		vim.api.nvim_create_user_command("DapGoProject", function()
 			require("dap").run(config[2])
 		end, { desc = "Run " .. config[2].name })
 
-		vim.api.nvim_create_user_command("DapRunWeb", function()
+		vim.api.nvim_create_user_command("DapGoWeb", function()
 			require("dap").run(config[3])
 		end, { desc = "Run " .. config[3].name })
 
-		vim.api.nvim_create_user_command("DapRunCli", function()
+		vim.api.nvim_create_user_command("DapGoCli", function()
 			require("dap").run(config[4])
 		end, { desc = "Run " .. config[4].name })
 	end,
