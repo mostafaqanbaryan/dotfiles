@@ -33,9 +33,10 @@ return {
 		{ "<Leader>dc", "<cmd>DapRunToCursor<CR>" },
 		{ "<F6>", "<cmd>DapTerminate<CR>" },
 
-		{ "<F7>", "<cmd>DapStepOver<CR>" },
-		{ "<F8>", "<cmd>DapStepInto<CR>" },
-		{ "<F9>", "<cmd>DapStepOut<CR>" },
+		{ "<Up>", "<cmd>lua require('dap').step_up()<CR>" },
+		{ "<Down>", "<cmd>DapStepOver<CR>" },
+		{ "<Right>", "<cmd>DapStepInto<CR>" },
+		{ "<Left>", "<cmd>DapStepOut<CR>" },
 
 		{ "<F12>", "<cmd>DapBreakpoint<CR>" },
 		{
@@ -75,10 +76,10 @@ return {
 		-- end },
 	},
 	config = function()
-		vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "", linehl = "", numhl = "" })
-		vim.fn.sign_define("DapBreakpointCondition", { text = "", texthl = "", linehl = "", numhl = "" })
-		vim.fn.sign_define("DapBreakpointRejected", { text = "", texthl = "", linehl = "", numhl = "" })
-		vim.fn.sign_define("DapLogPoint", { text = "", texthl = "", linehl = "", numhl = "" })
+		vim.fn.sign_define("DapBreakpoint", { text = "🛑", texthl = "", linehl = "", numhl = "" })
+		vim.fn.sign_define("DapBreakpointCondition", { text = "🔵", texthl = "", linehl = "", numhl = "" })
+		vim.fn.sign_define("DapBreakpointRejected", { text = "⭕", texthl = "", linehl = "", numhl = "" })
+		vim.fn.sign_define("DapLogPoint", { text = "🟡", texthl = "", linehl = "", numhl = "" })
 		vim.fn.sign_define("DapStopped", { text = "", texthl = "", linehl = "", numhl = "" })
 
 		require("nvim-dap-virtual-text").setup({
@@ -110,7 +111,13 @@ return {
 
 		local dap, dv = require("dap"), require("dap-view")
 		vim.api.nvim_create_user_command("DapBreakpoint", function()
-			dap.toggle_breakpoint()
+			vim.ui.input({ prompt = "Condition: " }, function(input)
+				if input == "" then
+					dap.toggle_breakpoint()
+				else
+					dap.set_breakpoint(input)
+				end
+			end)
 		end, { desc = "Set/unset breakpoint" })
 
 		vim.api.nvim_create_user_command("DapRunToCursor", function()
@@ -133,5 +140,24 @@ return {
 		dap.listeners.before.event_exited["dap-view-config"] = function()
 			dv.close()
 		end
+
+		dap.adapters.php = {
+			type = "executable",
+			command = "vscode-php-debug",
+		}
+
+		dap.set_log_level("DEBUG")
+
+		dap.configurations.php = {
+			{
+				type = "php",
+				request = "launch",
+				name = "Listen for Xdebug",
+				port = 9003,
+				pathMappings = {
+					["/var/www/html"] = vim.fn.getcwd() .. "/html",
+				},
+			},
+		}
 	end,
 }
