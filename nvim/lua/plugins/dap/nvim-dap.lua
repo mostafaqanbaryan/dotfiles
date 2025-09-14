@@ -1,3 +1,24 @@
+local initialize = function()
+	vim.keymap.set("n", "<Up>", "<cmd>lua require('dap').step_up()<CR>")
+	vim.keymap.set("n", "<Down>", "<cmd>DapStepOver<CR>")
+	vim.keymap.set("n", "<Right>", "<cmd>DapStepInto<CR>")
+	vim.keymap.set("n", "<Left>", "<cmd>DapStepOut<CR>")
+	vim.keymap.set("n", "<F1>", function()
+		require("dap.ui.widgets").hover()
+	end)
+	require("dap-view").open()
+end
+
+local terminate = function()
+	require("dap").terminate()
+	require("dap-view").close()
+	vim.keymap.del("n", "<Up>")
+	vim.keymap.del("n", "<Down>")
+	vim.keymap.del("n", "<Right>")
+	vim.keymap.del("n", "<Left>")
+	vim.keymap.del("n", "<F1>")
+end
+
 return {
 	"mfussenegger/nvim-dap",
 	dependencies = {
@@ -47,10 +68,6 @@ return {
 			},
 		},
 	},
-	cmd = {
-		"DapRunToCursor",
-		"DapBreakpoint",
-	},
 	keys = {
 		{ "<F4>", "<cmd>DapViewToggle<CR>" },
 		{ "<F5>", "<cmd>DapContinue<CR>" },
@@ -60,16 +77,16 @@ return {
 				require("dap").run_last()
 			end,
 		},
-		{ "<F17>", "<cmd>DapRunToCursor<CR>" },
+		{
+			"<F17>",
+			function()
+				require("dap").run_to_cursor()
+			end,
+		},
 		{
 			"<F6>",
 			function()
-				require("dap").terminate()
-				require("dap-view").close()
-				vim.keymap.del("n", "<Up>")
-				vim.keymap.del("n", "<Down>")
-				vim.keymap.del("n", "<Right>")
-				vim.keymap.del("n", "<Left>")
+				terminate()
 			end,
 		},
 
@@ -113,26 +130,14 @@ return {
 		vim.fn.sign_define("DapLogPoint", { text = "🟡", texthl = "", linehl = "", numhl = "" })
 		vim.fn.sign_define("DapStopped", { text = "", texthl = "", linehl = "", numhl = "" })
 
-		local dap, dv = require("dap"), require("dap-view")
-
-		vim.api.nvim_create_user_command("DapRunToCursor", function()
-			dap.run_to_cursor()
-		end, { desc = "Run/Continue debugging to cursor position" })
+		local dap = require("dap")
 
 		dap.listeners.before.attach["dap-view-config"] = function()
-			vim.keymap.set("n", "<Up>", "<cmd>lua require('dap').step_up()<CR>")
-			vim.keymap.set("n", "<Down>", "<cmd>DapStepOver<CR>")
-			vim.keymap.set("n", "<Right>", "<cmd>DapStepInto<CR>")
-			vim.keymap.set("n", "<Left>", "<cmd>DapStepOut<CR>")
-			dv.open()
+			initialize()
 		end
 
 		dap.listeners.before.launch["dap-view-config"] = function()
-			vim.keymap.set("n", "<Up>", "<cmd>lua require('dap').step_up()<CR>")
-			vim.keymap.set("n", "<Down>", "<cmd>DapStepOver<CR>")
-			vim.keymap.set("n", "<Right>", "<cmd>DapStepInto<CR>")
-			vim.keymap.set("n", "<Left>", "<cmd>DapStepOut<CR>")
-			dv.open()
+			initialize()
 		end
 
 		dap.adapters.php = {

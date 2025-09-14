@@ -65,7 +65,7 @@ vim.keymap.set("n", "]e", '"udd"up')
 
 -- Close quickfix with ESC/q
 vim.api.nvim_create_autocmd({ "FileType" }, {
-	pattern = "qf",
+	pattern = { "qf", "dap-float" },
 	callback = function()
 		vim.api.nvim_buf_set_keymap(0, "n", "<ESC>", "<cmd>q<CR>", { silent = true, noremap = true })
 		vim.api.nvim_buf_set_keymap(0, "n", "q", "<cmd>q<CR>", { silent = true, noremap = true })
