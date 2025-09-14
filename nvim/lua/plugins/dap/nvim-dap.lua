@@ -99,6 +99,14 @@ return {
 		},
 	},
 	config = function()
+		-- Load autocompletion for REPL
+		vim.api.nvim_create_autocmd({ "FileType" }, {
+			pattern = "dap-repl",
+			callback = function()
+				require("dap.ext.autocompl").attach()
+			end,
+		})
+
 		vim.fn.sign_define("DapBreakpoint", { text = "🛑", texthl = "", linehl = "", numhl = "" })
 		vim.fn.sign_define("DapBreakpointCondition", { text = "🔵", texthl = "", linehl = "", numhl = "" })
 		vim.fn.sign_define("DapBreakpointRejected", { text = "⭕", texthl = "", linehl = "", numhl = "" })
