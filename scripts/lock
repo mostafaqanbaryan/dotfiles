@@ -3,4 +3,9 @@ lock=$(find "$HOME/Pictures/wallpapers" -type f -name "*.jpg"  -printf "\n%AD %A
 if [ -z "$lock" ]; then
     lock="/$HOME/dotfiles/wallpaper.jpg"
 fi
-swaylock -e -f -F -k -l -c 000000 -s fill -i "$lock" --clock --inside-color 33333377 --indicator-radius 90 --indicator-thickness 4 --indicator $@
+
+# Lock bitwaden in browser (workspace 1) with ctrl+0 and in bwmenu
+keyctl purge user bw_session &>/dev/null && \
+    hyprctl dispatch workspace 1 && \
+    wtype -M ctrl 0 -m ctrl && \
+    swaylock -e -f -F -k -l -c 000000 -s fill -i "$lock" --clock --inside-color 33333377 --indicator-radius 90 --indicator-thickness 4 --indicator $@
