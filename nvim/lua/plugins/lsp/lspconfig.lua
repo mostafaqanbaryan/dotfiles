@@ -1,53 +1,42 @@
-local function setup_format_on_save()
-	vim.g.disable_autoformat = false
-
-	local formatter_group = vim.api.nvim_create_augroup("formatter_au", { clear = true })
-
-	for _, name in ipairs({
-		"source.addMissingImports.ts",
-		"source.removeUnused.ts",
-		-- "source.organizeImports",
-		-- "source.fixAll.eslint",
-	}) do
+local function runCodeActions(group, pattern, actions)
+	for _, name in ipairs(actions) do
+		-- We could do:
+		-- vim.lsp.buf.code_action({ apply = true, context = { only = { name }, diagnostics = {} } })
+		-- Instead of this, but this is async
+		-- Well use the sync request to prevent conflicts in ts files
+		-- So until there is a way for vim.lsp.buf.code_action() to be sync, we'll use this
 		vim.api.nvim_create_autocmd("BufWritePre", {
-			pattern = { "*.tsx", "*.ts", "*.jsx", "*.js" },
-			group = formatter_group,
+			pattern = pattern,
+			group = group,
 			callback = function()
 				if vim.g.disable_autoformat then
 					return
 				end
-				vim.lsp.buf.code_action({ apply = true, context = { only = { name }, diagnostics = {} } })
+				local params = vim.lsp.util.make_range_params()
+				params.context = { diagnostics = {}, only = { name } }
+				local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 5000)
+				for cid, res in pairs(result or {}) do
+					for _, r in pairs(res.result or {}) do
+						if r.edit then
+							local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
+							vim.lsp.util.apply_workspace_edit(r.edit, enc)
+						end
+					end
+				end
 			end,
 		})
 	end
+end
 
-	-- Autoimport and sort imports in go files
-	-- https://go.dev/gopls/editor/vim#neovim-imports
-	vim.api.nvim_create_autocmd("BufWritePre", {
-		pattern = "*.go",
-		group = formatter_group,
-		callback = function()
-			if vim.g.disable_autoformat then
-				return
-			end
-			local params = vim.lsp.util.make_range_params()
-			params.context = { only = { "source.organizeImports" } }
-			-- buf_request_sync defaults to a 1000ms timeout. Depending on your
-			-- machine and codebase, you may want longer. Add an additional
-			-- argument after params if you find that you have to write the file
-			-- twice for changes to be saved.
-			-- E.g., vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
-			local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
-			for cid, res in pairs(result or {}) do
-				for _, r in pairs(res.result or {}) do
-					if r.edit then
-						local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
-						vim.lsp.util.apply_workspace_edit(r.edit, enc)
-					end
-				end
-			end
-		end,
-	})
+local function setup_format_on_save()
+	local formatter_group = vim.api.nvim_create_augroup("formatter_au", { clear = true })
+
+	runCodeActions(
+		formatter_group,
+		{ "*.tsx", "*.ts", "*.jsx", "*.js" },
+		{ "source.removeUnused.ts", "source.addMissingImports.ts" }
+	)
+	runCodeActions(formatter_group, { "*.go" }, { "source.organizeImports" })
 
 	vim.api.nvim_create_autocmd("BufWritePre", {
 		pattern = "*",
@@ -56,7 +45,7 @@ local function setup_format_on_save()
 			if vim.g.disable_autoformat then
 				return
 			end
-			require("conform").format({ bufnr = args.buf, timeout_ms = 5000 })
+			require("conform").format({ bufnr = args.buf, timeout_ms = 5000, async = false })
 		end,
 	})
 
@@ -77,6 +66,7 @@ return {
 	"neovim/nvim-lspconfig",
 	lazy = false,
 	config = function()
+		vim.g.disable_autoformat = false
 		vim.lsp.config("gopls", {
 			settings = {
 				gopls = {
@@ -181,7 +171,7 @@ return {
 
 				vim.lsp.on_type_formatting.enable()
 
-				setup_format_on_save(args)
+				setup_format_on_save()
 
 				vim.keymap.set(
 					"n",
