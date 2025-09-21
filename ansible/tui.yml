@@ -79,7 +79,7 @@
   ignore_errors: true
   community.general.pacman: 
     executable: "yay"
-    name: ["lazygit", "delta"]
+    name: ["lazygit", "git-delta"]
     state: "present"
   tags:
     - install
