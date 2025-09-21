@@ -83,7 +83,7 @@ case ${chosen} in
 		run_cmd --hibernate
         ;;
     $lock)
-		$HOME/.local/bin/lock
+		loginctl lock-session
         ;;
     $suspend)
 		run_cmd --suspend

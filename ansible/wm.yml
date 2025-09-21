@@ -22,10 +22,10 @@
   tags:
     - install
 
-- name: "Install swayidle"
+- name: "Install hypridle"
   become: true
   community.general.pacman: 
-    name: "swayidle"
+    name: "hypridle"
     state: "present"
   tags:
     - install
