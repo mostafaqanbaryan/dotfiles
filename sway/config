@@ -142,7 +142,7 @@ bindsym --to-code {
     $mod+e exec rofi -modi emoji -show emoji -sort-method fzf -theme "$HOME/dotfiles/rofi/style.rasi" -p "Emoji"
 
     # SSH
-    $mod+t exec $HOME/.local/bin/rofi-ssh -sort-method fzf -p "Clipboard" -theme "$HOME/dotfiles/rofi/style.rasi"
+    $mod+t exec $HOME/.local/bin/rofi-ssh -sort-method fzf -p "Server" -theme "$HOME/dotfiles/rofi/style.rasi"
 
     # Password manager
     $mod+p exec $HOME/dotfiles/bitwarden-rofi/bwmenu --folder-id=b028c1cb-2c6f-4e9b-888e-b071007964d2 --no-clear --auto-lock '-1' -- -matching fuzzy -sort-method fzf -sort -theme $HOME/dotfiles/rofi/style.rasi
