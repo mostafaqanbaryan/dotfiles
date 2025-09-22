@@ -1,15 +1,15 @@
 # Dotfiles
-My current setup and tools I use:
+My current setup and tools I use everyday:
 - [EndeavourOS](https://endeavouros.com/)
 - [Hyprland](https://hyprland.org/) as window manager
 - [Waybar](https://github.com/Alexays/Waybar) as status bar
-- [Wezterm](https://github.com/wez/wezterm) as my terminal
+- [Kitty](https://github.com/kovidgoyal/kitty) as my terminal
 - [Monaco](https://github.com/cseelus/monego) fonts
 - [Fish](https://github.com/fish-shell/fish-shell) as my shell
 - [Starship](https://github.com/cseelus/monego) as prompt
 - [Neovim](https://github.com/neovim/neovim) as my Editor/IDE
-- [Ranger](https://github.com/ranger/ranger) as filemanager
-- [Musikcube](https://github.com/clangen/musikcube) as my player
+- [Yazi](https://github.com/sxyazi/yazi) as filemanager
+- [Tauon](https://github.com/Taiko2k/Tauon) as my player
 - [Rofi](https://github.com/davatorium/rofi) as launcher
 
 ## Softwares
@@ -17,7 +17,6 @@ My current setup and tools I use:
 - [Grim](https://github.com/emersion/grim), [Slurp](https://github.com/emersion/slurp) and [Swappy](https://github.com/jtheoof/swappy) for taking screenshots in Sway
 - [Termdown](https://github.com/trehn/termdown) beautiful countdown timer in terminal
 - [NotificationCenter](https://github.com/ErikReider/SwayNotificationCenter) Sway notificaion center
-- Highlight in ranger
 
 ## Setup
 - Clone this repository to your SSD (For better performance of `VIM`)
