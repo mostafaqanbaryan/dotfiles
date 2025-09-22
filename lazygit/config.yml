@@ -1,11 +1,14 @@
+gui:
+  screenMode: "half"
+  nerdFontsVersion: "3"
+  skipHookPrefix: "\U0001F525"
+  parseEmoji: true
+
 git:
   paging:
-    externalDiffCommand: difft --color=always --display=inline --syntax-highlight=on --tab-width=2
-gui:
-  windowSize: "half"
-# keybinding:
-  # universal:
-    # pushFiles: '<c-p>'
+    colorArg: always
+    pager: delta --dark --paging=never
+
 customCommands:
   - key: "c"
     context: "files"
@@ -58,10 +61,8 @@ customCommands:
           - name: "--no-verify"
             value: "--no-verify"
             description: "Commit with --no-verify flag"
-
     command: "sh ~/dotfiles/lazygit/commit.sh {{.Form.Type | quote}} {{.Form.TaskId | quote}} {{.Form.Message | quote}} {{.Form.Flag}}"
     loadingText: "Commiting..."
-
   - key: "N"
     context: "localBranches"
     description: "Create new branch"
@@ -91,8 +92,7 @@ customCommands:
           preset: "branches"
     command: "sh ~/dotfiles/lazygit/branch.sh {{.Form.Type | quote}} {{.Form.TaskId | quote}} {{.Form.Name | quote}}"
     loadingText: "Checking out to the new branch..."
-
-  - key: "<c-p>"
+  - key: "<c-u>"
     context: "global"
     description: "Push"
     prompts:
@@ -102,6 +102,5 @@ customCommands:
         initialValue: "develop"
         suggestions:
           preset: 'branches'
-
     command: "git remote get-url origin | grep gitlab && git push -u origin HEAD -o merge_request.create -o merge_request.target={{.Form.Target}} -o merge_request.title='{{.SelectedLocalBranch.Name}}' || git push -u origin HEAD"
     loadingText: "Pushing..."

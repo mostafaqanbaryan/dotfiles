@@ -1,0 +1,26 @@
+- name: "Install hyprland"
+  ignore_errors: true
+  community.general.pacman: 
+    executable: "yay"
+    name: ["hyprland", "hyprpicker-git", "hyprsunset", "uwsm"]
+    state: "present"
+  tags:
+    - hyprland
+
+- name: "Install screencast"
+  become: true
+  community.general.pacman: 
+    name: ["xdg-desktop-portal-hyprland", "xdg-desktop-portal-wlr", "xdg-desktop-portal-gtk"]
+    state: "present"
+  tags:
+    - hyprland
+
+- name: "Layout based on workspace"
+  become: true
+  community.general.pacman: 
+    executable: "yay"
+    name: "hyprland-per-window-layout"
+    state: "present"
+  tags:
+    - hyprland
+

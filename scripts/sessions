@@ -1,10 +1,18 @@
 #!/usr/bin/bash
-if [ "$(command -v zellij)" = "" ]; then
-    echo "Zellij is not installed"
+if [ "$(command -v tmux)" = "" ]; then
+    echo "Tmux is not installed"
     exit 1
 fi
 
-LAST_SESSION="$(cat /tmp/zellij_last_session || '')"
+
+pgrep tmux > /dev/null
+mux_running=$?
+
+function mux(){
+     [[ $mux_running -eq 0 ]] && tmux $@
+}
+
+LAST_SESSION="$([[ -f /tmp/zellij_last_session ]] && cat /tmp/zellij_last_session)"
 
 home_replacer() {
     HOME_REPLACER=""                                          # default to a noop
@@ -26,7 +34,7 @@ transform_home_path() {
 }
 
 fzf_window() {
-    fzf --reverse --no-sort --border "rounded" --info inline --pointer "→" --prompt "Session > " --header "Select session" --preview "bash -c \"echo {2} | grep -q 'Session' && echo {} || ls {3}\""
+    fzf --reverse --border "rounded" --info inline --pointer "→" --prompt "Session > " --header "Select session" --preview "bash -c \"echo {2} | grep -q 'Session' && echo {} || ls {3}\""
 }
 
 set_last_session() {
@@ -39,18 +47,37 @@ last_session() {
     fi
 }
 
+sessions_list_names() {
+     mux list-sessions | sed 's/:.*$//'
+}
+
 sessions_list(){
     if [[ -n "$LAST_SESSION" ]]; then
-        zellij list-sessions -s | grep -v "$(echo $LAST_SESSION)" | awk '{ print "("NR")\t[Session]\t"$1 }'
+        mux list-sessions | sed 's/:.*$//' | grep -v "$(echo $LAST_SESSION)" | awk '{ print "("NR")\t[Session]\t"$1 }'
     else
-        zellij list-sessions -s | awk '{ print "("NR")\t[Session]\t"$1 }'
+        sessions_list_names | awk '{ print "("NR")\t[Session]\t"$1 }'
     fi
 }
 
 project_list(){
-    list=$(find ~/Projects/ -maxdepth 1 -type d)
-    list="$(realpath ~/dotfiles) ${list}"
-    echo $list | tr --truncate-set1 " /" "\n" | awk '{ print "("NR")\t[Directory]\t"$1 }' 
+    project_list_session_excluded | tr --truncate-set1 " /" "\n" | awk '{ print "("NR")\t[Directory]\t"$1 }' 
+}
+
+project_list_session_excluded(){
+    list=$(find /mnt/Projects/ -maxdepth 1 -type d)
+    list=$(echo -e "$(realpath ~/dotfiles)\n${list}")
+    OLDIFS="$IFS"
+    IFS=$'\n'
+    foo=$(sessions_list_names)
+    bar=$(echo $foo | sed "s/ /\\\|/g")
+    for item in $list; do
+        echo $item | grep -q "/\($bar\)$"
+        if [[ "$?" -eq 0 ]]; then
+            continue 2
+        fi
+        echo $item
+    done
+    IFS="$OLDIFS"
 }
 
 select_project() {
@@ -84,22 +111,18 @@ fi
 
 cwd=$(get_sanitized_selected "$selected")
 session_name=$(get_session_name "$(transform_home_path "$cwd")")
-session=$(zellij list-sessions | grep "$session_name")
-current_session=$(zellij list-sessions -n | grep '(current)' | grep -o '^[^ ]*')
-is_current_session=$(zellij list-sessions -n | grep "^$session_name \[Created" | grep "(current)")
+session=$(mux has-session -t="$session_name" 2> /dev/null)
+current_session=$(mux list-sessions | grep '(attached)' | grep -o '^[^ :]*')
+is_current_session=$(mux list-sessions | grep "^$session_name: .* (created" | grep "(attached)")
 
 set_last_session "$current_session"
 
-# If we're inside of zellij, detach
-if [[ -n "$ZELLIJ" ]]; then
-    if [[ -z "$is_current_session" ]]; then
-        zellij pipe --plugin https://github.com/mostafaqanbaryan/zellij-switch/releases/download/0.2.0/zellij-switch.wasm -- "--session=$session_name --cwd=$cwd"
-    fi
-else
-    if [[ -n "$session" ]]; then
-        zellij attach $session_name -c
-    else
-        zellij attach $session_name -c options --default-cwd $cwd
-    fi
+if ! mux has-session -t=$session_name 2> /dev/null; then
+    tmux new-session -ds $session_name  -x - -y - -c $cwd
 fi
 
+if [[ -z $TMUX ]]; then
+    tmux attach -t $session_name
+else
+    tmux switch-client -t $session_name
+fi

@@ -1,109 +1,207 @@
+local function runCodeActions(group, pattern, actions)
+	for _, name in ipairs(actions) do
+		-- We could do:
+		-- vim.lsp.buf.code_action({ apply = true, context = { only = { name }, diagnostics = {} } })
+		-- Instead of this, but this is async
+		-- Well use the sync request to prevent conflicts in ts files
+		-- So until there is a way for vim.lsp.buf.code_action() to be sync, we'll use this
+		vim.api.nvim_create_autocmd("BufWritePre", {
+			pattern = pattern,
+			group = group,
+			callback = function()
+				if vim.g.disable_autoformat then
+					return
+				end
+				local params = vim.lsp.util.make_range_params()
+				params.context = { diagnostics = {}, only = { name } }
+				local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 5000)
+				for cid, res in pairs(result or {}) do
+					for _, r in pairs(res.result or {}) do
+						if r.edit then
+							local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
+							vim.lsp.util.apply_workspace_edit(r.edit, enc)
+						end
+					end
+				end
+			end,
+		})
+	end
+end
+
+local function setup_format_on_save()
+	local formatter_group = vim.api.nvim_create_augroup("formatter_au", { clear = true })
+
+	runCodeActions(
+		formatter_group,
+		{ "*.tsx", "*.ts", "*.jsx", "*.js" },
+		{ "source.removeUnused.ts", "source.addMissingImports.ts" }
+	)
+	runCodeActions(formatter_group, { "*.go" }, { "source.organizeImports" })
+
+	vim.api.nvim_create_autocmd("BufWritePre", {
+		pattern = "*",
+		group = formatter_group,
+		callback = function(args)
+			if vim.g.disable_autoformat then
+				return
+			end
+			require("conform").format({ bufnr = args.buf, timeout_ms = 5000, async = false })
+		end,
+	})
+
+	vim.api.nvim_create_user_command("FormatterDisable", function(args)
+		vim.g.disable_autoformat = true
+	end, {
+		desc = "Disable autoformat-on-save",
+	})
+
+	vim.api.nvim_create_user_command("FormatterEnable", function(args)
+		vim.g.disable_autoformat = false
+	end, {
+		desc = "Enable autoformat-on-save",
+	})
+end
+
 return {
-    "folke/neodev.nvim",
-    cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
-    event = { 'BufReadPre', 'BufNewFile' },
-    dependencies = {
-        { 'williamboman/mason-lspconfig.nvim' },
-        { 'neovim/nvim-lspconfig' },
-        { 'Chaitanyabsprip/fastaction.nvim' }
-    },
-    config = function()
-        -- neodev must be initialized before lspconfig
-        require("neodev").setup()
+	"neovim/nvim-lspconfig",
+	lazy = false,
+	config = function()
+		vim.g.disable_autoformat = false
+		vim.lsp.config("gopls", {
+			settings = {
+				gopls = {
+					completeUnimported = true,
+					usePlaceholders = true,
+					deepCompletion = true,
+					analyses = {
+						unusedparams = true,
+						shadow = true,
+						nilness = true,
+						unusedwrite = true,
+						useany = true,
+					},
+					staticcheck = true, -- Enable staticcheck
+					codelenses = {
+						generate = true,
+						gc_details = true,
+						test = true,
+					},
+					hints = {
+						assignVariableTypes = false,
+						compositeLiteralFields = true,
+						constantValues = true,
+						functionTypeParameters = true,
+						parameterNames = true,
+						rangeVariableTypes = true,
+					},
+				},
+			},
+		})
 
-        local signs = { Error = "󰅚 ", Warn = "󰀪 ", Hint = "󰌶 ", Info = " " }
-        for type, icon in pairs(signs) do
-            local hl = "DiagnosticSign" .. type
-            vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-        end
+		vim.lsp.config("lua_ls", {
+			settings = {
+				Lua = {
+					diagnostics = {
+						globals = { "vim" },
+					},
+				},
+			},
+		})
 
-        -- Show source in diagnostics
-        vim.diagnostic.config({
-            update_in_insert = true,
-            severity_sort = true,
-            virtual_text = false,
-            float = {
-                source = true
-            },
-        })
+		-- LSP
+		vim.diagnostic.config({
+			severity_sort = true,
+			virtual_text = false,
+			float = {
+				focusable = true,
+				source = true,
+				border = "rounded",
+				scope = "cursor",
+			},
+			jump = {
+				float = {
+					focusable = true,
+					source = true,
+					border = "rounded",
+					scope = "cursor",
+				},
+			},
+			signs = {
+				text = {
+					[vim.diagnostic.severity.ERROR] = "󰅚 ",
+					[vim.diagnostic.severity.WARN] = "󰀪 ",
+					[vim.diagnostic.severity.INFO] = " ",
+					[vim.diagnostic.severity.HINT] = "󰌶 ",
+				},
+			},
+		})
 
-        -- Remove background of virtual text
-        local table = vim.api.nvim_get_hl(0, { name = 'DiagnosticVirtualTextError' })
-        local newTable = vim.tbl_extend("force", table, { bg = "NONE", ctermbg = "NONE" })
-        vim.api.nvim_set_hl(0, 'DiagnosticVirtualTextError', newTable);
+		vim.lsp.enable({
+			"bash_ls",
+			"docker_compose_language_service",
+			"rust_analyzer",
+			"vtsls",
+			"intelephense",
+			"harper_ls",
+			"eslint",
+			"pylsp",
+			"lua_ls",
+			"gopls",
+			"php_ls",
+		})
 
-        -- This is where all the LSP shenanigans will live
-        local lsp_zero = require('lsp-zero')
-        lsp_zero.extend_lspconfig()
+		vim.filetype.add({
+			extension = {
+				env = "sh",
+			},
+			filename = {
+				[".env"] = "sh",
+			},
+			pattern = {
+				[".env.[%w]+"] = "sh",
+			},
+		})
 
-        --- if you want to know more about lsp-zero and mason.nvim
-        --- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guides/integrate-with-mason-nvim.md
-        lsp_zero.on_attach(function(client, bufnr)
-            if client.server_capabilities.inlayHintProvider then
-                vim.lsp.inlay_hint.enable(true)
-            end
+		vim.api.nvim_create_autocmd("LspAttach", {
+			callback = function(args)
+				local client = vim.lsp.get_client_by_id(args.data.client_id)
+				if client ~= nil and client:supports_method("textDocument/definition") then
+					vim.keymap.set("n", "gd", vim.lsp.buf.definition)
+				end
 
-            -- Fastaction
-            vim.keymap.set(
-                'n',
-                '<F4>',
-                '<cmd>lua require("fastaction").code_action()<CR>',
-                { buffer = bufnr }
-            )
-            vim.keymap.set(
-                'v',
-                '<F4>',
-                "<esc><cmd>lua require('fastaction').range_code_action()<CR>",
-                { buffer = bufnr }
-            )
+				vim.lsp.on_type_formatting.enable()
 
-            -- See :help lsp-zero-keybindings
-            -- to learn the available actions
-            lsp_zero.default_keymaps({ buffer = bufnr })
-            vim.api.nvim_create_autocmd('CursorHold', {
-                pattern = "*",
-                callback = function()
-                    vim.diagnostic.open_float(0, {
-                        scope = 'cursor',
-                        focusable = false,
-                        close_events = {
-                            'CursorMoved',
-                            'CursorMovedI',
-                            'BufHidden',
-                            'InsertCharPre',
-                            'WinLeave',
-                        }
-                    })
-                end
-            })
-        end)
+				setup_format_on_save()
 
+				vim.keymap.set(
+					"n",
+					"]D",
+					"<cmd>lua vim.diagnostic.goto_next( {severity=vim.diagnostic.severity.ERROR, wrap = true} )<CR>",
+					{ silent = true }
+				)
+				vim.keymap.set(
+					"n",
+					"[D",
+					"<cmd>lua vim.diagnostic.goto_prev( {severity=vim.diagnostic.severity.ERROR, wrap = true} )<CR>",
+					{ silent = true }
+				)
 
-        -- for neodev
-        local lspconfig = require('lspconfig')
-        lspconfig.lua_ls.setup({
-            settings = {
-                Lua = {
-                    completion = {
-                        callSnippet = "Replace"
-                    }
-                }
-            }
-        })
+				vim.keymap.set("n", "<leader>;", function()
+					-- If we find a floating window, close it.
+					local found_float = false
+					for _, win in ipairs(vim.api.nvim_list_wins()) do
+						local l = vim.api.nvim_win_get_config(win)
+						if l.relative ~= "" and l.focusable then
+							vim.api.nvim_win_close(win, true)
+							found_float = true
+						end
+					end
 
-        -- lsp zero mason
-        require('mason-lspconfig').setup({
-            lazy = false,
-            automatic_installation = true,
-            ensure_installed = { "intelephense", "vtsls", "lua_ls", "eslint", "gopls", "bashls", "harper_ls" },
-            handlers = {
-                lsp_zero.default_setup,
-                lua_ls = function()
-                    -- (Optional) Configure lua language server for neovim
-                    local lua_opts = lsp_zero.nvim_lua_ls()
-                    require('lspconfig').lua_ls.setup(lua_opts)
-                end,
-            }
-        })
-    end
+					if not found_float then
+						vim.diagnostic.open_float()
+					end
+				end, { silent = true })
+			end,
+		})
+	end,
 }

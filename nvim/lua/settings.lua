@@ -3,13 +3,14 @@ vim.opt.termbidi = true
 vim.opt.mouse = "a"
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.encoding = 'utf-8'
+vim.opt.encoding = "utf-8"
 vim.opt.showmatch = true
 vim.opt.showmode = true
 vim.opt.showcmd = true
 vim.opt.hidden = true
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
+vim.o.winborder = "rounded"
 
 vim.opt.smartindent = true
 vim.opt.autoindent = true
@@ -28,10 +29,10 @@ vim.opt.splitright = true
 
 -- Highlight current line
 vim.opt.cursorline = true
-vim.opt.cursorlineopt = 'both'
+vim.opt.cursorlineopt = "both"
 
 -- Show search and replace result in split
-vim.opt.inccommand = 'split'
+vim.opt.inccommand = "split"
 
 -- Show indentation
 vim.opt.list = true
@@ -39,39 +40,39 @@ vim.opt.list = true
 -- Maintain undo history between sessions
 vim.opt.undolevels = 500
 vim.opt.undofile = true
-vim.o.undodir = vim.fn.expand(vim.fn.stdpath("data") .. '/undodir')
+vim.o.undodir = vim.fn.expand(vim.fn.stdpath("data") .. "/undodir")
 
 vim.opt.updatetime = 400
-vim.opt.backspace = { 'indent', 'eol', 'start' }
+vim.opt.backspace = { "indent", "eol", "start" }
 vim.o.timeoutlen = 1000
 vim.o.ttimeoutlen = 100
 vim.opt.linebreak = true
 vim.opt.cindent = false
 vim.opt.wrap = true
 vim.opt.breakindent = true
-vim.opt.signcolumn = 'yes'
+vim.opt.signcolumn = "yes"
 
 -- Case insensitive UNLESS using uppercase characters
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 -- Add indent for p/li in html
-vim.g.html_indent_tags = 'li│p'
+vim.g.html_indent_tags = "li│p"
 
 local function paste()
-    return {
-        vim.fn.split(vim.fn.getreg(""), "\n"),
-        vim.fn.getregtype(""),
-    }
+	return {
+		vim.fn.split(vim.fn.getreg(""), "\n"),
+		vim.fn.getregtype(""),
+	}
 end
 vim.g.clipboard = {
-    name = 'OSC 52',
-    copy = {
-        ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
-        ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
-    },
-    paste = {
-        ['+'] = paste,
-        ['*'] = paste,
-    },
+	name = "OSC 52",
+	copy = {
+		["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+		["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+	},
+	paste = {
+		["+"] = paste,
+		["*"] = paste,
+	},
 }

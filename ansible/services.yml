@@ -26,9 +26,9 @@
     - install
     - services
 
-- name: "Start pipewire-media-session"
+- name: "Start wireplumber instead of pipewire-media-session"
   ansible.builtin.service:
-    name: "pipewire-media-session"
+    name: "wireplumber"
     state: "started"
     enabled: true
   tags:

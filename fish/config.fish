@@ -4,13 +4,19 @@ function fish_greeting
 end
 
 # Editor
+function vim
+    tmux set-option -g status-style bg=#232136
+    PHP_CS_FIXER_IGNORE_ENV=1 nvim $argv
+    tmux set-option -g status-style bg=default
+end
+alias v "vim"
 alias s "sessions"
 
 # Dockers
-abbr dcu "docker-compose -f docker-compose.yml up -d"
-abbr dcd "docker-compose -f docker-compose.yml down"
-abbr dcpu "docker-compose -f docker-compose.prod.yml up -d"
-abbr dcpd "docker-compose -f docker-compose.prod.yml down"
+abbr dcu "docker compose -f docker-compose.yml up -d"
+abbr dcd "docker compose -f docker-compose.yml down"
+abbr dcpu "docker compose -f docker-compose.prod.yml up -d"
+abbr dcpd "docker compose -f docker-compose.prod.yml down"
 
 # Git
 abbr gl "git pull"
@@ -73,8 +79,6 @@ set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gcr/ssh"
 ## Default applications
 set -gx BROWSER brave
 set -gx EDITOR nvim
-
-alias v "$EDITOR"
 
 # Override
 if ! test -f "$HOME/.env.fish" 

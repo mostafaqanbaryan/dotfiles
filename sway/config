@@ -1,7 +1,16 @@
+# Disable built-in monitor when the lid is closed
+output VGA-1 disable
+output VGA-2 disable
+set $laptop LVDS-1
+bindswitch --reload --locked lid:on output $laptop disable
+bindswitch --reload --locked lid:off output $laptop enable
+
+
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
 
-font pango:Monego Ligatures 9
+# font pango:Monego Ligatures 9
+focus_follows_mouse yes
 
 # Home row direction keys, like vim
 set $left h
@@ -9,54 +18,313 @@ set $down j
 set $up k
 set $right l
 
-# Your preferred terminal emulator
-set $term wezterm
-
-# Your preferred application launcher
-# Note: pass the final command to swaymsg so that the resulting window can be opened
-# on the original workspace that the command was run on.
-set $rofi_theme "$HOME/.config/rofi/launchers/type-5"
-set $rofi_style 'style-2'
-
-set $menu rofi -show drun -theme $rofi_theme/$rofi_style.rasi | xargs swaymsg exec --
-
-set $wallpaper "~/wallpaper.jpg"
-
 # Set names for workspaces
-set $workspace1 " "
-set $workspace2 " "
-set $workspace3 " "
-set $workspace4 " "
-set $workspace5 " "
+set $workspace1 "1"
+set $workspace2 "2"
+set $workspace3 "3"
+set $workspace4 "4"
+set $workspace5 "5"
 set $workspace6 "6"
 set $workspace7 "7"
 set $workspace8 "8"
 set $workspace9 "9"
-set $workspace10 " "
+set $workspace10 "10"
 
-smart_borders on
+set $gap 26
+set $inner_gap 5
+
 default_floating_border pixel 2
 default_border pixel 2
-client.focused #BD9699 #F14627 #222222 #BD9699 #F14627
-client.unfocused #BD9699 #BD9699 #222222 #F14627 #BD9699
+hide_edge_borders smart
+client.focused #bc3a3aFF #FF6600FF #222222 #FFFFFF #FF6600FF
+client.unfocused #7A7688AA #7A7688AA #222222 #7A7688AA #7A7688AA
 
 include /etc/sway/config-vars.d/*
 include /etc/sway/config.d/*
-include ~/.config/sway/config.d/*.conf
 
-# Open apps
-exec tauon
-exec google-chrome-stable --password-store=gnome
-exec wezterm
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize them with right mouse button + $mod.
+# Despite the name, also works for non-floating windows.
+# Change normal to inverse to use left mouse button for resizing and right
+# mouse button for dragging.
+floating_modifier $mod normal
+
+
+input type:pointer {
+    pointer_accel 1 # set mouse sensitivity (between -1 and 1)
+}
+
+input type:keyboard {
+
+    # Set keyboard layout
+    xkb_layout us,ir
+
+    # Capslock key should work as ctrl key
+    # Both shift keys toggle capslock
+    # Alt+Shift changes layout
+    # See https://manpages.org/xkeyboard-config#options for options
+    xkb_options shift:both_capslock,ctrl:nocaps,grp:alt_shift_toggle
+
+    # Always keep numlock enable
+    xkb_numlock enabled
+
+    repeat_delay 250
+    repeat_rate 45
+}
+
+# Idle configuration
+exec swayidle -w \
+    timeout 60 '$HOME/.local/bin/lock --grace-no-touch --fade-in 2' \
+    timeout 1200 'swaymsg "output * dpms off"' \
+    resume 'swaymsg "output * dpms on"' \
+    before-sleep '$HOME/.local/bin/lock'
+
+
+bindsym --to-code {
+    # Switch to workspace
+    $mod+1 workspace $workspace1
+    $mod+2 workspace $workspace2
+    $mod+3 workspace $workspace3
+    $mod+4 workspace $workspace4
+    $mod+5 workspace $workspace5
+    $mod+6 workspace $workspace6
+    $mod+7 workspace $workspace7
+    $mod+8 workspace $workspace8
+    $mod+9 workspace $workspace9
+    $mod+0 workspace $workspace10
+
+    # Move focused container to workspace
+    $mod+Shift+1 move container to workspace $workspace1
+    $mod+Shift+2 move container to workspace $workspace2
+    $mod+Shift+3 move container to workspace $workspace3
+    $mod+Shift+4 move container to workspace $workspace4
+    $mod+Shift+5 move container to workspace $workspace5
+    $mod+Shift+6 move container to workspace $workspace6
+    $mod+Shift+7 move container to workspace $workspace7
+    $mod+Shift+8 move container to workspace $workspace8
+    $mod+Shift+9 move container to workspace $workspace9
+    $mod+Shift+0 move container to workspace $workspace10
+
+    $mod+r mode "resize"
+
+
+    # $mod+b or $mod+v, for horizontal and vertical splits
+    $mod+b splith
+    $mod+v splitv
+
+    # Switch the current container between different layout styles
+    $mod+s layout toggle stacking split
+    $mod+w layout toggle tabbed split
+    # $mod+Shift+e layout toggle split
+
+    # Make the current focus fullscreen
+    $mod+f fullscreen toggle
+
+    # Toggle the current focus between tiling and floating mode
+    $mod+space floating toggle
+
+    # Swap focus between the tiling area and the floating area
+    $mod+Shift+space focus mode_toggle
+
+    # Move focus to the parent container
+    $mod+a focus parent
+
+    # Start a terminal
+    $mod+Return exec wezterm
+
+    # Clipboard history
+    $mod+c exec $HOME/.local/bin/rofi-clipboard -sort-method fzf -p "Clipboard" -theme "$HOME/dotfiles/rofi/style.rasi"
+
+    # Add to clipboard
+    $mod+Shift+c exec rofi -i -dmenu -l 0 -p "Add to Clipboard" -theme "$HOME/dotfiles/rofi/add-to-clipboard-style.rasi" | wl-copy
+
+    # Emoji
+    $mod+e exec rofi -modi emoji -show emoji -sort-method fzf -theme "$HOME/dotfiles/rofi/style.rasi" -p "Emoji"
+
+    # SSH
+    $mod+t exec $HOME/.local/bin/rofi-ssh -sort-method fzf -p "Server" -theme "$HOME/dotfiles/rofi/style.rasi"
+
+    # Password manager
+    $mod+p exec $HOME/dotfiles/bitwarden-rofi/bwmenu --folder-id=b028c1cb-2c6f-4e9b-888e-b071007964d2 --no-clear --auto-lock '-1' -- -matching fuzzy -sort-method fzf -sort -theme $HOME/dotfiles/rofi/style.rasi
+    $mod+Shift+p exec $HOME/dotfiles/bitwarden-rofi/bwmenu --folder-id=3a3824a7-bac5-4681-85dc-b070010f58b8 --no-clear --auto-lock '-1' -- -matching fuzzy -sort-method fzf -sort -theme $HOME/dotfiles/rofi/style.rasi
+
+    # Toggle control Center
+    $mod+Shift+n exec swaync-client -t -sw
+
+    # Kill focused window
+    $mod+q kill
+
+    # Start your launcher
+    $mod+d exec rofi -show drun -theme $HOME/.config/rofi/launchers/type-2/style-10.rasi | xargs swaymsg exec --
+
+    # Reload the configuration file
+    $mod+Shift+r reload
+
+    # Exit sway (logs you out of your Wayland session)
+    $mod+m exit
+    $mod+Escape exec $HOME/.local/bin/powermenu
+
+    # Screenshot
+    Print exec grim - | wl-copy && notify-send -t 1000 "Screenshot copied!" -i 2
+    # ALT+Print exec grim -g "$(sway activewindow | grep size | sed "s/,/x/" | sed "s/size:/$(hyprctl activewindow | grep "at:" | sed "s/at: //")/")" - | swappy -f -
+
+    # Move your focus around
+    $mod+$left focus left
+    $mod+$down focus down
+    $mod+$up focus up
+    $mod+$right focus right
+
+    # Or use $mod+[up|down|left|right]
+    $mod+Left focus left
+    $mod+Down focus down
+    $mod+Up focus up
+    $mod+Right focus right
+
+    # Move the focused window with the same, but add Shift
+    $mod+Shift+$left move left
+    $mod+Shift+$down move down
+    $mod+Shift+$up move up
+    $mod+Shift+$right move right
+
+    # Ditto, with arrow keys
+    $mod+Shift+Left move left
+    $mod+Shift+Down move down
+    $mod+Shift+Up move up
+    $mod+Shift+Right move right
+
+    # Pulse Audio controls
+    XF86AudioRaiseVolume exec volumectl -u up
+    XF86AudioLowerVolume exec volumectl -u down
+    XF86AudioMute exec volumectl toggle-mute
+    XF86AudioMicMute exec volumectl -m toggle-mute
+
+    # Sreen brightness controls
+    XF86MonBrightnessUp exec lightctl up
+    XF86MonBrightnessDown exec lightctl down
+
+    # Touchpad controls
+    XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
+
+    # Media player controls
+    XF86AudioPlay exec playerctl play-pause
+    XF86AudioNext exec playerctl next
+    XF86AudioPrev exec playerctl previous
+
+    # Move the currently focused window to the scratchpad
+    $mod+Shift+minus move scratchpad
+
+    # Show the next scratchpad window or hide the focused scratchpad window.
+    # If there are multiple scratchpad windows, this command cycles through them.
+    $mod+minus scratchpad show
+}
+
+mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym --to-code {
+        $left resize shrink width 10px
+        $down resize grow height 10px
+        $up resize shrink height 10px
+        $right resize grow width 10px
+
+        # Ditto, with arrow keys
+        Left resize shrink width 10px
+        Down resize grow height 10px
+        Up resize shrink height 10px
+        Right resize grow width 10px
+
+        # Return to default mode
+        Return mode "default"
+        Escape mode "default"
+    }
+}
+
+# Gaps
+workspace $workspace1 gaps outer $gap
+workspace $workspace2 gaps outer $gap
+workspace $workspace3 gaps outer $gap
+workspace $workspace4 gaps outer $gap
+workspace $workspace5 gaps outer $gap
+workspace $workspace6 gaps outer $gap
+workspace $workspace7 gaps outer $gap
+workspace $workspace8 gaps outer $gap
+workspace $workspace9 gaps outer $gap
+workspace $workspace10 gaps outer $gap
+
+workspace $workspace1 gaps inner $inner_gap
+workspace $workspace2 gaps inner $inner_gap
+workspace $workspace3 gaps inner $inner_gap
+workspace $workspace4 gaps inner $inner_gap
+workspace $workspace5 gaps inner $inner_gap
+workspace $workspace6 gaps inner $inner_gap
+workspace $workspace7 gaps inner $inner_gap
+workspace $workspace8 gaps inner $inner_gap
+workspace $workspace9 gaps inner $inner_gap
+workspace $workspace10 gaps inner $inner_gap
+
+# Assign Workspace to a specific monitor
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+workspace $workspace1 output HDMI-A-1
+workspace $workspace2 output HDMI-A-1
+workspace $workspace3 output HDMI-A-1
+workspace $workspace4 output HDMI-A-1
+workspace $workspace5 output HDMI-A-1
+workspace $workspace6 output HDMI-A-1
+workspace $workspace7 output HDMI-A-1
+workspace $workspace8 output DP-1
+workspace $workspace9 output HDMI-A-1
+workspace $workspace10 output HDMI-A-1
+
+# Assign applications to a specific workspace
+# For app_id: swaymsg -t get_tree | grep app_id
+assign [class="Google-chrome"] workspace $workspace1
+assign [app_id="google-chrome"] workspace $workspace1
+assign [app_id="brave-browser"] workspace $workspace1
+assign [app_id="Brave-browser"] workspace $workspace1
+assign [app_id="Vivaldi"] workspace $workspace1
+assign [app_id="Vivaldi-stable"] workspace $workspace1
+
+assign [app_id="org.wezfurlong.wezterm"] workspace $workspace2
+assign [class="org.wezfurlong.wezterm"] workspace $workspace2
+assign [class="wezterm"] workspace $workspace2
+
+assign [app_id="org.gnome.Nautilus"] workspace $workspace5
+assign [app_id="thunar"] workspace $workspace5
+
+assign [app_id="org.clementine_player.Clementine"] workspace $workspace10
+assign [app_id="org.clementine-player.clementine"] workspace $workspace10
+assign [class="Clementine"] workspace $workspace10
+assign [app_id="org.musikcube"] workspace $workspace10
+assign [app_id="tauonmb"] workspace $workspace10
+
+# Floating mode
+for_window [app_id="pavucontrol"] floating enable
+for_window [app_id="nm-connection-editor"] floating enable
+for_window [class="pavucontrol"] floating enable
+
+# Bitwarden in brave
+for_window [app_id="^brave-nn.*"] floating enable
+for_window [app_id="^brave-nn.*"] move position center
 
 # Auth agent for filemanager
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
-### Notification center
-exec swaync
-
-### Clipboard history
+# Open apps
+exec avizo-service
+exec udiskie
+exec waybar
+exec wezterm
+exec brave
+exec tauon
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec wl-paste --watch cliphist store
+exec pipewire
+exec wireplumber
+exec swww-daemon --format xrgb
+exec waypaper --restore --backend swww
+exec swaync
 
 ### Share screen
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
