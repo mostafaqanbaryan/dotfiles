@@ -1,0 +1,44 @@
+- name: "Install tmux"
+  become: true
+  community.general.pacman: 
+    name: ["tmux"]
+    state: "present"
+  tags:
+    - install
+    - tmux
+
+- name: "Remove old config"
+  ignore_errors: true
+  ansible.builtin.file:
+    path: "~/.config/tmux"
+    state: "absent"
+  tags:
+    - install
+    - config
+    - tmux
+
+- name: "Link config"
+  ansible.builtin.file:
+    src: "$PWD/tmux"
+    dest: "~/.config/tmux"
+    state: "link"
+    force: true
+  tags:
+    - install
+    - config
+    - tmux
+
+- name: "Install tmux plugins"
+  become: true
+  ansible.builtin.git:
+    repo: "https://github.com/tmux-plugins/tpm"
+    dest: "~/.config/tmux/plugins/tpm"
+    depth: 1
+    single_branch: true
+    recursive: true
+    version: master
+  tags:
+    - install
+    - config
+    - tmux
+
