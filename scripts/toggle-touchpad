@@ -1,0 +1,30 @@
+#!/bin/bash
+
+STATE_FILE="/tmp/hyprland-touchpad-mode.status"
+
+# Last state
+if [[ -f "$STATE_FILE" ]]; then
+  LAST_MODE=$(cat "$STATE_FILE")
+else
+  LAST_MODE="0"
+fi
+
+# Next mode
+case "$LAST_MODE" in
+  0) NEXT_MODE="1"; STATUS="Enabled" ;;
+  *) NEXT_MODE="0"; STATUS="Disabled" ;;
+esac
+
+touchpads=$(hyprctl devices -j | jq -r '.mice | .[] | select(.name | test("touch")) | .name')
+
+if [[ -z "$touchpads" ]]; then
+  notify-send "No touchpads found"
+  exit 1
+fi
+
+for touchpad in $touchpads; do
+    hyprctl keyword "device[$touchpad]:enabled" $NEXT_MODE
+done
+
+notify-send "Touchpad mode: $STATUS"
+echo "$NEXT_MODE" > "$STATE_FILE"

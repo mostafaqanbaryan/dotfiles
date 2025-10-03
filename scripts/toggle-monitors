@@ -1,0 +1,62 @@
+#!/bin/bash
+# Hyprland monitor mode switcher (auto-detects resolution)
+# Cycles between: extended → mirror → disable
+
+STATE_FILE="/tmp/hyprland-monitor-mode.status"
+
+# Detect monitors and their preferred modes
+MONITORS_JSON=$(hyprctl monitors -j)
+
+INTERNAL=$(echo "$MONITORS_JSON" | jq -r '.[] | select(.name | test("eDP|LVDS")) | .name' | head -n1)
+EXTERNAL=$(echo "$MONITORS_JSON" | jq -r '.[] | select(.name | test("HDMI|DP")) | .name' | head -n1)
+
+if [[ -z "$EXTERNAL" ]]; then
+  notify-send "No external monitors found"
+  exit 1
+fi
+
+# Preferred modes
+INTERNAL_MODE=$(echo "$MONITORS_JSON" | jq -r --arg m "$INTERNAL" '.[] | select(.name==$m) | .modes[0].name')
+EXTERNAL_MODE=$(echo "$MONITORS_JSON" | jq -r --arg m "$EXTERNAL" '.[] | select(.name==$m) | .modes[0].name')
+
+# Last state
+if [[ -f "$STATE_FILE" ]]; then
+  LAST_MODE=$(cat "$STATE_FILE")
+else
+  LAST_MODE="disable"
+fi
+
+# Next mode
+case "$LAST_MODE" in
+  disable) NEXT_MODE="extended" ;;
+  extended) NEXT_MODE="mirror" ;;
+  mirror) NEXT_MODE="disable" ;;
+  *) NEXT_MODE="disable" ;;
+esac
+
+case "$NEXT_MODE" in
+  extended)
+    if [[ -n "$INTERNAL" && -n "$EXTERNAL" ]]; then
+      hyprctl keyword monitor "$INTERNAL,$INTERNAL_MODE,0x0,1"
+      hyprctl keyword monitor "$EXTERNAL,$EXTERNAL_MODE,auto,1"
+    fi
+    ;;
+  mirror)
+    if [[ -n "$INTERNAL" && -n "$EXTERNAL" ]]; then
+      hyprctl keyword monitor "$INTERNAL,$INTERNAL_MODE,0x0,1"
+      hyprctl keyword monitor "$EXTERNAL,$EXTERNAL_MODE,0x0,1,mirror,$INTERNAL"
+    fi
+    ;;
+  disable)
+    if [[ -n "$INTERNAL" ]]; then
+      hyprctl keyword monitor "$INTERNAL,$INTERNAL_MODE,0x0,1"
+    fi
+    if [[ -n "$EXTERNAL" ]]; then
+      hyprctl keyword monitor "$EXTERNAL,disable"
+    fi
+    ;;
+esac
+
+notify-send "External monitor: $NEXT_MODE"
+echo "$NEXT_MODE" > "$STATE_FILE"
+
