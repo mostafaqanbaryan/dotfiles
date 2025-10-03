@@ -1,10 +1,29 @@
 {
-    "modules-left": ["hyprland/workspaces", "hyprland/window"],
-    "modules-center": ["clock", "idle_inhibitor", "custom/shamsi"],
-    "modules-right": ["hyprland/submap", "custom/scratchpad-indicator", "custom/media", "hyprland/language", "network", "custom/notification", "custom/updates", "group/group-audio", "privacy",  "group/group-icons", "memory", "load", "temperature"],
+    "layer": "top",
+    "position": "left",
+    "orientation": "vertical",
+
+    "modules-left": ["hyprland/workspaces", "custom/media", "idle_inhibitor"],
+    "modules-center": [],
+    "modules-right": [
+        "hyprland/submap",
+        "tray",
+        "hyprland/language",
+        "custom/updates",
+        "privacy",
+        "memory",
+        "load",
+        "temperature",
+        "battery",
+        "group/group-audio",
+        "custom/notification",
+        "group/group-icons",
+        "clock",
+        "custom/shamsi",
+    ],
 
     "hyprland/workspaces": {
-        "format": "{icon}",
+        "format": "<big>{icon}</big>",
         "format-icons": {
             "1": "",
             "2": "",
@@ -15,103 +34,72 @@
             "default": ""
         }
     },
-    "hyprland/window": {
-        "format": "<small>{}</small>",
-        "separate-outputs": true
-    },
-    "mpd": {
-        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
-        "format-disconnected": "Disconnected ",
-        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
-        "unknown-tag": "N/A",
-        "interval": 2,
-        "consume-icons": {
-            "on": " "
-        },
-        "random-icons": {
-            "off": "<span color=\"#f53c3c\"></span> ",
-            "on": " "
-        },
-        "repeat-icons": {
-            "on": " "
-        },
-        "single-icons": {
-            "on": "1 "
-        },
-        "state-icons": {
-            "paused": "",
-            "playing": ""
-        },
-        "tooltip-format": "MPD (connected)",
-        "tooltip-format-disconnected": "MPD (disconnected)"
-    },
+
     "hyprland/submap": {
         "format": "<span style=\"italic\">{}</span>"
     },
-    "network": {
-        "tooltip-format": "{essid} ({signalStrength}%) ",
-        "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "{ifname} ",
-        "format-disconnected": "⚠", 
-        "max-length": 50,
-        "tooltip-format": "{essid}\r{ipaddr}",
-        "on-click": "sleep 0.1 && networkmanager_dmenu"
-    },
+
     "idle_inhibitor": {
-        "format": "{icon}",
+        "format": "<big>{icon}</big>",
         "format-icons": {
             "activated": "",
             "deactivated": ""
         },
-		"start-activated": true
+        "start-activated": true
     },
+
     "tray": {
-        "icon-size": 15,
+        "icon-size": 20,
         "spacing": 10
     },
+
     "clock": {
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%Y-%m-%d}",
-        "format": "{:%H:%M:%OS}",
+        "format-alt": "<big>{:%Y</big>\n%m-%d}",
+        "format": "{:%H:%M<big>\n%OS}</big>",
+        "justify": "center",
         "calendar": {
             "mode": "month",
             "on-scroll": 1,
             "format": {
-                "months":     "<span color='#ffead3'><b>{}</b></span>",
-                "days":       "<span color='#ecc6d9'><b>{}</b></span>",
-                "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
-                "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
-                "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+                "months": "<span color='#ffead3'><b>{}</b></span>",
+                "days": "<span color='#ecc6d9'><b>{}</b></span>",
+                "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+                "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+                "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
             }
         },
-        "actions":  {
+        "actions": {
             "on-click-right": "mode",
             "on-scroll-up": "shift_up",
             "on-scroll-down": "shift_down"
         },
-        "interval": 1,
+        "interval": 1
     },
+
     "group/group-audio": {
-        "orientation": "inherit",
+        "orientation": "vertical",
         "drawer": {
             "transition-duration": 500,
             "children-class": "",
-            "transition-left-to-right": false,
+            "transition-left-to-right": false
         },
         "modules": [
             "pulseaudio",
-            "pulseaudio/slider",
+            "pulseaudio/slider"
         ]
     },
+
     "pulseaudio/slider": {
-        "orientation": "horizontal"
+        "orientation": "vertical"
     },
+
     "pulseaudio": {
-        "format": "{volume}% {icon} ",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format": "<small>{volume}</small> {icon}",
+        "format-bluetooth": "<small>{volume}</small> {icon}",
         "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": "0% {icon} ",
-        "format-source": "{volume}% ",
+        "format-muted": "<small>0</small> {icon}",
+        "format-source": "<small>{volume}</small> ",
         "format-source-muted": "",
         "format-icons": {
             "headphone": "",
@@ -124,23 +112,16 @@
         },
         "on-click": "sleep 0.1 && pavucontrol"
     },
-	"custom/power": {
-        "format": " ",
+
+    "custom/power": {
+        "format": "",
         "min-length": 3,
         "on-click": "sleep 0.1 && $HOME/.config/rofi/scripts/powermenu_t6"
-	},
-    "custom/scratchpad-indicator": {
-        "format-text": "{}",
-        "return-type": "json",
-        "interval": 3,
-        "exec": "~/.local/bin/scratchpad-indicator 2> /dev/null",
-        "exec-if": "exit 0",
-        "on-click": "sleep 0.1 && swaymsg 'scratchpad show'",
-        "on-click-right": "sleep 0.1 && swaymsg 'move scratchpad'"
     },
+
     "custom/notification": {
         "tooltip": false,
-        "format": "{} {icon}",
+        "format": "{icon}",
         "format-icons": {
             "notification": " <span foreground='red'><sup></sup></span>",
             "none": "",
@@ -158,20 +139,22 @@
         "on-click-right": "sleep 0.1 && swaync-client -d -sw",
         "escape": true
     },
+
     "custom/media": {
         "format": "{}",
         "return-type": "json",
         "max-length": 40,
-		"on-click": "sleep 0.1 && playerctl play-pause",
-		"on-scroll-up": "playerctl position 5+",
-		"on-scroll-down": "playerctl position 5-",
+        "rotate": 90,
+        "on-click": "sleep 0.1 && playerctl play-pause",
+        "on-scroll-up": "playerctl position 5+",
+        "on-scroll-down": "playerctl position 5-",
         "format-icons": {
             "spotify": "",
             "default": "🎜"
         },
-        // apt install gir1.2-playerctl-2.0
         "exec": "$HOME/.config/waybar/resources/./player.sh 2> /dev/null"
     },
+
     "custom/screenshot": {
         "format": "",
         "tooltip": false,
@@ -179,25 +162,29 @@
         "on-click": "sleep 0.1 && grim -g \"$(slurp)\" - | swappy -f -",
         "on-click-middle": "sleep 0.1 && grim -g \"$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?) | .rect | \"\\(.x),\\(.y) \\(.width)x\\(.height)\"' | slurp)\" - | swappy -f -"
     },
+
     "custom/colorpicker": {
         "format": "",
         "tooltip": false,
         "min-length": 4,
         "on-click": "hyprpicker -a"
     },
+
     "custom/shamsi": {
         "format": "{}",
         "tooltip": true,
+        "justify": "center",
         "return-type": "json",
-        "min-length": 14,
         "exec": "$HOME/.config/waybar/resources/shamsi.sh",
         "interval": 60
     },
+
     "custom/updates": {
-        "format": "{} 󰚰",
+        "format": "<small>{}</small> 󰚰",
         "exec": "checkupdates | wc -l",
         "interval": 600
     },
+
     "privacy": {
         "icon-spacing": 14,
         "icon-size": 18,
@@ -215,6 +202,7 @@
             }
         ]
     },
+
     "power-profiles-daemon": {
         "format": "{icon}",
         "min-length": 4,
@@ -227,41 +215,46 @@
             "power-saver": ""
         }
     },
+
     "memory": {
         "interval": 30,
-        "format": "{}% /",
+        "format": "<small>{}</small> 󰍛",
         "max-length": 6
     },
+
     "load": {
         "interval": 5,
-        "format": "{load1}",
-        "max-length": 4
+        "format": "<small>{load1}</small>",
+        "max-length": 1
     },
+
     "hyprland/language": {
-        "format": "{long}",
         "on-click": "hyprctl switchxkblayout all next",
+        "format-en": "ENG",
+        "format-fa": "فارسی",
     },
+
     "group/group-icons": {
-        "orientation": "inherit",
+        "orientation": "vertical",
         "drawer": {
             "transition-duration": 500,
             "children-class": "not-power",
-            "transition-left-to-right": false,
+            "transition-left-to-right": false
         },
         "modules": [
-            "custom/power", // First element is the "group leader" and won't ever be hidden
-            "tray",
+            "custom/power",
             "custom/colorpicker",
             "custom/screenshot",
             "power-profiles-daemon",
-            "battery"
         ]
     },
+
     "temperature": {
         "interval": 2,
+        "justify": "center",
         "critical-threshold": 88,
-        "format-critical": "!!! {temperatureC}°C !!! ",
-        "format": "{temperatureC}°C "
-    },
-    "layer": "top"
+        "format-critical": "!!!\n{temperatureC} \n!!!",
+        "format": "<small>{temperatureC}</small> "
+    }
 }
+
