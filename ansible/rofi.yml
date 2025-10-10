@@ -1,11 +1,12 @@
 - name: "Install rofi"
   become: true
-  community.general.pacman: 
-    executable: "yay"
+  kewlfft.aur.aur:
+    use: "yay"
     name: ["rofi-lbonn-wayland-git", "rofi-emoji-git"]
     state: "present"
   tags:
     - install
+    - rofi
 
 - name: "Clone rofi themes"
   ansible.builtin.git:
@@ -17,6 +18,7 @@
     version: master
   tags:
     - install
+    - rofi
 
 - name: "Set the permission of rofi themes' executable"
   ansible.builtin.file:
@@ -24,6 +26,7 @@
     mode: "0544"
   tags:
     - install
+    - rofi
 
 - name: "Install rofi themes"
   ansible.builtin.command:
@@ -31,6 +34,7 @@
     cmd: "./setup.sh"
   tags:
     - install
+    - rofi
 
 - name: "Remove rofi themes clone"
   ansible.builtin.file:
@@ -38,4 +42,5 @@
     state: "absent"
   tags:
     - install
+    - rofi
 

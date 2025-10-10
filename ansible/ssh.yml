@@ -1,0 +1,7 @@
+- name: "Include ssh config"
+  ignore_errors: true
+  ansible.builtin.shell: "echo 'Include $PWD/ssh_config' >> ~/.ssh/config"
+  tags:
+    - install
+    - config
+    - ssh

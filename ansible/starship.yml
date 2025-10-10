@@ -1,0 +1,29 @@
+- name: "Install starship"
+  become: true
+  community.general.pacman: 
+    name: "starship"
+    state: "present"
+  tags:
+    - install
+    - starship
+
+- name: "Remove starship's old config"
+  ignore_errors: true
+  ansible.builtin.file:
+    path: "~/.config/starship.toml"
+    state: "absent"
+  tags:
+    - install
+    - config
+    - starship
+
+- name: "Link starship's config"
+  ansible.builtin.file:
+    src: "$PWD/starship.toml"
+    dest: "~/.config/starship.toml"
+    state: "link"
+    force: true
+  tags:
+    - install
+    - config
+    - starship

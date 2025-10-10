@@ -1,10 +1,32 @@
 - name: "Install hyprland"
   ignore_errors: true
-  community.general.pacman: 
-    executable: "yay"
+  kewlfft.aur.aur:
+    use: "yay"
     name: ["hyprland", "hyprpicker-git", "hyprsunset", "uwsm"]
     state: "present"
   tags:
+    - install
+    - hyprland
+
+- name: "Remove hyprland's old config"
+  ignore_errors: true
+  ansible.builtin.file:
+    path: "~/.config/hypr"
+    state: "absent"
+  tags:
+    - install
+    - config
+    - hyprland
+
+- name: "Link hyprland's config"
+  ansible.builtin.file:
+    src: "$PWD/hypr"
+    dest: "~/.config/hypr"
+    state: "link"
+    force: true
+  tags:
+    - install
+    - config
     - hyprland
 
 - name: "Install screencast"
@@ -13,14 +35,25 @@
     name: ["xdg-desktop-portal-hyprland", "xdg-desktop-portal-wlr", "xdg-desktop-portal-gtk"]
     state: "present"
   tags:
+    - install
     - hyprland
 
 - name: "Layout based on workspace"
   become: true
-  community.general.pacman: 
-    executable: "yay"
+  kewlfft.aur.aur:
+    use: "yay"
     name: "hyprland-per-window-layout"
     state: "present"
   tags:
+    - install
+    - hyprland
+
+- name: "Install hypridle"
+  become: true
+  community.general.pacman: 
+    name: "hypridle"
+    state: "present"
+  tags:
+    - install
     - hyprland
 

@@ -1,0 +1,30 @@
+- name: "Install zellij"
+  become: true
+  community.general.pacman: 
+    name: ["zellij"]
+    state: "present"
+  tags:
+    - install
+    - zellij
+
+- name: "Remove old config"
+  ignore_errors: true
+  ansible.builtin.file:
+    path: "~/.config/zellij"
+    state: "absent"
+  tags:
+    - install
+    - config
+    - zellij
+
+- name: "Link config"
+  ansible.builtin.file:
+    src: "$PWD/zellij"
+    dest: "~/.config/zellij"
+    state: "link"
+    force: true
+  tags:
+    - install
+    - config
+    - zellij
+

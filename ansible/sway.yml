@@ -1,10 +1,32 @@
 - name: "Install sway"
   ignore_errors: true
-  community.general.pacman: 
-    executable: "yay"
+  kewlfft.aur.aur:
+    use: "yay"
     name: ["sway"]
     state: "present"
   tags:
+    - install
+    - sway
+
+- name: "Remove sway's old config"
+  ignore_errors: true
+  ansible.builtin.file:
+    path: "~/.config/sway"
+    state: "absent"
+  tags:
+    - install
+    - config
+    - sway
+
+- name: "Link sway's config"
+  ansible.builtin.file:
+    src: "$PWD/sway"
+    dest: "~/.config/sway"
+    state: "link"
+    force: true
+  tags:
+    - install
+    - config
     - sway
 
 - name: "Install screencast"
@@ -13,5 +35,15 @@
     name: ["xdg-desktop-portal-wlr", "xdg-desktop-portal-gtk"]
     state: "present"
   tags:
+    - install
     - sway
 
+- name: "Install swaylock-effects"
+  ignore_errors: true
+  kewlfft.aur.aur:
+    use: "yay"
+    name: "swaylock-effects-git"
+    state: "present"
+  tags:
+    - install
+    - sway

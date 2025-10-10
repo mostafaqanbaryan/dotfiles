@@ -1,0 +1,29 @@
+- name: "Install ranger"
+  community.general.pacman: 
+    name: 
+      - "ranger"
+    state: "present"
+  tags:
+    - install
+    - ranger
+
+- name: "Remove ranger's old config"
+  ignore_errors: true
+  ansible.builtin.file:
+    path: "~/.config/ranger"
+    state: "absent"
+  tags:
+    - install
+    - config
+    - ranger
+
+- name: "Link ranger's config"
+  ansible.builtin.file:
+    src: "$PWD/ranger"
+    dest: "~/.config/ranger"
+    state: "link"
+    force: true
+  tags:
+    - install
+    - config
+    - ranger

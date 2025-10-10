@@ -1,6 +1,5 @@
 function fish_greeting
     starship init fish | source
-	zoxide init fish | source
 end
 
 # Editor
@@ -17,6 +16,8 @@ abbr dcu "docker compose -f docker-compose.yml up -d"
 abbr dcd "docker compose -f docker-compose.yml down"
 abbr dcpu "docker compose -f docker-compose.prod.yml up -d"
 abbr dcpd "docker compose -f docker-compose.prod.yml down"
+abbr dl "docker logs -f -n 100 "
+abbr dps "docker ps"
 
 # Git
 abbr gl "git pull"
@@ -54,8 +55,6 @@ bind -M insert \ca forward-word
 alias download 'aria2c -c -x 10 -s 10'
 alias kodi 'kodi --standalone --windowing=x11'
 alias g 'lazygit'
-alias cp 'xcp'
-alias du 'dust'
 alias ls 'exa --icons=always --hyperlink --git-repos --git'
 alias search 'yazi (realpath (fzf))'
 

@@ -1,23 +1,46 @@
 - name: "Install calculator"
-  community.general.pacman: 
-    executable: "yay"
+  kewlfft.aur.aur:
+    use: "yay"
     name: "qalculate-gtk"
     state: "present"
   tags:
     - install
+    - utilities
 
 - name: "Install brave"
-  community.general.pacman: 
-    executable: "yay"
+  kewlfft.aur.aur:
+    use: "yay"
     name: "brave"
     state: "present"
   tags:
     - install
+    - utilities
 
 - name: "Install musicplayer"
-  community.general.pacman: 
-    executable: "yay"
+  kewlfft.aur.aur:
+    use: "yay"
     name: "tauon-music-box"
     state: "present"
   tags:
     - install
+    - utilities
+
+- name: "Install eza in place of ls"
+  become: true
+  kewlfft.aur.aur:
+    use: "yay"
+    name: "eza"
+    state: "present"
+  tags:
+    - install
+    - utilities
+
+- name: "Install difftastic in place of diff"
+  ignore_errors: true
+  kewlfft.aur.aur:
+    use: "yay"
+    name: "difftastic"
+    state: "present"
+  tags:
+    - install
+    - utilities

@@ -7,6 +7,7 @@
   tags:
     - install
     - config
+    - scripts
 
 - name: "Create wallpaper directory"
   ansible.builtin.file:
@@ -17,6 +18,7 @@
   tags:
     - install
     - config
+    - scripts
 
 - name: "Enable lockscreen cron"
   ansible.builtin.cron:
@@ -26,6 +28,7 @@
   tags:
     - install
     - config
+    - scripts
 
 - name: "Enable mirrorlist cron"
   become: true
@@ -37,3 +40,4 @@
   tags:
     - install
     - config
+    - scripts

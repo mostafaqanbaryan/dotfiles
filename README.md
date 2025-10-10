@@ -15,11 +15,11 @@ My current setup and tools I use everyday:
 ## Softwares
 - [FZF](https://github.com/junegunn/fzf) fuzzy in terminal
 - [Grim](https://github.com/emersion/grim), [Slurp](https://github.com/emersion/slurp) and [Swappy](https://github.com/jtheoof/swappy) for taking screenshots in Sway
-- [Termdown](https://github.com/trehn/termdown) beautiful countdown timer in terminal
 - [NotificationCenter](https://github.com/ErikReider/SwayNotificationCenter) Sway notificaion center
 
 ## Setup
-- Clone this repository to your SSD (For better performance of `VIM`)
-- Run `ansible-playbook -K ansible/playbook.yml`
+- Clone this repository to your SSD (For better performance of `(Neo)VIM`)
+- Run `ansible-galaxy collection install -r requirements.yml`
+- Run `ansible-playbook -K playbook.yml --tags install,config`
 - You can add your `fish` config inside `~/env.fish`
 - Enjoy!

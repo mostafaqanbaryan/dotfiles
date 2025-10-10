@@ -1,0 +1,9 @@
+- name: "Install fzf"
+  become: true
+  community.general.pacman: 
+    name: ["fzf", "bat", "ripgrep"]
+    state: "present"
+  tags:
+    - install
+    - fzf
+

@@ -1,0 +1,20 @@
+- name: "Install networkmanager"
+  ignore_errors: true
+  kewlfft.aur.aur:
+    use: "yay"
+    name: ["networkmanager"]
+    state: "present"
+  tags:
+    - install
+    - networkmanager
+
+- name: "Start networkmanager service"
+  ansible.builtin.service:
+    become: true
+    name: "NetworkManager"
+    state: "started"
+    enabled: true
+  tags:
+    - install
+    - services
+    - networkmanager

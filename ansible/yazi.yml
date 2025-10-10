@@ -1,9 +1,9 @@
-- name: "Install golang"
-  become: true
+- name: "Install yazi"
   kewlfft.aur.aur:
     use: "yay"
-    name: "go"
+    name: 
+      - "yazi"
     state: "present"
   tags:
     - install
-    - golang
+    - yazi

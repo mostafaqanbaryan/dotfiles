@@ -1,0 +1,38 @@
+- name: "Install fish"
+  become: true
+  community.general.pacman: 
+    name: ["fish"]
+    state: "present"
+  tags:
+    - install
+    - fish
+
+- name: "Remove fish's old config"
+  ignore_errors: true
+  ansible.builtin.file:
+    path: "~/.config/fish"
+    state: "absent"
+  tags:
+    - install
+    - config
+    - fish
+
+- name: "Link fish's config"
+  ansible.builtin.file:
+    src: "$PWD/fish"
+    dest: "~/.config/fish"
+    state: "link"
+    force: true
+  tags:
+    - install
+    - config
+    - fish
+
+- name: "Create fish local config"
+  ansible.builtin.file:
+    path: "~/env.fish"
+    state: "touch"
+  tags:
+    - install
+    - config
+    - fish

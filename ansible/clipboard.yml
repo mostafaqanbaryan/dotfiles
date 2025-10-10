@@ -1,0 +1,17 @@
+- name: "Install wl-clipboard"
+  become: true
+  community.general.pacman: 
+    name: "wl-clipboard"
+    state: "present"
+  tags:
+    - install
+    - clipboard
+
+- name: "Install cliphist"
+  become: true
+  community.general.pacman: 
+    name: "cliphist"
+    state: "present"
+  tags:
+    - install
+    - clipboard
