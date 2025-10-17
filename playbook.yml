@@ -64,3 +64,4 @@
 
     - import_tasks: ansible/fonts.yml
     - import_tasks: ansible/bitwarden.yml
+    - import_tasks: ansible/vlc.yml
