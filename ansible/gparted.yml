@@ -1,0 +1,10 @@
+- name: "Install gparted"
+  ignore_errors: true
+  kewlfft.aur.aur:
+    use: "yay"
+    name: ["gparted", "xorg-xhost"]
+    state: "present"
+  tags:
+    - install
+    - gparted
+
