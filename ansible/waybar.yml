@@ -43,6 +43,15 @@
     - install
     - waybar
 
+- name: "Install icons"
+  become: true
+  community.general.pacman: 
+    name: "kiconthemes"
+    state: "present"
+  tags:
+    - install
+    - waybar
+
 - name: "Remove waybar's old config"
   ignore_errors: true
   ansible.builtin.file:
