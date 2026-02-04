@@ -16,6 +16,7 @@
         "temperature",
         "battery",
         "group/group-audio",
+        "power-profiles-daemon",
         "custom/notification",
         "group/group-icons",
         "clock",
@@ -45,7 +46,7 @@
             "activated": "",
             "deactivated": ""
         },
-        "start-activated": true
+        "start-activated": false
     },
 
     "tray": {
@@ -245,7 +246,6 @@
             "custom/power",
             "custom/colorpicker",
             "custom/screenshot",
-            "power-profiles-daemon",
         ]
     },
 
