@@ -108,6 +108,30 @@ return {
 			},
 		})
 
+		vim.lsp.config("vtsls", {
+			settings = {
+				typescript = {
+					preferences = {
+						includeCompletionsForModuleExports = true,
+						includeCompletionsForImportStatements = true,
+						importModuleSpecifier = "relative",
+					},
+				},
+			},
+		})
+
+		vim.lsp.config("ts_ls", {
+			settings = {
+				typescript = {
+					preferences = {
+						includeCompletionsForModuleExports = true,
+						includeCompletionsForImportStatements = true,
+						importModuleSpecifierPreference = "relative",
+					},
+				},
+			},
+		})
+
 		-- LSP
 		vim.diagnostic.config({
 			severity_sort = true,
