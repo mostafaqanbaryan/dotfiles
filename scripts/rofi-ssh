@@ -11,6 +11,6 @@ case "$status" in
     11)
         ssh -G "$selected" | sed -nE "s/^user (.)/\1/p" | wl-copy -n
     ;;
-    0) wezterm start ssh "$selected";;
+    0) kitty --execute sh -c "TERM=xterm ssh '$selected'";;
     *) exit "$status";;
 esac
