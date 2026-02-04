@@ -30,7 +30,7 @@
 
 - name: "Create fish local config"
   ansible.builtin.file:
-    path: "~/env.fish"
+    path: "~/.env.fish"
     state: "touch"
   tags:
     - install
