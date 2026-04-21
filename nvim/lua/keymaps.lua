@@ -29,10 +29,6 @@ vim.keymap.set("n", "ga", "<C-^>")
 vim.keymap.set("n", "<C-<>", '<C-W>> " Increase split size')
 vim.keymap.set("n", "<C->>", '<C-W>< " Decrease split size')
 
--- remap movement to move by column layout
-vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
-vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true })
-
 -- Title as filename
 vim.opt.title = true
 
