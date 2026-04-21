@@ -45,8 +45,7 @@ return {
 			ensure_installed = {
 				"intelephense",
 				"laravel_ls",
-				-- "vtsls",
-				"tsgo",
+				"vtsls",
 				"lua_ls",
 				"eslint",
 				"gopls",
