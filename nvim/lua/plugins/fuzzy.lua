@@ -1,12 +1,9 @@
----@alias node unknown
-local parsers = require("nvim-treesitter.parsers")
-
 local M = {}
 
 ---Wrapper to get treesitter root parser
 ---@return node|nil
 local function get_root()
-	local parser = parsers.get_parser()
+	local parser = vim.treesitter.get_parser()
 	if parser == nil then
 		return nil
 	end

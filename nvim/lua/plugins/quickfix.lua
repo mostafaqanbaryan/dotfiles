@@ -2,9 +2,7 @@ return {
 	"kevinhwang91/nvim-bqf",
 	branch = "main",
 	event = "VeryLazy",
-	dependencies = {
-		"nvim-treesitter/nvim-treesitter",
-	},
+	dependencies = {},
 	config = function()
 		require("bqf").setup({
 			preview = {

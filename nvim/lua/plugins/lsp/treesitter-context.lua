@@ -1,0 +1,36 @@
+return {
+	"nvim-treesitter/nvim-treesitter-context",
+	event = "VeryLazy",
+	branch = "master",
+	config = function()
+		require("treesitter-context").setup({
+			enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+			max_lines = 3, -- How many lines the window should span. Values <= 0 mean no limit.
+			trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+			patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+				default = {
+					"class",
+					"function",
+					"method",
+					"for",
+					"foreach",
+					"if",
+				},
+			},
+			zindex = 20, -- The Z-index of the context window
+			mode = "cursor", -- Line used to calculate context. Choices: 'cursor', 'topline'
+		})
+
+		-- Jumping to context (upwards)
+		vim.keymap.set("n", "[c", function()
+			require("treesitter-context").go_to_context(vim.v.count1)
+		end, { silent = true })
+
+		-- vim.api.nvim_create_autocmd("FileType", {
+		-- 	pattern = "markdown",
+		-- 	callback = function()
+		-- 		require("treesitter-context").disable()
+		-- 	end,
+		-- })
+	end,
+}
