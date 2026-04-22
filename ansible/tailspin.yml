@@ -1,0 +1,10 @@
+- name: "Install tailspin"
+  become: true
+  community.general.pacman:
+    name: ["tailspin"]
+    state: "present"
+  tags:
+    - install
+    - tui
+    - tailspin
+
