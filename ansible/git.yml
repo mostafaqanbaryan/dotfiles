@@ -39,3 +39,13 @@
   tags:
     - install
     - git
+
+- name: "Install diffnav"
+  ignore_errors: true
+  kewlfft.aur.aur:
+    use: "yay"
+    name: "diffnav"
+    state: "present"
+  tags:
+    - install
+    - git
