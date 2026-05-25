@@ -22,6 +22,7 @@ return {
 			-- languages = {}, -- override or add new parser sources
 			-- parser_dir = vim.fn.stdpath("data") .. "/site/parser",
 			-- query_dir = vim.fn.stdpath("data") .. "/site/queries",
+			query_dir = vim.fn.stdpath("config") .. "/queries",
 		})
 	end,
 }
