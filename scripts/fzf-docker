@@ -1,2 +1,18 @@
 #!/bin/sh
-docker exec -it $(docker ps --format '{{.Names}}' | fzf) $(printf "bash\nsh\nnginx -s reload\nnpm i\nphp artisan migrate" | fzf --bind enter:accept-or-print-query)
+function config_dir_path() {
+    docker inspect "$1" | jq '.[0].Config.Labels."com.docker.compose.project.working_dir"' | tr -d '"'
+}
+
+container=$(docker ps --format '{{.Names}}' | fzf --style full \
+    --preview "docker logs -n 30 {}" \
+    --header 'Press CTRL-L to show log | Press CTRL-R to restart | Press CTRL-E to go to config directory | Enter to get shell' \
+    --bind "ctrl-l:execute(tmux split-window -h 'docker logs -f {}')+abort" \
+    --bind "ctrl-e:execute(tmux split-window -h 'cd \$(docker inspect {} | jq \'.[0].Config.Labels.\"com.docker.compose.project.working_dir\"\' | tr -d \'\"\') && \$SHELL')+abort" \
+    --bind "ctrl-r:execute(tmux split-window -h 'cd \$(docker inspect {} | jq \'.[0].Config.Labels.\"com.docker.compose.project.working_dir\"\' | tr -d \'\"\') && pwd && docker compose -f docker-compose.dev.yml up -d --force-recreate --no-deps \$(docker inspect {} | jq \'.[0].Config.Labels.\"com.docker.compose.service\"\' | tr -d \'\"\') && sleep 0.5')+abort" \
+)
+
+# If Ctrl-L was used, fzf aborts without selecting, so container will be empty.
+[ -z "$container" ] && exit
+
+shell=$(docker exec -it $container sh -c "which bash || which ash || which sh")
+tmux split-window -h "docker exec -it $container $shell"

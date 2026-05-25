@@ -3,12 +3,10 @@ gui:
   nerdFontsVersion: "3"
   skipHookPrefix: "\U0001F525"
   parseEmoji: true
-
 git:
-  paging:
-    colorArg: always
-    pager: delta --dark --paging=never
-
+  pagers:
+    - colorArg: always
+      pager: delta --dark --paging=never
 customCommands:
   - key: "c"
     context: "files"
@@ -21,26 +19,26 @@ customCommands:
           - name: "✨"
             value: "✨"
             description: "Feature"
-          - name: "🐛"
-            value: "🐛"
+          - name: "\U0001F41B"
+            value: "\U0001F41B"
             description: "BugFix"
-          - name: "🎨"
-            value: "🎨"
+          - name: "\U0001F3A8"
+            value: "\U0001F3A8"
             description: "Changed"
-          - name: "🔒️"
-            value: "🔒️"
+          - name: "\U0001F512️"
+            value: "\U0001F512️"
             description: "Security"
           - name: "⬆️"
             value: "⬆️"
             description: "Bumped"
-          - name: "🚧"
-            value: "🚧"
+          - name: "\U0001F6A7"
+            value: "\U0001F6A7"
             description: "WIP"
-          - name: "🔥"
-            value: "🔥"
+          - name: "\U0001F525"
+            value: "\U0001F525"
             description: "Removed"
-          - name: "🎉"
-            value: "🎉"
+          - name: "\U0001F389"
+            value: "\U0001F389"
             description: "New project"
       - type: "input"
         title: "Task Id"
@@ -74,10 +72,10 @@ customCommands:
           - name: "✨"
             value: "feature"
             description: "Feature"
-          - name: "🐛"
+          - name: "\U0001F41B"
             value: "bugFix"
             description: "BugFix"
-          - name: "🚑️"
+          - name: "\U0001F691️"
             value: "hotFix"
             description: "HotFix"
       - type: "input"
