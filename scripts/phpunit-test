@@ -25,6 +25,8 @@ for i in $argsInput; do
     esac
 done
 
+outputPath="/tmp/pest-results.json"
+
 # replace with local
 args=("${argsInput/$subPath\//}")
 args=("${args//(*}")
@@ -37,7 +39,6 @@ dockerPath=$(docker inspect --format {{.Config.WorkingDir}} $container)
 
 # Run the tests
 docker exec -it $container $execPath -c "SYMFONY_DEPRECATIONS_HELPER=weak $phpunitPath -d memory_limit=-1 -d xdebug.idekey=deliver-be ${args} --log-junit=${localPhpUnitResultPath}"
-# docker exec -it $container $phpunitPath -d memory_limit=-1 ${args[@]}
 
 # copy results
 docker cp -a "$container:$localPhpUnitResultPath" "$outputPath"|- &> /dev/null

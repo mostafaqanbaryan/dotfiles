@@ -6,9 +6,12 @@ return {
 		"nvim-lua/plenary.nvim",
 		"fredrikaverpil/neotest-golang",
 		"olimorris/neotest-phpunit",
+		"V13Axel/neotest-pest",
 	},
 	config = function()
-		require("neotest").setup({
+		local n = require("neotest")
+		n.setup({
+			-- log_level = vim.log.levels.INFO,
 			config = {
 				status = {
 					enabled = true,
@@ -19,15 +22,36 @@ return {
 
 			adapters = {
 				require("neotest-golang")(),
-				require("neotest-phpunit")({
-					phpunit_cmd = function()
+				-- require("neotest-phpunit")({
+				-- 	phpunit_cmd = function()
+				-- 		return vim.tbl_flatten({
+				-- 			"phpunit-test",
+				-- 			vim.g.test_container,
+				-- 		})
+				-- 	end,
+				-- }),
+				require("neotest-pest")({
+					results_path = function()
+						return "/tmp/.pest-result.json"
+					end,
+					pest_cmd = function()
 						return vim.tbl_flatten({
-							"php-test",
+							"php-pest-test",
 							vim.g.test_container,
 						})
 					end,
 				}),
 			},
+		})
+
+		-- Watch doesn't work in PHP, so handle it manually
+		vim.api.nvim_create_autocmd("BufWritePost", {
+			pattern = "*Test.php",
+			callback = function()
+				if vim.g.test_container ~= nil then
+					require("neotest").run.run(vim.fn.expand("%"))
+				end
+			end,
 		})
 
 		vim.api.nvim_create_user_command("NeotestContainer", function()
@@ -36,34 +60,38 @@ return {
 		end, {})
 
 		vim.keymap.set("n", "<F8>", function()
-			require("neotest").watch.toggle(vim.fn.expand("%"))
-			require("neotest").summary.toggle()
+			n.watch.toggle(vim.fn.expand("%"))
+			n.summary.toggle()
 		end)
 
 		vim.keymap.set("n", "<F9>", function()
-			require("neotest").run.run()
-			require("neotest").summary.open()
+			n.run.run()
+			n.summary.open()
 		end)
 
 		vim.keymap.set("n", "<F10>", function()
-			require("neotest").run.run(vim.fn.expand("%"))
-			require("neotest").summary.open()
+			n.run.run(vim.fn.expand("%"))
+			n.summary.open()
 		end)
 
 		vim.keymap.set("n", "[t", function()
-			require("neotest").jump.prev()
+			n.jump.prev()
 		end)
 
 		vim.keymap.set("n", "]t", function()
-			require("neotest").jump.next()
+			n.jump.next()
 		end)
 
 		vim.keymap.set("n", "[T", function()
-			require("neotest").jump.prev({ status = "failed" })
+			vim.api.close_all_floating_windows()
+			n.jump.prev({ status = "failed" })
+			n.output.open({ enter = false })
 		end)
 
 		vim.keymap.set("n", "]T", function()
-			require("neotest").jump.next({ status = "failed" })
+			vim.api.close_all_floating_windows()
+			n.jump.next({ status = "failed" })
+			n.output.open({ enter = false })
 		end)
 	end,
 }
