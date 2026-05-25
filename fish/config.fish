@@ -25,12 +25,13 @@ abbr gp "git push -u origin HEAD"
 abbr glo "git log"
 abbr gst "git status"
 abbr gco "git checkout"
-abbr gd "git diff | diffnav"
+abbr gd "git diff"
 abbr gre "git rebase"
 abbr gcm 'git commit -m "'
 abbr gca "git commit --amend"
 abbr parent "git log --first-parent"
 abbr dev "git checkout develop"
+abbr hd "hunk diff main --mode split --hunk-headers --line-numbers"
 
 
 # Ctrl+Backspace

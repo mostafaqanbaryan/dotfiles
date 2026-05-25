@@ -40,11 +40,11 @@
     - install
     - git
 
-- name: "Install diffnav"
+- name: "Install hunk diff"
   ignore_errors: true
   kewlfft.aur.aur:
     use: "yay"
-    name: "diffnav"
+    name: "hunk"
     state: "present"
   tags:
     - install
