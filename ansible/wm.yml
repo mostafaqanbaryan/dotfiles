@@ -20,7 +20,7 @@
   ignore_errors: true
   kewlfft.aur.aur:
     use: "yay"
-    name: ["swww", "waypaper-git", "python-imageio", "python-screeninfo"]
+    name: ["awww", "waypaper-git", "python-imageio", "python-screeninfo"]
     state: "present"
   tags:
     - install
