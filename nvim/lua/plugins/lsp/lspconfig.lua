@@ -218,17 +218,7 @@ return {
 				)
 
 				vim.keymap.set("n", "<leader>;", function()
-					-- If we find a floating window, close it.
-					local found_float = false
-					for _, win in ipairs(vim.api.nvim_list_wins()) do
-						local l = vim.api.nvim_win_get_config(win)
-						if l.relative ~= "" and l.focusable then
-							vim.api.nvim_win_close(win, true)
-							found_float = true
-						end
-					end
-
-					if not found_float then
+					if not vim.api.close_all_floating_windows() then
 						vim.diagnostic.open_float()
 					end
 				end, { silent = true })
