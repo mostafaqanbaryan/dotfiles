@@ -1,0 +1,30 @@
+- name: "Install yazi"
+  kewlfft.aur.aur:
+    use: "yay"
+    name: 
+      - "yazi"
+    state: "present"
+  tags:
+    - install
+    - yazi
+
+- name: "Remove old config"
+  ignore_errors: true
+  ansible.builtin.file:
+    path: "~/.config/yazi"
+    state: "absent"
+  tags:
+    - install
+    - config
+    - tmux
+
+- name: "Link config"
+  ansible.builtin.file:
+    src: "$PWD/yazi"
+    dest: "~/.config/yazi"
+    state: "link"
+    force: true
+  tags:
+    - install
+    - config
+    - yazi

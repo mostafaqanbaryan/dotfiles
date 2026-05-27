@@ -1,0 +1,29 @@
+- name: "Install alacritty"
+  community.general.pacman: 
+  ansible.builtin.command:
+    name: "alacritty"
+    state: "present"
+  tags:
+    - install
+    - alacritty
+
+- name: "Remove alacritty's old config"
+  ignore_errors: true
+  ansible.builtin.file:
+    path: "~/.config/alacritty"
+    state: "absent"
+  tags:
+    - install
+    - config
+    - alacritty
+
+- name: "Link alacritty's config"
+  ansible.builtin.file:
+    src: "$PWD/alacritty"
+    dest: "~/.config/alacritty"
+    state: "link"
+    force: true
+  tags:
+    - install
+    - config
+    - alacritty

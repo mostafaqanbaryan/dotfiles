@@ -1,0 +1,37 @@
+- name: "Install wezterm"
+  community.general.pacman: 
+  ansible.builtin.command:
+    name: "wezterm"
+    state: "present"
+  tags:
+    - install
+    - wezterm
+
+- name: "Install wezterm terminfo for neovim styles (undercurl) to work in tmux"
+  ignore_errors: true
+  ansible.builtin.command:
+    cmd: "curl https://raw.githubusercontent.com/wez/wezterm/main/termwiz/data/wezterm.terminfo | tic -x -"
+  tags:
+    - install
+    - wezterm
+
+- name: "Remove wezterm's old config"
+  ignore_errors: true
+  ansible.builtin.file:
+    path: "~/.wezterm.lua"
+    state: "absent"
+  tags:
+    - install
+    - config
+    - wezterm
+
+- name: "Link wezterm's config"
+  ansible.builtin.file:
+    src: "$PWD/wezterm.lua"
+    dest: "~/.wezterm.lua"
+    state: "link"
+    force: true
+  tags:
+    - install
+    - config
+    - wezterm

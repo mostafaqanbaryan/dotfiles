@@ -5,6 +5,7 @@
     state: "present"
   tags:
     - install
+    - waybar
 
 - name: "Install grim for taking screenshots"
   become: true
@@ -13,6 +14,7 @@
     state: "present"
   tags:
     - install
+    - waybar
 
 - name: "Install swappy as snapshop editor tool"
   become: true
@@ -21,6 +23,7 @@
     state: "present"
   tags:
     - install
+    - waybar
 
 - name: "Install slurp for partial screenshots with grim"
   become: true
@@ -29,6 +32,7 @@
     state: "present"
   tags:
     - install
+    - waybar
 
 - name: "Install pavucontrol for sound control"
   become: true
@@ -37,4 +41,34 @@
     state: "present"
   tags:
     - install
+    - waybar
 
+- name: "Install icons"
+  become: true
+  community.general.pacman: 
+    name: "kiconthemes"
+    state: "present"
+  tags:
+    - install
+    - waybar
+
+- name: "Remove waybar's old config"
+  ignore_errors: true
+  ansible.builtin.file:
+    path: "~/.config/waybar"
+    state: "absent"
+  tags:
+    - install
+    - config
+    - waybar
+
+- name: "Link waybar's config"
+  ansible.builtin.file:
+    src: "$PWD/waybar"
+    dest: "~/.config/waybar"
+    state: "link"
+    force: true
+  tags:
+    - install
+    - config
+    - waybar

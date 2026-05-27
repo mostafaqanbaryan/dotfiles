@@ -1,16 +1,18 @@
 #!/bin/bash
 selected=$(cliphist list -max-items 750 -max-dedupe-search 750 | rofi $@ -i -dmenu  -mesg "<b>Alt+1</b>: Type and copy")
 status=$?
-value=$(echo "$selected" | cliphist decode)
-
-# Copy to clipboard
-echo "$value" | wl-copy -n
 
 # Type
 case "$status" in
     10)
         sleep 0.3
+        echo $selected
+        value=$(echo "$selected" | cliphist decode)
         wtype "$value"
     ;;
-    *) exit "$status";;
+    *) ;;
 esac
+
+# Copy to clipboard
+echo "$selected" | cliphist decode | wl-copy -n
+

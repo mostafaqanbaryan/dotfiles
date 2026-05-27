@@ -1,17 +1,19 @@
 - name: "Install nvidia"
-  community.general.pacman: 
-    executable: "yay"
+  kewlfft.aur.aur:
+    use: "yay"
     name: "nvidia-390xx-dkms"
     state: "present"
   tags:
+    - install
     - nvidia
 
 - name: "Install bumblebee"
-  community.general.pacman: 
-    executable: "yay"
+  kewlfft.aur.aur:
+    use: "yay"
     name: "bumblebee"
     state: "present"
   tags:
+    - install
     - nvidia
 
 - name: "Copy nvidia config"
@@ -21,6 +23,7 @@
     state: "hard"
     force: true
   tags:
+    - install
     - nvidia
 
 

@@ -1,0 +1,9 @@
+- name: "Install vlc"
+  kewlfft.aur.aur:
+    use: "yay"
+    name:
+      - ["vlc", "vlc-plugin-x264"]
+    state: "present"
+  tags:
+    - install
+    - vlc

@@ -108,6 +108,30 @@ return {
 			},
 		})
 
+		vim.lsp.config("vtsls", {
+			settings = {
+				typescript = {
+					preferences = {
+						includeCompletionsForModuleExports = true,
+						includeCompletionsForImportStatements = true,
+						importModuleSpecifier = "relative",
+					},
+				},
+			},
+		})
+
+		vim.lsp.config("ts_ls", {
+			settings = {
+				typescript = {
+					preferences = {
+						includeCompletionsForModuleExports = true,
+						includeCompletionsForImportStatements = true,
+						importModuleSpecifierPreference = "relative",
+					},
+				},
+			},
+		})
+
 		-- LSP
 		vim.diagnostic.config({
 			severity_sort = true,
@@ -119,12 +143,18 @@ return {
 				scope = "cursor",
 			},
 			jump = {
-				float = {
-					focusable = true,
-					source = true,
-					border = "rounded",
-					scope = "cursor",
-				},
+				on_jump = function()
+					if winid and vim.api.nvim_win_is_valid(winid) then
+						vim.api.nvim_win_close(winid, true)
+					end
+
+					_, winid = vim.diagnostic.open_float({
+						focusable = true,
+						source = true,
+						border = "rounded",
+						scope = "cursor",
+					})
+				end,
 			},
 			signs = {
 				text = {
@@ -167,6 +197,7 @@ return {
 				local client = vim.lsp.get_client_by_id(args.data.client_id)
 				if client ~= nil and client:supports_method("textDocument/definition") then
 					vim.keymap.set("n", "gd", vim.lsp.buf.definition)
+					vim.keymap.set("n", "gi", vim.lsp.buf.implementation)
 				end
 
 				vim.lsp.on_type_formatting.enable()
@@ -176,28 +207,18 @@ return {
 				vim.keymap.set(
 					"n",
 					"]D",
-					"<cmd>lua vim.diagnostic.goto_next( {severity=vim.diagnostic.severity.ERROR, wrap = true} )<CR>",
+					"<cmd>lua vim.diagnostic.jump({severity=vim.diagnostic.severity.ERROR, count = 1 })<CR>",
 					{ silent = true }
 				)
 				vim.keymap.set(
 					"n",
 					"[D",
-					"<cmd>lua vim.diagnostic.goto_prev( {severity=vim.diagnostic.severity.ERROR, wrap = true} )<CR>",
+					"<cmd>lua vim.diagnostic.jump({ severity=vim.diagnostic.severity.ERROR, count = -1 })<CR>",
 					{ silent = true }
 				)
 
 				vim.keymap.set("n", "<leader>;", function()
-					-- If we find a floating window, close it.
-					local found_float = false
-					for _, win in ipairs(vim.api.nvim_list_wins()) do
-						local l = vim.api.nvim_win_get_config(win)
-						if l.relative ~= "" and l.focusable then
-							vim.api.nvim_win_close(win, true)
-							found_float = true
-						end
-					end
-
-					if not found_float then
+					if not vim.api.close_all_floating_windows() then
 						vim.diagnostic.open_float()
 					end
 				end, { silent = true })

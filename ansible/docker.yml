@@ -1,0 +1,19 @@
+- name: "Install docker"
+  ignore_errors: true
+  kewlfft.aur.aur:
+    use: "yay"
+    name: ["docker", "docker-compose"]
+    state: "present"
+  tags:
+    - install
+    - docker
+
+- name: "Install lazydocker"
+  ignore_errors: true
+  kewlfft.aur.aur:
+    use: "yay"
+    name: ["lazydocker-bin"]
+    state: "present"
+  tags:
+    - install
+    - docker

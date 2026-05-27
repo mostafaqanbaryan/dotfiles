@@ -1,0 +1,47 @@
+#!/bin/bash
+# Customize the following:
+containerName=$1
+shift;
+
+# detect local path and remove from args
+localPhpUnitResultPath='/tmp/phpunit-result.xml'
+argsInput=${@}
+runFile=$(echo $argsInput| awk '{print $1}')
+phpTestPath=$(dirname "$runFile")
+pushd $phpTestPath > /dev/null
+projectPath="$(git rev-parse --show-toplevel)/src"
+pushd > /dev/null
+
+subPath=$(awk -F '/vendor/' '{print $1}' <<< $projectPath)
+
+## detect test result output
+for i in $argsInput; do
+    case $i in
+        --log-junit=*)
+            outputPath="${i#*=}"
+            ;;
+        *)
+            ;;
+    esac
+done
+
+outputPath="/tmp/pest-results.json"
+
+# replace with local
+args=("${argsInput/$subPath\//}")
+args=("${args//(*}")
+
+# Detect path
+container=$(docker ps -n=-1 --filter name=$containerName --format="{{.ID}}")
+phpunitPath=$(docker exec -it $container /bin/bash -c "if [ -f /var/www/vendor/bin/phpunit ]; then echo /var/www/vendor/bin/phpunit; else echo bin/phpunit; fi" | tr -d '\r')
+execPath=$(docker exec -it $container /bin/bash -c "if [ -f /bin/sh ]; then echo /bin/sh; else echo /bin/bash; fi" | tr -d '\r')
+dockerPath=$(docker inspect --format {{.Config.WorkingDir}} $container)
+
+# Run the tests
+docker exec -it $container $execPath -c "SYMFONY_DEPRECATIONS_HELPER=weak $phpunitPath -d memory_limit=-1 -d xdebug.idekey=deliver-be ${args} --log-junit=${localPhpUnitResultPath}"
+
+# copy results
+docker cp -a "$container:$localPhpUnitResultPath" "$outputPath"|- &> /dev/null
+
+# replace docker path to locals
+sed -i '_' "s#$dockerPath#$projectPath#g" $outputPath

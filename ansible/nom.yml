@@ -1,0 +1,9 @@
+- name: "Install nom rss reader"
+  become: true
+  kewlfft.aur.aur:
+    use: "yay"
+    name: ["nom"]
+    state: "present"
+  tags:
+    - install
+    - nom

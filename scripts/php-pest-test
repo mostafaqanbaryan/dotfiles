@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+containerName="$1"
+shift
+
+argsInput=("$@")
+
+echo $@ > /tmp/args
+
+runFile=$(echo "$args" | awk '{print $1}')
+phpTestPath=$(dirname "$runFile")
+
+pushd "$phpTestPath" >/dev/null
+projectPath="$(git rev-parse --show-toplevel)/src"
+popd >/dev/null
+
+containerResultPath="/var/www/.pest-result.json"
+localResultPath="/tmp/.pest-result.json"
+
+for arg in $@; do
+    case "$arg" in
+        --log-junit=*)
+            # outputPath="${arg#*=}"
+            args+=("--log-junit=$containerResultPath")
+            ;;
+        *)
+            args+=("$arg")
+            ;;
+    esac
+done
+
+echo $args >> /tmp/args
+
+subPath=$(awk -F '/vendor/' '{print $1}' <<< "$projectPath")
+
+args="${args/$subPath\//}"
+args="${args//(/}"
+
+
+container=$(docker ps -n=-1 --filter "name=$containerName" --format "{{.ID}}")
+dockerPath=$(docker inspect --format {{.Config.WorkingDir}} $container)
+
+execPath=$(docker exec -i "$container" /bin/bash -c \
+'if [ -f /bin/sh ]; then echo /bin/sh; else echo /bin/bash; fi' \
+| tr -d '\r')
+
+pestPath="/var/www/vendor/bin/pest"
+
+echo "
+SYMFONY_DEPRECATIONS_HELPER=weak \
+$pestPath \
+$(printf '%q ' "${args[@]}")
+" >> /tmp/args
+
+docker exec -i "$container" "$execPath" -c "
+SYMFONY_DEPRECATIONS_HELPER=weak \
+$pestPath \
+$(printf '%q ' "${args[@]}")
+"
+
+docker cp "$container:$containerResultPath" "$localResultPath" >/dev/null 2>&1
+
+# replace docker path to locals
+sed -i_ "s#tests/#src/tests/#g" $localResultPath

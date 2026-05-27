@@ -1,0 +1,8 @@
+- name: "Install kitty"
+  community.general.pacman: 
+  ansible.builtin.command:
+    name: "kitty"
+    state: "present"
+  tags:
+    - install
+    - kitty

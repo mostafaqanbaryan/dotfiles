@@ -1,27 +1,37 @@
 - name: "Install vazir font"
-  community.general.pacman: 
-    executable: "yay"
+  kewlfft.aur.aur:
+    use: "yay"
     name: 
       - "vazir-code-fonts"
     state: "present"
   tags:
     - install
+    - fonts
 
 - name: "Install nerd fonts"
-  community.general.pacman: 
-    executable: "yay"
+  kewlfft.aur.aur:
+    use: "yay"
     name: 
       - "ttf-nerd-fonts-symbols-mono"
     state: "present"
   tags:
     - install
+    - fonts
 
-# - name: "Copy fonts"
-#   ansible.builtin.copy:
-#     src: "{{ item }}"
-#     dest: "~/.local/share/fonts"
-#   with_fileglob:
-#     src: "$PWD/../fonts/*"
-#   tags:
-#     - install
-#     - config
+- name: Display dotfiles fonts
+  ansible.builtin.debug: msg={{ lookup('ansible.builtin.fileglob', '../fonts/*') }}
+  tags:
+    - install
+    - config
+    - fonts
+
+- name: "Copy fonts"
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "~/.local/share/fonts"
+  with_fileglob:
+    - "../fonts/*"
+  tags:
+    - install
+    - config
+    - fonts

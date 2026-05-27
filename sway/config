@@ -322,8 +322,8 @@ exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec wl-paste --watch cliphist store
 exec pipewire
 exec wireplumber
-exec swww-daemon --format xrgb
-exec waypaper --restore --backend swww
+exec awww-daemon --format xrgb
+exec waypaper --restore --backend awww
 exec swaync
 
 ### Share screen

@@ -1,7 +1,8 @@
 - name: "Install nodejs"
-  community.general.pacman: 
-    executable: "yay"
+  kewlfft.aur.aur:
+    use: "yay"
     name: ["nodejs", "npm"]
     state: "present"
   tags:
     - install
+    - nodejs

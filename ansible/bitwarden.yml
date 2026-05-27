@@ -1,16 +1,17 @@
-- name: "Install fzf"
+- name: "Install bitwarden"
   become: true
   community.general.pacman: 
-    name: ["fzf", "bat", "ripgrep"]
+    name: ["bitwarden-cli"]
     state: "present"
   tags:
     - install
+    - bitwarden
 
-- name: "Install Neovim"
+- name: "Install wtype for bitwarden script"
   become: true
   community.general.pacman: 
-    name: ["neovim", "noto-fonts-emoji"]
+    name: "wtype"
     state: "present"
   tags:
     - install
-
+    - bitwarden

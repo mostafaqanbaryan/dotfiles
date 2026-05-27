@@ -44,6 +44,7 @@ return {
 			automatic_installation = true,
 			ensure_installed = {
 				"intelephense",
+				"laravel_ls",
 				"vtsls",
 				"lua_ls",
 				"eslint",

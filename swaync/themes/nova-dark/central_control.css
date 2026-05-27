@@ -9,7 +9,7 @@
   color:            @text;
 
   all: unset;
-  font-size: 14px;
+  font-size: 20px;
   font-family: "JetBrains Mono Nerd Font 10";
   transition: 200ms;
 

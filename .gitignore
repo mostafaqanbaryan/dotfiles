@@ -37,3 +37,4 @@ nushell/history.txt
 
 # Tmux
 tmux/plugins
+/nvim/queries/php

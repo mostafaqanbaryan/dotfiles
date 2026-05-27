@@ -14,6 +14,7 @@ return {
 			typescriptreact = { "prettier", stop_after_first = true },
 			javascriptreact = { "prettier", stop_after_first = true },
 			php = { "php_cs_fixer", "prettier", stop_after_first = true },
+			go = { "gofumpt", "goimports" },
 		},
 		-- Customize formatters
 		formatters = {

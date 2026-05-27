@@ -1,0 +1,20 @@
+- name: "Install blueman"
+  ignore_errors: true
+  kewlfft.aur.aur:
+    use: "yay"
+    name: ["blueman"]
+    state: "present"
+  tags:
+    - install
+    - bluetooth
+
+- name: "Start bluetooth service"
+  ansible.builtin.service:
+    become: true
+    name: "bluetooth"
+    state: "started"
+    enabled: true
+  tags:
+    - install
+    - services
+    - bluetooth

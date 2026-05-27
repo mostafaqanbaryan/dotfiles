@@ -1,0 +1,41 @@
+- name: "Install Neovim"
+  become: true
+  kewlfft.aur.aur:
+    use: "yay"
+    name: ["neovim-nightly-bin", "noto-fonts-emoji"]
+    state: "present"
+  tags:
+    - install
+    - neovim
+
+# - name: "Install delve for debugging go"
+#   become: true
+#   kewlfft.aur.aur:
+#     use: "yay"
+#     name: "delve"
+#     state: "present"
+#   tags:
+#     - install
+#     - golang
+#     - neovim
+#
+- name: "Remove neovim's old config"
+  ignore_errors: true
+  ansible.builtin.file:
+    path: "~/.config/nvim"
+    state: "absent"
+  tags:
+    - install
+    - config
+    - neovim
+
+- name: "Link neovim's config"
+  ansible.builtin.file:
+    src: "$PWD/nvim"
+    dest: "~/.config/nvim"
+    state: "link"
+    force: true
+  tags:
+    - install
+    - config
+    - neovim

@@ -1,0 +1,51 @@
+- name: "Install lazygit"
+  ignore_errors: true
+  kewlfft.aur.aur:
+    use: "yay"
+    name: ["lazygit", "git-delta"]
+    state: "present"
+  tags:
+    - install
+    - git
+
+- name: "Remove lazygit's old config"
+  ignore_errors: true
+  ansible.builtin.file:
+    path: "~/.config/lazygit"
+    state: "absent"
+  tags:
+    - install
+    - config
+    - git
+
+- name: "Link lazygit's config"
+  ignore_errors: true
+  ansible.builtin.file:
+    src: "$PWD/lazygit"
+    dest: "~/.config/lazygit"
+    state: "link"
+    force: true
+  tags:
+    - install
+    - config
+    - git
+
+- name: "Install difftastic in place of diff"
+  ignore_errors: true
+  kewlfft.aur.aur:
+    use: "yay"
+    name: "difftastic"
+    state: "present"
+  tags:
+    - install
+    - git
+
+- name: "Install hunk diff"
+  ignore_errors: true
+  kewlfft.aur.aur:
+    use: "yay"
+    name: "hunk"
+    state: "present"
+  tags:
+    - install
+    - git
