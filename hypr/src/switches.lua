@@ -1,0 +1,5 @@
+hl.bind("switch:off:Lid Switch", hl.dsp.dpms({ monitor = "LVDS-1", action = "on" }))
+hl.bind("switch:on:Lid Switch", function()
+	hl.dispatch(hl.dsp.dpms({ monitor = "LVDS-1", action = "off" }))
+	hl.dispatch(hl.dsp.exec_cmd("lock"))
+end)
