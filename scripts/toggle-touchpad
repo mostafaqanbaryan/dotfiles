@@ -11,8 +11,8 @@ fi
 
 # Next mode
 case "$LAST_MODE" in
-  0) NEXT_MODE="1"; STATUS="Enabled" ;;
-  *) NEXT_MODE="0"; STATUS="Disabled" ;;
+  "false") NEXT_MODE="true"; STATUS="Enabled" ;;
+  *) NEXT_MODE="false"; STATUS="Disabled" ;;
 esac
 
 touchpads=$(hyprctl devices -j | jq -r '.mice | .[] | select(.name | test("touch")) | .name')
@@ -23,7 +23,7 @@ if [[ -z "$touchpads" ]]; then
 fi
 
 for touchpad in $touchpads; do
-    hyprctl keyword "device[$touchpad]:enabled" $NEXT_MODE
+    hyprctl eval "hl.device({ name = '$touchpad', enabled = $NEXT_MODE })"
 done
 
 notify-send "Touchpad mode: $STATUS"
