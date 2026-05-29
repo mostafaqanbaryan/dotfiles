@@ -1,7 +1,7 @@
+require("./src/environments")
 require("./src/binds")
 require("./src/mouse_binds")
 require("./src/monitors")
-require("./src/environments")
 require("./src/devices")
 require("./src/languages")
 require("./src/general")
