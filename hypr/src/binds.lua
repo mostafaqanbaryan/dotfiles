@@ -42,20 +42,44 @@ hl.bind(
 )
 
 -- Password manager
-hl.bind(
-	mainMod .. " + p",
-	hl.dsp.exec_cmd(
-		"~/dotfiles/bitwarden-rofi/bwmenu --folder-id=fd5c2974-6529-44ef-8d81-b39e0087b764 --no-clear --auto-lock '-1' -- -x11 -sort -i -dmenu -matching fuzzy -sorting-method fzf -theme ~/dotfiles/rofi/style.rasi"
-	)
-)
+hl.bind(mainMod .. " + p", function()
+	local id = os.getenv("BW_ID")
+	if id == nil then
+		hl.notification.create({
+			text = "BW_ID not set!",
+			duration = 5000,
+			color = "#ff1ea3",
+		})
+	else
+		hl.dispatch(
+			hl.dsp.exec_cmd(
+				"~/dotfiles/bitwarden-rofi/bwmenu --folder-id="
+					.. id
+					.. " --no-clear --auto-lock '-1' -- -x11 -sort -i -dmenu -matching fuzzy -sorting-method fzf -theme ~/dotfiles/rofi/style.rasi"
+			)
+		)
+	end
+end)
 
 -- Basic Password manager
-hl.bind(
-	mainMod .. " + SHIFT + p",
-	hl.dsp.exec_cmd(
-		"~/dotfiles/bitwarden-rofi/bwmenu --folder-id=3e0467e2-8e30-401f-8925-b3a0006ce1ac --no-clear --auto-lock '-1' -- -x11 -sort -i -dmenu -matching fuzzy -sorting-method fzf -theme ~/dotfiles/rofi/style.rasi"
-	)
-)
+hl.bind(mainMod .. " + SHIFT + p", function()
+	local id = os.getenv("BW_BASIC_ID")
+	if id == nil then
+		hl.notification.create({
+			text = "BW_BASIC_ID not set!",
+			duration = 5000,
+			color = "#ff1ea3",
+		})
+	else
+		hl.dispatch(
+			hl.dsp.exec_cmd(
+				"~/dotfiles/bitwarden-rofi/bwmenu --folder-id="
+					.. id
+					.. " --no-clear --auto-lock '-1' -- -x11 -sort -i -dmenu -matching fuzzy -sorting-method fzf -theme ~/dotfiles/rofi/style.rasi"
+			)
+		)
+	end
+end)
 
 -- SSH
 hl.bind(
