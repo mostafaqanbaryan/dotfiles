@@ -68,10 +68,19 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 	end,
 })
 
--- Send text to popup
-vim.keymap.set("v", "<leader>pp", function()
-	vim.print("notify-send '" .. get_visual_selection() .. "'")
-	print(os.execute("notify-send '" .. get_visual_selection() .. "'"))
+-- Git diff the current buffer
+vim.keymap.set(
+	"n",
+	"<leader>gd",
+	"execute 'vnew' | setlocal buftype=nofile bufhidden=wipe noswapfile | execute '0read !git show dev:' . expand('#') | execute 'setfiletype' getbufvar(bufnr('#'), '&filetype')"
+)
+vim.keymap.set("n", "]e", '"udd"up')
+
+-- Arg list
+vim.keymap.set("n", "<leader>aa", function()
+	vim.cmd("argadd %")
+	vim.cmd("argdedup")
+	vim.print("Added current file to arguments")
 end)
 
 -- https://github.com/ibhagwan/fzf-lua/blob/f7f54dd685cfdf5469a763d3a00392b9291e75f2/lua/fzf-lua/utils.lua#L372
