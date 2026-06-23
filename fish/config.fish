@@ -73,6 +73,9 @@ set fish_cursor_visual underscore
 ## Rust
 set -Ua fish_user_paths $HOME/.cargo/bin
 
+# Golang
+set -Ua fish_user_paths $HOME/go/bin
+
 set -x PATH "$PATH:$HOME/.local/bin"
 set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gcr/ssh"
 
