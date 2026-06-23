@@ -1,7 +1,8 @@
 - name: "Install bitwarden"
   become: true
-  community.general.pacman: 
-    name: ["bitwarden-cli"]
+  community.general.npm
+    global: true
+    name: ["@bitwarden/cli"]
     state: "present"
   tags:
     - install
