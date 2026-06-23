@@ -1,5 +1,5 @@
 local getRoot = function()
-	local root = vim.fs.root(0, { "go.mod" })
+	local root = vim.fs.root(0, { "go.work", "go.mod", ".git" })
 	if not root then
 		root = vim.loop.cwd()
 	end

@@ -21,7 +21,11 @@ return {
 			},
 
 			adapters = {
-				require("neotest-golang")(),
+				require("neotest-golang")({
+					cwd = function()
+						return vim.fs.root(0, { "go.work", "go.mod", ".git" })
+					end,
+				}),
 				-- require("neotest-phpunit")({
 				-- 	phpunit_cmd = function()
 				-- 		return vim.tbl_flatten({

@@ -299,7 +299,7 @@ GetBlock = function()
 end
 
 GetRoot = function()
-	local root = vim.fs.root(0, { ".git", "Makefile", "package.json", "composer.json" })
+	local root = vim.fs.root(0, { "go.work", "go.mod", "composer.json", "package.json", ".git" })
 	if not root then
 		root = "."
 	end
