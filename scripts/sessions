@@ -53,7 +53,7 @@ sessions_list_names() {
 
 sessions_list(){
     if [[ -n "$LAST_SESSION" ]]; then
-        mux list-sessions | sed 's/:.*$//' | grep -v "$(echo $LAST_SESSION)" | awk '{ print "("NR")\t[Session]\t"$1 }'
+        mux list-sessions | sed 's/:.*$//' | grep -xv "$(echo $LAST_SESSION)" | awk '{ print "("NR")\t[Session]\t"$1 }'
     else
         sessions_list_names | awk '{ print "("NR")\t[Session]\t"$1 }'
     fi

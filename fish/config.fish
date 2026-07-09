@@ -29,6 +29,11 @@ abbr gd "git diff"
 abbr gre "git rebase"
 abbr gcm 'git commit -m "'
 abbr gca "git commit --amend"
+
+abbr gwl "git worktree list"
+abbr gwr "git worktree remove"
+complete -x -c gwa -a "(git for-each-ref --format='%(refname:short)' refs/heads)"
+
 abbr parent "git log --first-parent"
 abbr dev "git checkout develop"
 abbr hd "hunk diff main --mode split --hunk-headers --line-numbers"

@@ -1,0 +1,8 @@
+#!/bin/bash
+project_name="$(basename "$(realpath "$(git rev-parse --git-common-dir --path-format=absolute)" | sed "s#/.git\$##")")"
+current_branch_name="$(echo "$1" | sed "s#/#-#g")"
+name="$project_name"__"$current_branch_name"
+
+git worktree add -q "../$name" "$1"
+
+sessions "../$name"
