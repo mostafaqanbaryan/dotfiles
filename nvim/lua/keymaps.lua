@@ -69,11 +69,11 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 })
 
 -- Git diff the current buffer
-vim.keymap.set(
-	"n",
-	"<leader>gd",
-	"execute 'vnew' | setlocal buftype=nofile bufhidden=wipe noswapfile | execute '0read !git show dev:' . expand('#') | execute 'setfiletype' getbufvar(bufnr('#'), '&filetype')"
-)
+vim.keymap.set("n", "<leader>gd", function()
+	vim.cmd(
+		"execute 'vnew' | setlocal buftype=nofile bufhidden=wipe noswapfile | execute '0read !git show dev:' . expand('#') | execute 'setfiletype' getbufvar(bufnr('#'), '&filetype')"
+	)
+end)
 vim.keymap.set("n", "]e", '"udd"up')
 
 -- Arg list

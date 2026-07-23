@@ -38,10 +38,10 @@ return {
 			}
 		end
 
-		vim.keymap.set("n", "<leader>g", "<cmd>CodeCompanionChat Toggle<CR>", keymapOptions("Toggle Chat"))
+		vim.keymap.set("n", "<leader>gg", "<cmd>CodeCompanionChat Toggle<CR>", keymapOptions("Toggle Chat"))
 		vim.keymap.set(
 			"v",
-			"<leader>g",
+			"<leader>gg",
 			"<cmd>CodeCompanionChat Add<CR>",
 			keymapOptions("Toggle Chat and Add Selected Range")
 		)
