@@ -31,8 +31,8 @@ abbr gcm 'git commit -m "'
 abbr gca "git commit --amend"
 
 abbr gwl "git worktree list"
-abbr gwr "git worktree remove"
 complete -x -c gwa -a "(git for-each-ref --format='%(refname:short)' refs/heads)"
+complete -x -c gwr -a "(git for-each-ref --format='%(refname:short)' refs/heads)"
 
 abbr parent "git log --first-parent"
 abbr dev "git checkout develop"
