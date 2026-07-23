@@ -5,4 +5,15 @@ name="$project_name"__"$current_branch_name"
 
 git worktree add -q "../$name" "$1"
 
-sessions "../$name"
+cp ./docker-compose.dev.yml ../$name/
+cp ./src/.env ../$name/src/
+echo "CONTAINER_NAME=$name" > ../$name/.env
+
+# For Golang projects, generate sqlc files
+if [[ -f src/go.mod ]]; then
+    sh -c "cd \"../$name/src\" && go tool sqlc generate"
+fi
+
+sh -c "cd \"../$name\" && docker compose -f docker-compose.dev.yml up -d"
+
+sessions "$PWD/../$name"
