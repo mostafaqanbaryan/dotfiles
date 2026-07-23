@@ -22,6 +22,7 @@ return {
 
 			adapters = {
 				require("neotest-golang")({
+					filter_dir_patterns = { "/usr/**", "~/go/**" },
 					cwd = function()
 						return vim.fs.root(0, { "go.work", "go.mod", ".git" })
 					end,
