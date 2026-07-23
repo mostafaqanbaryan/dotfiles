@@ -318,6 +318,11 @@ return {
 			{ silent = true },
 		},
 		{
+			"<Leader>fa",
+			'<cmd>lua require("fzf-lua").files({ query = get_visual_selection() })<CR>',
+			mode = "v",
+		},
+		{
 			"<Leader>fb",
 			'<cmd>lua require("fzf-lua").buffers()<CR>',
 			{ silent = true },

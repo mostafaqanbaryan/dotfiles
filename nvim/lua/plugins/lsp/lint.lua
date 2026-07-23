@@ -15,7 +15,8 @@ return {
 			"analyze",
 			"--error-format=json",
 			"--no-progress",
-			"--memory-limit=2G",
+			"--memory-limit=512M",
+			"--parallel=2",
 		}
 
 		local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
@@ -25,7 +26,7 @@ return {
 			callback = function()
 				if vim.bo.filetype == "php" then
 					-- If project exists in a subdirectory, we have to go to the subdirectory and run linter
-					local dirs = { "backend", "html", "app", "." }
+					local dirs = { "backend", "html", "app", "src", "." }
 					for i, x in pairs(dirs) do
 						local f = io.open(x .. "/phpstan.neon", "r")
 						if f ~= nil then

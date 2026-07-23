@@ -121,8 +121,42 @@ return {
 				name = "Listen for Xdebug",
 				port = 9003,
 				pathMappings = {
-					["/var/www/html"] = vim.fn.getcwd() .. "/html",
+					["/var/www"] = vim.fn.getcwd() .. "/src",
 				},
+			},
+		}
+
+		dap.adapters["pwa-node"] = {
+			type = "server",
+			host = "::1",
+			port = "${port}",
+			executable = {
+				command = "js-debug-adapter",
+				args = {
+					"${port}",
+				},
+				-- 💀 Make sure to update this path to point to your installation
+				-- args = { "/path/to/js-debug/src/dapDebugServer.js", "${port}" },
+				-- args = { vim.fn.stdpath("data") .. "/mason/packages/js-debug/src/dapDebugServer.js" },
+			},
+		}
+
+		dap.configurations.typescript = {
+			{
+				type = "pwa-node",
+				request = "launch",
+				name = "Launch file",
+				program = "${file}",
+				cwd = "${workspaceFolder}",
+			},
+			{
+				type = "pwa-node",
+				request = "attach",
+				name = "Attach to Node app",
+				address = "localhost",
+				port = 9229,
+				cwd = "${workspaceFolder}",
+				restart = true,
 			},
 		}
 	end,
