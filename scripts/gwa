@@ -14,6 +14,12 @@ if [[ -f src/go.mod ]]; then
     sh -c "cd \"../$name/src\" && go tool sqlc generate"
 fi
 
+# For PHP projects
+if [[ -f src/composer.json ]]; then
+    cp nginx.conf "../$name/nginx.conf"
+    sed -i "s/fastcgi_pass .*$/fastcgi_pass ${name}_app:9000;/" "../$name/nginx.conf"
+fi
+
 sh -c "cd \"../$name\" && docker compose -f docker-compose.dev.yml up -d"
 
 sessions "$PWD/../$name"
