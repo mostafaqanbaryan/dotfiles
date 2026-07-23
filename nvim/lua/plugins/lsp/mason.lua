@@ -43,7 +43,7 @@ return {
 			lazy = false,
 			automatic_installation = true,
 			ensure_installed = {
-				"intelephense",
+				"phpantom_lsp",
 				"laravel_ls",
 				"vtsls",
 				"lua_ls",
