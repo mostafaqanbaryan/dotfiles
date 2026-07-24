@@ -3,7 +3,7 @@ project_name="$(basename "$(realpath "$(git rev-parse --git-common-dir --path-fo
 current_branch_name="$(echo "$1" | sed "s#/#-#g")"
 name="$project_name"__"$current_branch_name"
 
-cd "../$name" && docker compose -f docker-compose.dev.yml down && git checkout "docker-compose.dev.yml"
+cd "../$name" && docker compose -f docker-compose.dev.yml down
 
 tmux kill-session -t "$name"
 
