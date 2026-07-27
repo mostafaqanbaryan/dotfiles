@@ -93,3 +93,5 @@ if ! test -f "$HOME/.env.fish"
     touch $HOME/.env.fish
 end
 source $HOME/.env.fish
+
+direnv hook fish | source

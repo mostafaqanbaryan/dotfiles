@@ -1,25 +1,55 @@
 #!/bin/bash
+
+# $1 is the main branch directory
+# $2 is the new/exsiting branch name for creating a new worktree
+
+if [[ -z "$2" ]]; then
+    read -p "Branch > " current_branch_name
+else
+    current_branch_name="$2"
+fi
+
+MAIN_BRANCH_DIR="$1"
+cd "$MAIN_BRANCH_DIR"
+
+current_branch_name="$(echo "$current_branch_name" | sed "s#/#-#g")"
 project_name="$(basename "$(realpath "$(git rev-parse --git-common-dir --path-format=absolute)" | sed "s#/.git\$##")")"
-current_branch_name="$(echo "$1" | sed "s#/#-#g")"
-name="$project_name"__"$current_branch_name"
+CONTAINER_NAME="$project_name"__"$current_branch_name"
+NEW_BRANCH_DIR="$MAIN_BRANCH_DIR/../$CONTAINER_NAME"
 
-git worktree add -q "../$name" "$1"
+# Create branch if it doesn't exist
+if [[ -z "$(git rev-parse --verify --quiet "$current_branch_name")" ]]; then
+    echo "Creating branch $current_branch_name..."
+    git branch "$current_branch_name"
+fi
 
-cp ./docker-compose.dev.yml ../$name/
-cp ./src/.env ../$name/src/
-echo "CONTAINER_NAME=$name" > ../$name/.env
+echo "Adding worktree $current_branch_name..."
+git worktree add -q "$NEW_BRANCH_DIR" "$current_branch_name"
+
+echo "Copying files..."
+cp "$MAIN_BRANCH_DIR/docker-compose.dev.yml" "$NEW_BRANCH_DIR/docker-compose.dev.yml"
+cp "$MAIN_BRANCH_DIR/src/.env" "$NEW_BRANCH_DIR/src/.env"
+
+echo "Creating .envrc file..."
+echo "export CONTAINER_NAME=$CONTAINER_NAME" > "$NEW_BRANCH_DIR/.envrc"
 
 # For Golang projects, generate sqlc files
 if [[ -f src/go.mod ]]; then
-    sh -c "cd \"../$name/src\" && go tool sqlc generate"
+    echo "Generating sqlc files..."
+    sh -c "cd \"$NEW_BRANCH_DIR/src\" && go tool sqlc generate"
 fi
 
 # For PHP projects
 if [[ -f src/composer.json ]]; then
-    cp nginx.conf "../$name/nginx.conf"
-    sed -i "s/fastcgi_pass .*$/fastcgi_pass ${name}_app:9000;/" "../$name/nginx.conf"
+    echo "Copying nginx.conf..."
+    cp nginx.conf "$NEW_BRANCH_DIR/nginx.conf"
+    sed -i "s/fastcgi_pass .*$/fastcgi_pass ${CONTAINER_NAME}_app:9000;/" "$NEW_BRANCH_DIR/nginx.conf"
 fi
 
-sh -c "cd \"../$name\" && docker compose -f docker-compose.dev.yml up -d"
+echo "Starting containers..."
+cd "$NEW_BRANCH_DIR"
+eval "$(direnv export bash)"
+docker compose -f docker-compose.dev.yml up -d
 
-sessions "$PWD/../$name"
+echo "Create session..."
+sessions "$NEW_BRANCH_DIR"

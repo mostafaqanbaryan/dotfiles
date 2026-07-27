@@ -101,7 +101,7 @@ customCommands:
           - name: "Remove"
             value: "gwr"
             description: "Remove the worktree"
-    command: "{{.Form.Type}} {{.SelectedLocalBranch.Name}}"
+    command: "sh -c '{{.Form.Type}} \"$PWD\" {{.SelectedLocalBranch.Name}}'"
     loadingText: "Checking out to the new branch..."
   - key: "<c-u>"
     context: "global"

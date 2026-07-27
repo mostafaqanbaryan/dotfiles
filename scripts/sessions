@@ -17,6 +17,7 @@ fzf_window() {
         --prompt "Session > " \
         --header "Select session" \
         --preview "bash -c \"echo {2} | grep -q 'Session' && echo {} || ls {4}\"" \
+        --bind "ctrl-a:become(gwa {4} 1>&2)" \
         --bind "ctrl-x:execute(sessions {4} gwr)"
 }
 
