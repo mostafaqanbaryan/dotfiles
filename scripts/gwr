@@ -7,6 +7,8 @@ project_name="$(basename "$(realpath "$(git rev-parse --git-common-dir --path-fo
 current_branch_name="$(echo "$2" | sed "s#/#-#g")"
 name="$project_name"__"$current_branch_name"
 
+eval "$(direnv export bash)"
+
 cd "../$name" && docker compose -f docker-compose.dev.yml down
 
 tmux kill-session -t "$name"

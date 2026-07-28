@@ -1,0 +1,30 @@
+- name: "Install direnv"
+  become: true
+  community.general.pacman: 
+    name: ["direnv"]
+    state: "present"
+  tags:
+    - install
+    - direnv
+
+- name: "Remove old config"
+  ignore_errors: true
+  ansible.builtin.file:
+    path: "~/.config/direnv"
+    state: "absent"
+  tags:
+    - install
+    - config
+    - direnv
+
+- name: "Link config"
+  ansible.builtin.file:
+    src: "$PWD/direnv"
+    dest: "~/.config/direnv"
+    state: "link"
+    force: true
+  tags:
+    - install
+    - config
+    - direnv
+

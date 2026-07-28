@@ -12,9 +12,9 @@ fi
 MAIN_BRANCH_DIR="$1"
 cd "$MAIN_BRANCH_DIR"
 
-current_branch_name="$(echo "$current_branch_name" | sed "s#/#-#g")"
+current_dir_name="$(echo "$current_branch_name" | sed "s#/#-#g")"
 project_name="$(basename "$(realpath "$(git rev-parse --git-common-dir --path-format=absolute)" | sed "s#/.git\$##")")"
-CONTAINER_NAME="$project_name"__"$current_branch_name"
+CONTAINER_NAME="$project_name"__"$current_dir_name"
 NEW_BRANCH_DIR="$MAIN_BRANCH_DIR/../$CONTAINER_NAME"
 
 # Create branch if it doesn't exist
@@ -31,7 +31,8 @@ cp "$MAIN_BRANCH_DIR/docker-compose.dev.yml" "$NEW_BRANCH_DIR/docker-compose.dev
 cp "$MAIN_BRANCH_DIR/src/.env" "$NEW_BRANCH_DIR/src/.env"
 
 echo "Creating .envrc file..."
-echo "export CONTAINER_NAME=$CONTAINER_NAME" > "$NEW_BRANCH_DIR/.envrc"
+cp "$MAIN_BRANCH_DIR/.envrc" "$NEW_BRANCH_DIR/.envrc"
+sed -i "s/^export CONTAINER_NAME=.*$/export CONTAINER_NAME=$CONTAINER_NAME/" "$NEW_BRANCH_DIR/.envrc"
 
 # For Golang projects, generate sqlc files
 if [[ -f src/go.mod ]]; then
@@ -43,7 +44,7 @@ fi
 if [[ -f src/composer.json ]]; then
     echo "Copying nginx.conf..."
     cp nginx.conf "$NEW_BRANCH_DIR/nginx.conf"
-    sed -i "s/fastcgi_pass .*$/fastcgi_pass ${CONTAINER_NAME}_app:9000;/" "$NEW_BRANCH_DIR/nginx.conf"
+    sed -i "s/fastcgi_pass .*$/fastcgi_pass ${CONTAINER_NAME}:9000;/" "$NEW_BRANCH_DIR/nginx.conf"
 fi
 
 echo "Starting containers..."
