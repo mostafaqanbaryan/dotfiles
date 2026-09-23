@@ -36,7 +36,8 @@ local function setup_format_on_save()
 		{ "*.tsx", "*.ts", "*.jsx", "*.js" },
 		{ "source.removeUnused.ts", "source.addMissingImports.ts" }
 	)
-	runCodeActions(formatter_group, { "*.go" }, { "source.organizeImports" })
+	-- runCodeActions(formatter_group, { "*.go" }, { "source.organizeImports" })
+	vim.lsp.buf.code_action({ apply = true, context = { only = { "source.organizeImports" }, diagnostics = {} } })
 
 	vim.api.nvim_create_autocmd("BufWritePre", {
 		pattern = "*",
