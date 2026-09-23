@@ -12,8 +12,8 @@ alias v "vim"
 alias s "sessions"
 
 # Dockers
-abbr dcu "docker compose -f docker-compose.yml up -d"
-abbr dcd "docker compose -f docker-compose.yml down"
+abbr dcu "docker compose -f docker-compose.dev.yml up -d"
+abbr dcd "docker compose -f docker-compose.dev.yml down"
 abbr dcpu "docker compose -f docker-compose.prod.yml up -d"
 abbr dcpd "docker compose -f docker-compose.prod.yml down"
 abbr dl "docker logs -f -n 100 "
@@ -95,3 +95,7 @@ end
 source $HOME/.env.fish
 
 direnv hook fish | source
+
+function ssh
+    env TERM=xterm-256color ssh $argv
+end
