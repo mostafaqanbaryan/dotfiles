@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+generator() {
+    local result=""
+    local sum=0
+
+    for ((i=10; i>1; i--)); do
+        local j=$((RANDOM % 10))
+        result+="$j"
+        ((sum += j * i))
+    done
+
+    local s=$((sum % 11))
+
+    if ((s < 2)); then
+        result+="$s"
+    else
+        result+="$((11 - s))"
+    fi
+
+    echo "$result"
+}
+
+generator
