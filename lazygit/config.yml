@@ -4,9 +4,9 @@ gui:
   skipHookPrefix: "\U0001F525"
   parseEmoji: true
 git:
-  pagers:
+  diffRenderers:
     - colorArg: always
-      pager: delta --dark --paging=never
+      command: delta --dark --paging=never
 customCommands:
   - key: "c"
     context: "files"
@@ -96,10 +96,10 @@ customCommands:
         title: "Action"
         options:
           - name: "Create"
-            value: "gwa"
+            value: "sesssions add-worktree"
             description: "Create a worktree and switch to it"
           - name: "Remove"
-            value: "gwr"
+            value: "sesssions delete-worktree"
             description: "Remove the worktree"
     command: "sh -c '{{.Form.Type}} \"$PWD\" {{.SelectedLocalBranch.Name}}'"
     loadingText: "Checking out to the new branch..."
